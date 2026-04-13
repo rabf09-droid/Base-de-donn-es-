@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مصلحة النظافة والوقاية الصحية - بلدية المدية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-green: #a8e6cf; /* لون الخلفية الفاتح */
+            --dark-green: #1b5e20; /* لون العناوين */
+            --btn-bg: #d1f2eb;
+            --btn-border: #145a32;
+            --header-bg: #004d40;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            background-image: url('https://via.placeholder.com/1920x1080/a8e6cf/ffffff?text=Background'); /* خلفية افتراضية */
+            background-size: cover;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Splash Screen --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Medea_Algeria.jpg/1200px-Medea_Algeria.jpg'); /* صورة تقريبية للمدية */
+            background-size: cover;
+        }
+        
+        .splash-overlay {
+            background: rgba(255,255,255,0.8);
+            padding: 40px;
+            border-radius: 10px;            text-align: center;
+            width: 80%;
+        }
+
+        .splash-title {
+            font-size: 2rem;
+            color: var(--dark-green);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+            height: 25px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #2196F3;
+            border-radius: 5px;
+            transition: width 0.1s;
+        }
+
+        .splash-footer {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* --- Login Screen --- */
+        #login-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Medea_Algeria.jpg/1200px-Medea_Algeria.jpg');
+            background-size: cover;
+            z-index: 900;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-header {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--dark-green);
+            text-shadow: 1px 1px 2px white;        }
+        
+        .login-header h2 { font-size: 2.2rem; }
+        .login-header h3 { font-size: 1.8rem; }
+        .login-date { font-size: 1.5rem; color: #004d40; font-weight: bold; margin-top: 10px;}
+
+        .login-box {
+            background-color: #a8e6cf; /* الأخضر الفاتح */
+            padding: 30px;
+            border-radius: 5px;
+            margin-top: 50px;
+            width: 400px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 2px solid #fff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .form-group label {
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .form-group input[type="text"], .form-group input[type="password"] {
+            width: 200px;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .login-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            border: 2px solid #555;
+            border-radius: 3px;
+            font-size: 1.1rem;
+        }
+        .btn-login { background-color: #d1f2eb; }
+        .btn-exit { background-color: #ffcccc; color: red; }
+        .btn-save { background-color: #d1f2eb; }
+        .btn-edit { background-color: #d1f2eb; }
+        .btn-delete { background-color: #d1f2eb; }
+
+        /* --- Dashboard --- */
+        #dashboard-screen {
+            display: none;
+            height: 100vh;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Medea_Algeria.jpg/1200px-Medea_Algeria.jpg');
+            background-size: cover;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dash-header {
+            width: 100%;
+            background: rgba(0, 77, 64, 0.9);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 1.5rem;
+        }
+
+        .dash-content {
+            display: flex;
+            width: 90%;
+            height: 80%;
+            margin-top: 20px;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .dash-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 25%;
+        }
+
+        .dash-btn {
+            background-color: rgba(209, 242, 235, 0.9);
+            padding: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: 2px solid #004d40;
+            cursor: pointer;
+            border-radius: 5px;            transition: 0.3s;
+        }
+
+        .dash-btn:hover {
+            background-color: #fff;
+        }
+
+        .dash-center {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dash-center img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid white;
+        }
+
+        .dash-footer-info {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #004d40;
+            background: rgba(255,255,255,0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .exit-btn-container {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .btn-red {
+            background-color: #ff4444;
+            color: white;
+            border: 2px solid #880000;
+        }
+
+        /* --- Database Forms --- */
+        .db-screen {
+            display: none;
+            height: 100vh;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Medea_Algeria.jpg/1200px-Medea_Algeria.jpg');            background-size: cover;
+            flex-direction: column;
+        }
+
+        .db-header {
+            background: linear-gradient(to right, #004d40, #00695c);
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        .db-header button {
+            background: #004d40;
+            color: white;
+            border: 1px solid white;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+
+        .db-body {
+            flex: 1;
+            padding: 20px;
+            background: rgba(200, 255, 200, 0.8); /* خلفية خضراء شفافة */
+            margin: 20px;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            overflow-y: auto;
+        }
+
+        .db-form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 15px;
+            align-items: center;
+        }
+
+        .db-field-label {
+            background-color: #00695c;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .db-field-input {
+            padding: 8px;            border: 1px solid #aaa;
+            width: 100%;
+        }
+        
+        .db-field-input.long {
+            grid-column: span 2;
+        }
+
+        .db-image-placeholder {
+            grid-row: span 4;
+            background: #eee;
+            border: 1px dashed #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            min-height: 150px;
+        }
+
+        .db-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            border-top: 2px solid #aaa;
+            padding-top: 10px;
+            background: rgba(255,255,255,0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .search-btn {
+            background: #e0e0e0;
+            border: 1px solid #999;
+            padding: 5px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btns {
+            margin-right: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 300px;
+        }
+        .modal-title {
+            background: #2196F3;
+            color: white;
+            padding: 5px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 5px 5px 0 0;
+            text-align: right;
+            padding-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <div class="splash-overlay">
+            <h1 class="splash-title">قاعدة البيانات مصلحة النظافة والوقاية الصحية</h1>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="splash-footer">إعداد وبرمجة : رابحي فتحي</p>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <div class="login-header">
+            <h2>مديرية البيئة وحماية المحيط لبلدية المدية</h2>
+            <h3>مصلحة النظافة والوقاية الصحية</h3>
+            <div class="login-date" id="login-date"></div>
+        </div>
+
+        <div class="login-box">
+            <div class="form-group">
+                <label>إسم المستخدم</label>
+                <input type="text" id="username">                <img src="https://img.icons8.com/color/48/000000/user.png" width="30" style="margin-right:5px">
+            </div>
+            <div class="form-group">
+                <label>كلمة السر</label>
+                <input type="password" id="password">
+                <img src="https://img.icons8.com/color/48/000000/lock.png" width="30" style="margin-right:5px">
+            </div>
+            <div class="form-group" style="justify-content: center; margin-top: 10px;">
+                <input type="checkbox" id="show-pass"> <label for="show-pass" style="font-size: 0.9rem;">إظهار كلمة المرور</label>
+            </div>
+
+            <div class="login-buttons">
+                <button class="btn btn-login" onclick="login()">دخول</button>
+                <button class="btn btn-exit" onclick="exitApp()">الخروج</button>
+            </div>
+            <div style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: #004d40; font-weight: bold;">
+                من إعداد الطبيب البيطري الرئيسي للإدارة الإقليمية رابحي فتحي
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard-screen">
+        <div class="dash-header">المنصة الرئيسية</div>
+        
+        <div class="dash-content">
+            <div class="dash-col">
+                <div class="dash-btn" onclick="showScreen('form-employees')">قاعدة بيانات الموظفين</div>
+                <div class="dash-btn" onclick="showScreen('form-classified')">المؤسسات المصنفة</div>
+                <div class="dash-btn" onclick="showScreen('form-wells')">الأبار والمنابع</div>
+                <div class="dash-btn" onclick="showScreen('form-stray')">محاربة الحيوانات الضالة</div>
+            </div>
+
+            <div class="dash-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Medea_Algeria.jpg/1200px-Medea_Algeria.jpg" alt="Building">
+                <div class="dash-footer-info">
+                    بلدية المدية<br>
+                    مديرية البيئة وحماية المحيط<br>
+                    مصلحة النظافة والوقاية الصحية<br>
+                    <span id="dash-date"></span>
+                </div>
+            </div>
+
+            <div class="dash-col">
+                <div class="dash-btn" onclick="showScreen('form-edu')">المؤسسات التربوية</div>
+                <div class="dash-btn" onclick="showScreen('form-mosquito')">محاربة الناموس والجرذان</div>
+                <div class="dash-btn" onclick="showScreen('form-inspection')">المراقبة والتفتيش</div>
+                <div class="dash-btn" onclick="showScreen('form-hygiene')">النظافة العمومية</div>
+            </div>
+            <div class="exit-btn-container">
+                <button class="btn btn-red" onclick="confirmExit()">الخروج</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === FORMS === -->
+
+    <!-- 1. Employees -->
+    <div id="form-employees" class="db-screen">
+        <div class="db-header">
+            <span>قاعدة بيانات الموظفين</span>
+            <span id="emp-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>
+        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">رقم الموظف</div><input class="db-field-input" type="text">
+                <div class="db-field-label">العنوان</div><input class="db-field-input" type="text">
+                <div class="db-field-image-placeholder db-image-placeholder">الصورة</div>
+                
+                <div class="db-field-label">إسم الموظف</div><input class="db-field-input" type="text">
+                <div class="db-field-label">نوع العطلة</div><select class="db-field-input"><option></option></select>
+                
+                <div class="db-field-label">الوظيفة</div><input class="db-field-input" type="text">
+                <div class="db-field-label">تاريخ الخروج</div><input class="db-field-input" type="text">
+                
+                <div class="db-field-label">القسم</div><input class="db-field-input" type="text">
+                <div class="db-field-label">مدة العطلة</div><input class="db-field-input" type="text">
+                
+                <div class="db-field-label">رقم الهاتف</div><input class="db-field-input" type="text">
+                <div class="db-field-label">تاريخ الدخول</div><input class="db-field-input" type="text">
+            </div>
+            
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>
+                <button class="search-btn">🔍 رقم الموظف</button>
+                <button class="search-btn">🔍 اسم الموظف</button>
+                <button class="search-btn">🔍 الوظيفة</button>
+                <button class="search-btn">🔍 نوع العطلة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Classified Institutions -->
+    <div id="form-classified" class="db-screen">        <div class="db-header">
+            <span>قاعدة بيانات مؤسسات المصنفة</span>
+            <span class="header-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>
+        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">رقم</div><input class="db-field-input" type="text">
+                <div class="db-field-label">التصنيف</div><input class="db-field-input" type="text">
+                <div class="db-field-image-placeholder db-image-placeholder"></div>
+
+                <div class="db-field-label">إسم المستغل</div><input class="db-field-input" type="text">
+                <div class="db-field-label">رقم الهاتف</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">النشاط</div><input class="db-field-input" type="text">
+                <div class="db-field-label">تاريخ الإستلام</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">العنوان</div><input class="db-field-input" type="text">
+                <div class="db-field-label">رقم المقرر</div><input class="db-field-input" type="text">
+            </div>
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>
+                <button class="search-btn">🔍 رقم المقرر</button>
+                <button class="search-btn">🔍 اسم المستغل</button>
+                <button class="search-btn">🔍 النشاط</button>
+                <button class="search-btn">🔍 العنوان</button>
+                <button class="search-btn">🔍 التصنيف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Wells -->
+    <div id="form-wells" class="db-screen">
+        <div class="db-header">
+            <span>قاعدة بيانات للآبار والمنابع</span>
+            <span class="header-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>
+        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">الرقم</div><input class="db-field-input" type="text">
+                <div class="db-field-label">طبيعة نقطة الماء</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-image-placeholder db-image-placeholder"></div>
+
+                <div class="db-field-label">إسم مالك البئر</div><input class="db-field-input" type="text">
+                <div class="db-field-label">تاريخ الإنشاء</div><input class="db-field-input" type="text">
+                <div class="db-field-label">العنوان أو الموقع</div><input class="db-field-input" type="text">
+                <div class="db-field-label">تاريخ المعالجة</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">رقم الهاتف</div><input class="db-field-input" type="text">
+                <div class="db-field-label">احداثيات نقطة المياه</div><input class="db-field-input" type="text">
+            </div>
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>
+                <button class="search-btn">🔍 الرقم</button>
+                <button class="search-btn">🔍 المالك</button>
+                <button class="search-btn">🔍 الموقع</button>
+                <button class="search-btn">🔍 طبيعة نقطة الماء</button>
+                <button class="search-btn">🔍 تاريخ المعالجة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Stray Animals -->
+    <div id="form-stray" class="db-screen">
+        <div class="db-header">
+            <span>قاعدة بيانات محاربة الكلاب الضالة</span>
+            <span class="header-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>
+        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">رقم القرار الولائي</div><input class="db-field-input" type="text">
+                <div class="db-field-label">جمعية الصيد</div><input class="db-field-input" type="text">
+                <div class="db-field-image-placeholder db-image-placeholder"></div>
+
+                <div class="db-field-label">تاريخ اصدار القرار</div><input class="db-field-input" type="text">
+                <div class="db-field-label">عدد الخراديش 12</div><input class="db-field-input" type="text" value="12">
+
+                <div class="db-field-label">مدة صلاحية</div><input class="db-field-input" type="text">
+                <div class="db-field-label">عدد الخراديش 16</div><input class="db-field-input" type="text" value="16">
+
+                <div class="db-field-label">تاريخ الحملة</div><input class="db-field-input" type="text">
+                <div class="db-field-label">عدد الكلاب</div><input class="db-field-input" type="text">
+            </div>
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>                <button class="search-btn">🔍 رقم القرار</button>
+                <button class="search-btn">🔍 تاريخ الحملة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Edu Institutions -->
+    <div id="form-edu" class="db-screen">
+        <div class="db-header">
+            <span>قاعدة بيانات المؤسسات التربوية</span>
+            <span class="header-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>
+        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">الرقم</div><input class="db-field-input" type="text">
+                <div class="db-field-label">الإطعام</div><input class="db-field-input" type="text">
+                <div class="db-field-image-placeholder db-image-placeholder"></div>
+
+                <div class="db-field-label">إسم المؤسسة</div><input class="db-field-input" type="text">
+                <div class="db-field-label">تحاليل المياه</div><select class="db-field-input"><option></option></select>
+
+                <div class="db-field-label">الصنف</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-label">رقم الهاتف</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">العنوان</div><input class="db-field-input" type="text">
+                <div class="db-field-label">ت.آخر خرحة ميدانية</div><input class="db-field-input" type="text">
+            </div>
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>
+                <button class="search-btn">🔍 الرقم</button>
+                <button class="search-btn">🔍 اسم المؤسسة</button>
+                <button class="search-btn">🔍 الصنف</button>
+                <button class="search-btn">🔍 العنوان</button>
+                <button class="search-btn">🔍 الإطعام</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Mosquito -->
+    <div id="form-mosquito" class="db-screen">
+        <div class="db-header">
+            <span>قاعدة بيانات محاربة الناموس والجرذان</span>
+            <span class="header-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">الرقم</div><input class="db-field-input" type="text">
+                <div class="db-field-label">الهيأة المتدخلة</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-image-placeholder db-image-placeholder"></div>
+
+                <div class="db-field-label">تاريخ الحملة</div><input class="db-field-input" type="text">
+                <div class="db-field-label">تعيين أماكن</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">نوع الحملة</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-label">رقم الهاتف</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">الطريقة المستعملة</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-label">الكمية</div><input class="db-field-input" type="text">
+            </div>
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>
+                <button class="search-btn">🔍 الرقم</button>
+                <button class="search-btn">🔍 نوع الحملة</button>
+                <button class="search-btn">🔍 الطريقة</button>
+                <button class="search-btn">🔍 الهيأة</button>
+                <button class="search-btn">🔍 الكمية</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Inspection -->
+    <div id="form-inspection" class="db-screen">
+        <div class="db-header">
+            <span>قاعدة بيانات المراقبة والتفتيش</span>
+            <span class="header-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>
+        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">الرقم</div><input class="db-field-input" type="text">
+                <div class="db-field-label">الملاحظات المسجلة</div><input class="db-field-input" type="text">
+                <div class="db-field-image-placeholder db-image-placeholder"></div>
+
+                <div class="db-field-label">تعيين النشاط</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-label">الكمية المحجوزة</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">العنوان</div><input class="db-field-input" type="text">
+                <div class="db-field-label">الإجراءات المتخذة</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">رقم السجل</div><input class="db-field-input" type="text">                <div class="db-field-label">مدة العقوبة</div><input class="db-field-input" type="text">
+            </div>
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>
+                <button class="search-btn">🔍 الرقم</button>
+                <button class="search-btn">🔍 تعيين النشاط</button>
+                <button class="search-btn">🔍 العنوان</button>
+                <button class="search-btn">🔍 الاجراءات المتخذة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Hygiene -->
+    <div id="form-hygiene" class="db-screen">
+        <div class="db-header">
+            <span>قاعدة بيانات النظافة العمومية</span>
+            <span class="header-date"></span>
+            <button onclick="goHome()">الرجوع</button>
+        </div>
+        <div class="db-body">
+            <div class="db-form-grid">
+                <div class="db-field-label">الرقم</div><input class="db-field-input" type="text">
+                <div class="db-field-label">الهيأة المستخدمة</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-image-placeholder db-image-placeholder"></div>
+
+                <div class="db-field-label">تعيين</div><select class="db-field-input"><option></option></select>
+                <div class="db-field-label">الكمية</div><input class="db-field-input" type="text">
+
+                <div class="db-field-label">الشهر/السنة</div><input class="db-field-input long" type="text">
+            </div>
+            <div class="db-controls">
+                <div class="action-btns">
+                    <button class="btn btn-save">💾 حفظ</button>
+                    <button class="btn btn-edit">✏️ تعديل</button>
+                    <button class="btn btn-delete">🗑️ حذف</button>
+                </div>
+                <button class="search-btn">🔍 الرقم</button>
+                <button class="search-btn">🔍 تعيين</button>
+                <button class="search-btn">🔍 الهيأة المستخدمة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="exit-modal" class="modal">
+        <div class="modal-content">            <div class="modal-title">تنبيه</div>
+            <p>هل تريد إغلاق البرنامج؟</p>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
+                <button onclick="closeModal('exit-modal')">Non</button>
+                <button onclick="window.close()">Oui</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="thanks-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">شكرا</div>
+            <p>شكرا لاستخدامك البرنامج تقبلوا تحيات رابحي فتحي</p>
+            <div style="margin-top: 20px;">
+                <button onclick="closeModal('thanks-modal')">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Date Setup
+        const dateStr = "13-04-2026";
+        const timeStrStart = "21:15:04";
+        
+        document.getElementById('login-date').innerText = dateStr + " " + timeStrStart;
+        document.getElementById('dash-date').innerText = dateStr + "<br>" + "21:15:30";
+        
+        document.querySelectorAll('.header-date').forEach(el => {
+            el.innerText = dateStr + " " + timeStrStart;
+        });
+        document.getElementById('emp-date').innerText = dateStr + " " + "21:15:42";
+
+        // Splash Screen Logic
+        let progress = 0;
+        const bar = document.getElementById('progress-bar');
+        const interval = setInterval(() => {
+            progress += 5;
+            bar.style.width = progress + '%';
+            if(progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    document.getElementById('splash-screen').style.display = 'none';
+                    document.getElementById('login-screen').style.display = 'flex';
+                }, 500);
+            }
+        }, 100);
+
+        // Navigation Logic
+        function login() {
+            // Simple validation simulation            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard-screen').style.display = 'flex';
+        }
+
+        function showScreen(screenId) {
+            document.getElementById('dashboard-screen').style.display = 'none';
+            document.getElementById(screenId).style.display = 'flex';
+        }
+
+        function goHome() {
+            document.querySelectorAll('.db-screen').forEach(el => el.style.display = 'none');
+            document.getElementById('dashboard-screen').style.display = 'flex';
+        }
+
+        function exitApp() {
+            // Just close window or show thanks
+            // Since window.close() often blocked, we show thanks modal
+            document.getElementById('thanks-modal').style.display = 'flex';
+        }
+
+        function confirmExit() {
+            document.getElementById('exit-modal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Checkbox logic
+        document.getElementById('show-pass').addEventListener('change', function() {
+            const passInput = document.getElementById('password');
+            passInput.type = this.checked ? 'text' : 'password';
+        });
+
+    </script>
+</body>
+</html>

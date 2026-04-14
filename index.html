@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصلحة النظافة والوقاية الصحية</title>
+    <title>مصلحة النظافة والوقاية الصحية - مع GPS</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -109,12 +109,6 @@
             margin-bottom: 0.5rem;
         }
 
-        .login-header h2 {
-            color: #333;
-            font-size: 1.4rem;
-            margin-bottom: 0.3rem;
-        }
-
         .input-group {
             margin-bottom: 1rem;
         }
@@ -146,17 +140,12 @@
             border-radius: 8px;
             font-size: 0.9rem;
         }
-        .input-wrapper input:focus {
-            border-color: #667eea;
-            outline: none;
-        }
 
         .checkbox-group {
             display: flex;
             align-items: center;
             margin-bottom: 1.2rem;
-            font-size: 0.85rem;
-        }
+            font-size: 0.85rem;        }
 
         .btn-group {
             display: flex;
@@ -164,15 +153,14 @@
         }
 
         .btn {
-            flex: 1;
-            padding: 10px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 0.4rem;
@@ -183,18 +171,9 @@
             color: white;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-danger {
-            background: #ff4757;
-            color: white;
-        }
-
         .btn-success {
-            background: #2ed573;            color: white;
+            background: #2ed573;
+            color: white;
         }
 
         .btn-warning {
@@ -202,9 +181,27 @@
             color: white;
         }
 
+        .btn-danger {
+            background: #ff4757;
+            color: white;
+        }
+
+        .btn-info {
+            background: #1e90ff;
+            color: white;
+        }
+
         .btn-secondary {
             background: #747d8c;
             color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         /* القائمة الرئيسية */
@@ -226,11 +223,6 @@
             margin-bottom: 0.5rem;
         }
 
-        .dashboard-header h1 {
-            font-size: 1.6rem;
-            margin-bottom: 0.3rem;
-        }
-
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -243,7 +235,8 @@
             padding: 1.2rem;
             border-radius: 12px;
             text-align: center;
-            cursor: pointer;            transition: all 0.3s;
+            cursor: pointer;
+            transition: all 0.3s;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
@@ -251,7 +244,6 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
-
         .card i {
             font-size: 1.8rem;
             color: #667eea;
@@ -290,9 +282,6 @@
             gap: 0.5rem;
         }
 
-        .form-header i {
-            color: #667eea;
-        }
         .form-container {
             background: white;
             padding: 1.5rem;
@@ -303,8 +292,7 @@
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 1rem;            margin-bottom: 1.5rem;
         }
 
         .form-field {
@@ -326,7 +314,6 @@
             border: 2px solid #e0e0e0;
             border-radius: 6px;
             font-size: 0.9rem;
-            transition: all 0.3s;
         }
 
         .form-field input:focus,
@@ -336,12 +323,113 @@
             outline: none;
         }
 
+        /* قسم GPS */
+        .gps-section {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 2px solid #667eea30;
+        }
+
+        .gps-section h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .gps-buttons {            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .gps-info {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .gps-info.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gps-coordinates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .coord-box {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 6px;
+            border-right: 4px solid #667eea;
+        }
+
+        .coord-box label {
+            display: block;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+        .coord-box .value {
+            font-family: monospace;
+            font-size: 1rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .location-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-success {
+            background: #2ed57320;
+            color: #2ed573;
+        }
+
+        .status-error {
+            background: #ff475720;
+            color: #ff4757;
+        }
+
+        .status-loading {
+            background: #ffa50220;
+            color: #ffa502;
+        }
+
         .photo-upload {
             grid-column: span 2;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;            border: 2px dashed #667eea;
+            padding: 2rem;
+            border: 2px dashed #667eea;
             border-radius: 8px;
             background: #f8f9fa;
             cursor: pointer;
@@ -351,13 +439,6 @@
         .photo-upload:hover {
             background: #e9ecef;
         }
-
-        .photo-upload i {
-            font-size: 2rem;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
         .search-bar {
             display: flex;
             gap: 0.5rem;
@@ -390,7 +471,8 @@
             display: block;
             width: 100%;
             max-width: 300px;
-            margin: 1.5rem auto 0;            padding: 10px;
+            margin: 1.5rem auto 0;
+            padding: 10px;
             background: #ff4757;
             color: white;
             border: none;
@@ -406,8 +488,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100%;            height: 100%;
             background: rgba(0,0,0,0.5);
             z-index: 2000;
             justify-content: center;
@@ -439,7 +520,16 @@
                 grid-template-columns: 1fr;
             }
             
-            .photo-upload {                grid-column: span 1;
+            .photo-upload {
+                grid-column: span 1;
+            }
+
+            .gps-buttons {
+                flex-direction: column;
+            }
+
+            .gps-buttons .btn {
+                width: 100%;
             }
         }
     </style>
@@ -447,8 +537,7 @@
 <body>
 
     <!-- شاشة التحميل -->
-    <div id="splash-screen">
-        <div class="splash-icon"><i class="fas fa-shield-alt"></i></div>
+    <div id="splash-screen">        <div class="splash-icon"><i class="fas fa-shield-alt"></i></div>
         <h1 class="splash-title">مصلحة النظافة والوقاية الصحية</h1>
         <p class="splash-subtitle">بلدية المدية - مديرية البيئة</p>
         <div class="progress-container">
@@ -488,7 +577,8 @@
                     <button type="button" class="btn btn-danger" onclick="confirmExit()"><i class="fas fa-power-off"></i> خروج</button>
                 </div>
             </form>
-        </div>    </div>
+        </div>
+    </div>
 
     <!-- القائمة الرئيسية -->
     <div id="dashboard-screen" style="display: none;">
@@ -497,7 +587,6 @@
             <h1>المنصة الرئيسية</h1>
             <p>إدارة شاملة لمصلحة النظافة والوقاية الصحية</p>
         </div>
-
         <div class="cards-grid">
             <div class="card" onclick="openForm('employees-form')"><i class="fas fa-users"></i><h3>بيانات الموظفين</h3></div>
             <div class="card" onclick="openForm('classified-form')"><i class="fas fa-industry"></i><h3>المؤسسات المصنفة</h3></div>
@@ -512,85 +601,62 @@
         <button class="logout-btn" onclick="confirmExit()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
     </div>
 
-    <!-- نموذج بيانات الموظفين -->
-    <div id="employees-form" class="form-screen">
+    <!-- نموذج الآبار والمنابع مع GPS -->
+    <div id="wells-form" class="form-screen">
         <div class="form-header">
-            <h2><i class="fas fa-users"></i> قاعدة بيانات الموظفين</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
-        <div class="form-container">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="البحث برقم الموظف...">
-                <input type="text" class="search-input" placeholder="البحث بالاسم...">
-                <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-            </div>
-            <div class="form-grid">
-                <div class="photo-upload">
-                    <div style="text-align: center;">
-                        <i class="fas fa-camera"></i>
-                        <p>اضغط لإضافة صورة</p>
-                    </div>
-                </div>
-                <div class="form-field"><label>رقم الموظف</label><input type="text"></div>
-                <div class="form-field"><label>اسم الموظف</label><input type="text"></div>
-                <div class="form-field"><label>الوظيفة</label><input type="text"></div>
-                <div class="form-field"><label>القسم</label><input type="text"></div>
-                <div class="form-field"><label>العنوان</label><input type="text"></div>
-                <div class="form-field"><label>رقم الهاتف</label><input type="text"></div>
-                <div class="form-field"><label>نوع العطلة</label><select><option>سنوية</option><option>مرضية</option><option>استثنائية</option></select></div>                <div class="form-field"><label>تاريخ الخروج</label><input type="date"></div>
-                <div class="form-field"><label>تاريخ الدخول</label><input type="date"></div>
-                <div class="form-field"><label>مدة العطلة</label><input type="number"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نموذج المؤسسات المصنفة -->
-    <div id="classified-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-industry"></i> قاعدة بيانات المؤسسات المصنفة</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
-        <div class="form-container">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="البحث برقم المقرر...">
-                <input type="text" class="search-input" placeholder="البحث بالاسم...">
-                <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-            </div>
-            <div class="form-grid">
-                <div class="photo-upload">
-                    <div style="text-align: center;">
-                        <i class="fas fa-building"></i>
-                        <p>صورة المؤسسة</p>
-                    </div>
-                </div>
-                <div class="form-field"><label>الرقم</label><input type="text"></div>
-                <div class="form-field"><label>اسم المستغل</label><input type="text"></div>
-                <div class="form-field"><label>النشاط</label><input type="text"></div>
-                <div class="form-field"><label>التصنيف</label><select><option>صنف أ</option><option>صنف ب</option><option>صنف ج</option></select></div>
-                <div class="form-field"><label>العنوان</label><input type="text"></div>
-                <div class="form-field"><label>رقم الهاتف</label><input type="text"></div>
-                <div class="form-field"><label>تاريخ الاستلام</label><input type="date"></div>
-                <div class="form-field"><label>رقم المقرر</label><input type="text"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نموذج الآبار والمنابع -->
-    <div id="wells-form" class="form-screen">        <div class="form-header">
             <h2><i class="fas fa-tint"></i> قاعدة بيانات الآبار والمنابع</h2>
             <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
         </div>
         <div class="form-container">
+            <!-- قسم GPS -->
+            <div class="gps-section">
+                <h3><i class="fas fa-satellite-dish"></i> تحديد الموقع الجغرافي</h3>
+                <div class="gps-buttons">
+                    <button class="btn btn-info" onclick="getGPSLocation()">
+                        <i class="fas fa-location-crosshairs"></i>
+                        تحديد الموقع عبر GPS
+                    </button>
+                    <button class="btn btn-warning" onclick="toggleManualLocation()">
+                        <i class="fas fa-keyboard"></i>
+                        إدخال يدوي للموقع
+                    </button>
+                </div>
+                <div id="gps-status"></div>
+                <div id="gps-info" class="gps-info">
+                    <div class="gps-coordinates">
+                        <div class="coord-box">
+                            <label>خط العرض (Latitude)</label>
+                            <div class="value" id="latitude">-</div>
+                        </div>
+                        <div class="coord-box">
+                            <label>خط الطول (Longitude)</label>
+                            <div class="value" id="longitude">-</div>
+                        </div>
+                        <div class="coord-box">
+                            <label>الدقة (Accuracy)</label>
+                            <div class="value" id="accuracy">-</div>
+                        </div>                        <div class="coord-box">
+                            <label>الارتفاع (Altitude)</label>
+                            <div class="value" id="altitude">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الحقول اليدوية للموقع -->
+            <div id="manual-location" style="display: none; margin-bottom: 1.5rem;">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>خط العرض (يدوي)</label>
+                        <input type="number" step="any" id="manual-lat" placeholder="مثال: 36.2639">
+                    </div>
+                    <div class="form-field">
+                        <label>خط الطول (يدوي)</label>
+                        <input type="number" step="any" id="manual-lng" placeholder="مثال: 2.7456">
+                    </div>
+                </div>
+            </div>
+
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="البحث بالرقم...">
                 <input type="text" class="search-input" placeholder="البحث بالموقع...">
@@ -599,277 +665,7 @@
             <div class="form-grid">
                 <div class="photo-upload">
                     <div style="text-align: center;">
-                        <i class="fas fa-water"></i>
+                        <i class="fas fa-water" style="font-size: 2rem; color: #667eea;"></i>
                         <p>صورة البئر/المنبع</p>
                     </div>
-                </div>
-                <div class="form-field"><label>الرقم</label><input type="text"></div>
-                <div class="form-field"><label>اسم مالك البئر</label><input type="text"></div>
-                <div class="form-field"><label>العنوان أو الموقع</label><input type="text"></div>
-                <div class="form-field"><label>طبيعة نقطة الماء</label><select><option>بئر</option><option>عين</option><option>منبع</option></select></div>
-                <div class="form-field"><label>تاريخ الإنشاء</label><input type="date"></div>
-                <div class="form-field"><label>تاريخ المعالجة</label><input type="date"></div>
-                <div class="form-field"><label>رقم الهاتف</label><input type="text"></div>
-                <div class="form-field"><label>احداثيات نقطة المياه</label><input type="text"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نموذج محاربة الكلاب الضالة -->
-    <div id="stray-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-dog"></i> قاعدة بيانات محاربة الكلاب الضالة</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
-        <div class="form-container">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="البحث برقم القرار...">
-                <input type="text" class="search-input" placeholder="البحث بتاريخ الحملة...">
-                <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-            </div>
-            <div class="form-grid">
-                <div class="photo-upload">
-                    <div style="text-align: center;">
-                        <i class="fas fa-paw"></i>                        <p>صورة الحملة</p>
-                    </div>
-                </div>
-                <div class="form-field"><label>رقم القرار الولائي</label><input type="text"></div>
-                <div class="form-field"><label>تاريخ اصدار القرار</label><input type="date"></div>
-                <div class="form-field"><label>جمعية الصيد</label><input type="text"></div>
-                <div class="form-field"><label>مدة صلاحية</label><input type="text"></div>
-                <div class="form-field"><label>تاريخ الحملة</label><input type="date"></div>
-                <div class="form-field"><label>عدد الخراديش 12</label><input type="number" value="12"></div>
-                <div class="form-field"><label>عدد الخراديش 16</label><input type="number" value="16"></div>
-                <div class="form-field"><label>عدد الكلاب</label><input type="number"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نموذج المؤسسات التربوية -->
-    <div id="education-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-school"></i> قاعدة بيانات المؤسسات التربوية</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
-        <div class="form-container">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="البحث باسم المؤسسة...">
-                <input type="text" class="search-input" placeholder="البحث بالعنوان...">
-                <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-            </div>
-            <div class="form-grid">
-                <div class="photo-upload">
-                    <div style="text-align: center;">
-                        <i class="fas fa-graduation-cap"></i>
-                        <p>صورة المؤسسة</p>
-                    </div>
-                </div>
-                <div class="form-field"><label>الرقم</label><input type="text"></div>
-                <div class="form-field"><label>اسم المؤسسة</label><input type="text"></div>
-                <div class="form-field"><label>الصنف</label><select><option>ابتدائية</option><option>متوسطة</option><option>ثانوية</option></select></div>
-                <div class="form-field"><label>العنوان</label><input type="text"></div>
-                <div class="form-field"><label>رقم الهاتف</label><input type="text"></div>
-                <div class="form-field"><label>الإطعام</label><select><option>نعم</option><option>لا</option></select></div>
-                <div class="form-field"><label>تحاليل المياه</label><select><option>مطابقة</option><option>غير مطابقة</option></select></div>
-                <div class="form-field"><label>تاريخ آخر خرجة ميدانية</label><input type="date"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نموذج محاربة الناموس والجرذان -->
-    <div id="mosquito-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-bug"></i> قاعدة بيانات محاربة الناموس والجرذان</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
-        <div class="form-container">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="البحث بنوع الحملة...">
-                <input type="text" class="search-input" placeholder="البحث بالهيئة...">
-                <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-            </div>
-            <div class="form-grid">
-                <div class="photo-upload">
-                    <div style="text-align: center;">
-                        <i class="fas fa-spray-can"></i>
-                        <p>صورة الحملة</p>
-                    </div>
-                </div>
-                <div class="form-field"><label>الرقم</label><input type="text"></div>
-                <div class="form-field"><label>الهيئة المتدخلة</label><input type="text"></div>
-                <div class="form-field"><label>تاريخ الحملة</label><input type="date"></div>
-                <div class="form-field"><label>نوع الحملة</label><select><option>رذاذ</option><option>ضباب حراري</option><option>مبيدات</option></select></div>
-                <div class="form-field"><label>تعيين أماكن</label><input type="text"></div>
-                <div class="form-field"><label>الطريقة المستعملة</label><input type="text"></div>
-                <div class="form-field"><label>الكمية</label><input type="number"></div>
-                <div class="form-field"><label>رقم الهاتف</label><input type="text"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نموذج المراقبة والتفتيش -->
-    <div id="inspection-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-search"></i> قاعدة بيانات المراقبة والتفتيش</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
-        <div class="form-container">
-            <div class="search-bar">                <input type="text" class="search-input" placeholder="البحث بالعنوان...">
-                <input type="text" class="search-input" placeholder="البحث بالنشاط...">
-                <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-            </div>
-            <div class="form-grid">
-                <div class="photo-upload">
-                    <div style="text-align: center;">
-                        <i class="fas fa-clipboard-check"></i>
-                        <p>صورة التفتيش</p>
-                    </div>
-                </div>
-                <div class="form-field"><label>الرقم</label><input type="text"></div>
-                <div class="form-field"><label>رقم السجل</label><input type="text"></div>
-                <div class="form-field"><label>تعيين النشاط</label><input type="text"></div>
-                <div class="form-field"><label>العنوان</label><input type="text"></div>
-                <div class="form-field"><label>الملاحظات المسجلة</label><textarea rows="2"></textarea></div>
-                <div class="form-field"><label>الكمية المحجوزة</label><input type="text"></div>
-                <div class="form-field"><label>الإجراءات المتخذة</label><textarea rows="2"></textarea></div>
-                <div class="form-field"><label>مدة العقوبة</label><input type="text"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نموذج النظافة العمومية -->
-    <div id="hygiene-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-broom"></i> قاعدة بيانات النظافة العمومية</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
-        <div class="form-container">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="البحث بالهيئة...">
-                <input type="text" class="search-input" placeholder="البحث بالتعيين...">
-                <button class="btn btn-primary"><i class="fas fa-search"></i> بحث</button>
-            </div>
-            <div class="form-grid">
-                <div class="photo-upload">
-                    <div style="text-align: center;">
-                        <i class="fas fa-recycle"></i>
-                        <p>صورة العملية</p>
-                    </div>
-                </div>
-                <div class="form-field"><label>الرقم</label><input type="text"></div>
-                <div class="form-field"><label>الهيئة المستخدمة</label><input type="text"></div>
-                <div class="form-field"><label>تعيين</label><input type="text"></div>                <div class="form-field"><label>الكمية</label><input type="number"></div>
-                <div class="form-field"><label>الشهر/السنة</label><input type="month"></div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal الخروج -->
-    <div id="exit-modal" class="modal">
-        <div class="modal-content">
-            <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: #ff4757; margin-bottom: 0.8rem;"></i>
-            <h2>تأكيد الخروج</h2>
-            <p>هل أنت متأكد من رغبتك في الخروج؟</p>
-            <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="closeModal()">إلغاء</button>
-                <button class="btn btn-danger" onclick="exitApp()">نعم، خروج</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // شاشة التحميل
-        window.addEventListener('load', function() {
-            let progress = 0;
-            const progressBar = document.getElementById('progress-bar');
-            const interval = setInterval(function() {
-                progress += 3;
-                progressBar.style.width = progress + '%';
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(function() {
-                        document.getElementById('splash-screen').style.display = 'none';
-                        document.getElementById('login-screen').style.display = 'flex';
-                    }, 500);
-                }
-            }, 60);
-        });
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            if (username && password) {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard-screen').style.display = 'block';
-            }
-        }
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const checkbox = document.getElementById('show-pass');
-            passwordInput.type = checkbox.checked ? 'text' : 'password';
-        }
-
-        function openForm(formId) {
-            document.getElementById('dashboard-screen').style.display = 'none';
-            document.getElementById(formId).style.display = 'block';
-        }
-
-        function goHome() {
-            document.querySelectorAll('.form-screen').forEach(screen => {
-                screen.style.display = 'none';
-            });
-            document.getElementById('dashboard-screen').style.display = 'block';
-        }
-
-        function confirmExit() {
-            document.getElementById('exit-modal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('exit-modal').style.display = 'none';
-        }
-
-        function exitApp() {
-            alert('شكراً لاستخدامك التطبيق!\nإعداد: رابحي فتحي');
-            location.reload();
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('exit-modal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
-
-</body>
-</html>
+         

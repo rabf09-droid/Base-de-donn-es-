@@ -18,10 +18,7 @@
         body {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         /* شاشة التحميل */
@@ -40,33 +37,33 @@
             color: white;
         }
 
-        .splash-logo {
-            font-size: 5rem;
-            margin-bottom: 2rem;
-            animation: pulse 2s infinite;
+        .splash-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: rotate 3s linear infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }            50% { transform: scale(1.1); opacity: 0.8; }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-
         .splash-title {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .splash-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
+            font-size: 1rem;
+            margin-bottom: 2rem;
             opacity: 0.9;
         }
 
         .progress-container {
-            width: 300px;
-            height: 8px;
+            width: 250px;
+            height: 6px;
             background: rgba(255,255,255,0.3);
             border-radius: 10px;
             overflow: hidden;
@@ -82,22 +79,30 @@
         }
 
         .splash-footer {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
 
         /* شاشة تسجيل الدخول */
         #login-screen {
             display: none;
-            background: rgba(255,255,255,0.95);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 90%;
-            max-width: 450px;
-            animation: slideIn 0.5s ease;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        @keyframes slideIn {
+
+        .login-container {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -110,54 +115,56 @@
 
         .login-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .login-header i {
-            font-size: 4rem;
+            font-size: 2.5rem;
             color: #667eea;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .login-header h2 {
             color: #333;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
         }
 
         .login-header p {
             color: #666;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .input-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             color: #333;
             font-weight: 600;
+            font-size: 0.9rem;
         }
-
         .input-wrapper {
             position: relative;
         }
 
-        .input-wrapper i {            position: absolute;
-            right: 15px;
+        .input-wrapper i {
+            position: absolute;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
             color: #667eea;
+            font-size: 0.9rem;
         }
 
         .input-wrapper input {
             width: 100%;
-            padding: 15px 50px 15px 15px;
+            padding: 10px 40px 10px 12px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
             transition: all 0.3s;
         }
 
@@ -170,7 +177,8 @@
         .checkbox-group {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.85rem;
         }
 
         .checkbox-group input {
@@ -179,22 +187,22 @@
 
         .btn-group {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .btn {
             flex: 1;
-            padding: 15px;
+            padding: 10px;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border-radius: 8px;            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;        }
+            gap: 0.4rem;
+        }
 
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -203,7 +211,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
         .btn-danger {
@@ -213,57 +221,87 @@
 
         .btn-danger:hover {
             background: #ff3838;
-            transform: translateY(-2px);
         }
 
         /* القائمة الرئيسية */
         #dashboard-screen {
             display: none;
-            width: 100%;
+            padding: 1.5rem 1rem;
             max-width: 1200px;
-            padding: 2rem;
+            margin: 0 auto;
         }
 
         .dashboard-header {
             text-align: center;
             color: white;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-header i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
         }
 
         .dashboard-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.6rem;            margin-bottom: 0.3rem;
+        }
+
+        .dashboard-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .card {
             background: white;
-            padding: 2rem;            border-radius: 15px;
+            padding: 1.2rem;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
         .card i {
-            font-size: 3rem;
+            font-size: 1.8rem;
             color: #667eea;
-            margin-bottom: 1rem;
+            margin-bottom: 0.6rem;
         }
 
         .card h3 {
             color: #333;
-            font-size: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 10px;
+            background: #ff4757;
+            color: white;
+            border: none;            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff3838;
+            transform: translateY(-2px);
         }
 
         /* Modal */
@@ -278,33 +316,72 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            padding: 1rem;
         }
 
         .modal-content {
             background: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 15px;
             text-align: center;
-            max-width: 400px;
-            width: 90%;
+            max-width: 350px;
+            width: 100%;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .modal-content i {
-            font-size: 4rem;
-            color: #ff4757;
-            margin-bottom: 1rem;        }
+            font-size: 3rem;            color: #ff4757;
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-content h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+        }
 
         .modal-buttons {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.8rem;
         }
 
+        .modal-buttons .btn {
+            flex: 1;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .splash-title {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
             }
             
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card h3 {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
             .cards-grid {
                 grid-template-columns: 1fr;
             }
@@ -313,9 +390,8 @@
 </head>
 <body>
 
-    <!-- شاشة التحميل -->
-    <div id="splash-screen">
-        <div class="splash-logo">
+    <!-- شاشة التحميل -->    <div id="splash-screen">
+        <div class="splash-icon">
             <i class="fas fa-shield-alt"></i>
         </div>
         <h1 class="splash-title">مصلحة النظافة والوقاية الصحية</h1>
@@ -329,102 +405,103 @@
     </div>
 
     <!-- شاشة تسجيل الدخول -->
-    <div id="login-screen">
-        <div class="login-header">
-            <i class="fas fa-building"></i>
-            <h2>تسجيل الدخول</h2>
-            <p>مصلحة النظافة والوقاية الصحية</p>
-        </div>
-
-        <form onsubmit="event.preventDefault(); login();">
-            <div class="input-group">
-                <label>اسم المستخدم</label>
-                <div class="input-wrapper">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>                </div>
+    <div id="login-screen" style="display: none;">
+        <div class="login-container">
+            <div class="login-header">
+                <i class="fas fa-building"></i>
+                <h2>تسجيل الدخول</h2>
+                <p>مصلحة النظافة والوقاية الصحية</p>
             </div>
 
-            <div class="input-group">
-                <label>كلمة المرور</label>
-                <div class="input-wrapper">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+            <form onsubmit="event.preventDefault(); login();">
+                <div class="input-group">
+                    <label>اسم المستخدم</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
+                    </div>
                 </div>
-            </div>
 
-            <div class="checkbox-group">
-                <input type="checkbox" id="show-pass" onchange="togglePassword()">
-                <label for="show-pass">إظهار كلمة المرور</label>
-            </div>
+                <div class="input-group">
+                    <label>كلمة المرور</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+                    </div>
+                </div>
 
-            <div class="btn-group">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-sign-in-alt"></i>
-                    دخول
-                </button>
-                <button type="button" class="btn btn-danger" onclick="confirmExit()">
-                    <i class="fas fa-power-off"></i>
-                    خروج
-                </button>
-            </div>
-        </form>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-pass" onchange="togglePassword()">
+                    <label for="show-pass">إظهار كلمة المرور</label>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        دخول
+                    </button>                    <button type="button" class="btn btn-danger" onclick="confirmExit()">
+                        <i class="fas fa-power-off"></i>
+                        خروج
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- القائمة الرئيسية -->
-    <div id="dashboard-screen">
+    <div id="dashboard-screen" style="display: none;">
         <div class="dashboard-header">
-            <h1><i class="fas fa-city"></i> المنصة الرئيسية</h1>
+            <i class="fas fa-city"></i>
+            <h1>المنصة الرئيسية</h1>
             <p>إدارة شاملة لمصلحة النظافة والوقاية الصحية</p>
         </div>
 
         <div class="cards-grid">
-            <div class="card" onclick="alert('قاعدة بيانات الموظفين')">
+            <div class="card" onclick="openSection('employees')">
                 <i class="fas fa-users"></i>
                 <h3>بيانات الموظفين</h3>
             </div>
-            <div class="card" onclick="alert('المؤسسات المصنفة')">
+            <div class="card" onclick="openSection('classified')">
                 <i class="fas fa-industry"></i>
                 <h3>المؤسسات المصنفة</h3>
             </div>
-            <div class="card" onclick="alert('الآبار والمنابع')">
+            <div class="card" onclick="openSection('wells')">
                 <i class="fas fa-tint"></i>
                 <h3>الآبار والمنابع</h3>
             </div>
-            <div class="card" onclick="alert('محاربة الكلاب الضالة')">                <i class="fas fa-dog"></i>
+            <div class="card" onclick="openSection('stray')">
+                <i class="fas fa-dog"></i>
                 <h3>محاربة الكلاب الضالة</h3>
             </div>
-            <div class="card" onclick="alert('المؤسسات التربوية')">
+            <div class="card" onclick="openSection('education')">
                 <i class="fas fa-school"></i>
                 <h3>المؤسسات التربوية</h3>
             </div>
-            <div class="card" onclick="alert('محاربة الناموس والجرذان')">
+            <div class="card" onclick="openSection('mosquito')">
                 <i class="fas fa-bug"></i>
                 <h3>محاربة الناموس والجرذان</h3>
             </div>
-            <div class="card" onclick="alert('المراقبة والتفتيش')">
+            <div class="card" onclick="openSection('inspection')">
                 <i class="fas fa-search"></i>
                 <h3>المراقبة والتفتيش</h3>
             </div>
-            <div class="card" onclick="alert('النظافة العمومية')">
+            <div class="card" onclick="openSection('hygiene')">
                 <i class="fas fa-broom"></i>
                 <h3>النظافة العمومية</h3>
-            </div>
-        </div>
+            </div>        </div>
 
-        <div style="text-align: center; margin-top: 2rem;">
-            <button class="btn btn-danger" onclick="confirmExit()">
-                <i class="fas fa-sign-out-alt"></i>
-                تسجيل الخروج
-            </button>
-        </div>
+        <button class="logout-btn" onclick="confirmExit()">
+            <i class="fas fa-sign-out-alt"></i>
+            تسجيل الخروج
+        </button>
     </div>
 
     <!-- Modal الخروج -->
-    <div id="exit-modal" class="modal">
+    <div id="exit-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <i class="fas fa-exclamation-circle"></i>
             <h2>تأكيد الخروج</h2>
-            <p>هل أنت متأكد من رغبتك في إغلاق التطبيق؟</p>
+            <p>هل أنت متأكد من رغبتك في الخروج؟</p>
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="closeModal()">إلغاء</button>
                 <button class="btn btn-danger" onclick="exitApp()">نعم، خروج</button>
@@ -433,26 +510,33 @@
     </div>
 
     <script>
+        // التأكد من تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded successfully');
+            startSplash();
+        });
+
         // شاشة التحميل
-        window.addEventListener('load', function() {
+        function startSplash() {
             let progress = 0;
             const progressBar = document.getElementById('progress-bar');
             const splashScreen = document.getElementById('splash-screen');
             const loginScreen = document.getElementById('login-screen');
-                        const interval = setInterval(function() {
-                progress += 2;
+            
+            const interval = setInterval(function() {
+                progress += 3;
                 progressBar.style.width = progress + '%';
                 
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(function() {
                         splashScreen.style.display = 'none';
-                        loginScreen.style.display = 'block';
+                        loginScreen.style.display = 'flex';
+                        console.log('Moved to login screen');
                     }, 500);
                 }
-            }, 50);
-        });
-
+            }, 60);
+        }
         // تسجيل الدخول
         function login() {
             const username = document.getElementById('username').value;
@@ -461,6 +545,7 @@
             if (username && password) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard-screen').style.display = 'block';
+                console.log('Logged in successfully');
             } else {
                 alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
             }
@@ -471,6 +556,12 @@
             const passwordInput = document.getElementById('password');
             const checkbox = document.getElementById('show-pass');
             passwordInput.type = checkbox.checked ? 'text' : 'password';
+        }
+
+        // فتح قسم
+        function openSection(section) {
+            alert('سيتم فتح قسم: ' + section);
+            // هنا يمكنك إضافة الكود لفتح الصفحة المطلوبة
         }
 
         // تأكيد الخروج
@@ -485,10 +576,9 @@
 
         // الخروج من التطبيق
         function exitApp() {
-            if (confirm('شكراً لاستخدامك التطبيق!')) {
-                window.close();
-                // إذا لم تنجح الطريقة السابقة
-                document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#667eea;color:white;font-size:2rem;">شكراً لاستخدامك التطبيق<br><small>إعداد: رابحي فتحي</small></div>';            }
+            alert('شكراً لاستخدامك التطبيق!\nإعداد: رابحي فتحي');
+            // يمكنك هنا إعادة تحميل الصفحة أو إغلاقها
+            location.reload();
         }
 
         // إغلاق النافذة عند النقر خارجها
@@ -496,9 +586,8 @@
             const modal = document.getElementById('exit-modal');
             if (event.target === modal) {
                 modal.style.display = 'none';
-            }
-        }
+            }        }
     </script>
 
 </body>
-</html>
+                </html>

@@ -6,6 +6,7 @@
     <title>مصلحة النظافة والوقاية الصحية - بلدية المدية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <style>
         :root {
@@ -52,6 +53,9 @@
         .btn-danger { background: var(--danger); color: white; }
         .btn-info { background: #1e90ff; color: white; }
         .btn-secondary { background: #747d8c; color: white; }
+        .btn-export { background: #27ae60; color: white; }
+        .btn-print { background: #34495e; color: white; }
+        .btn-stats { background: #9b59b6; color: white; }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
         .btn:active { transform: translateY(0); }
         
@@ -126,12 +130,23 @@
         .preview-gallery img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); }
         
         .action-section { background: white; border-radius: 15px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
-        .action-buttons { display: flex; gap: 0.8rem; }
-        .action-buttons .btn { flex: 1; padding: 14px; font-size: 1rem; }
+        .action-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .action-buttons .btn { flex: 1; min-width: 120px; padding: 14px; font-size: 1rem; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 2rem; border-radius: 20px; text-align: center; max-width: 350px; width: 90%; }
+        .modal-content { background: white; padding: 2rem; border-radius: 20px; text-align: center; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
         .modal-buttons { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .stat-card { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1.5rem; border-radius: 10px; text-align: center; }
+        .stat-card .number { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .stat-card .label { font-size: 0.9rem; opacity: 0.9; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            .form-screen, .simple-form { display: block !important; }
+            body { background: white; }
+        }
         
         @media (max-width: 768px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
@@ -244,15 +259,18 @@
         </div>
         <div class="action-section">
             <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ البيانات</button>
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
                 <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
                 <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
                 <button class="btn btn-secondary" onclick="clearForm('employees-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('employees-form', 'بيانات_الموظفين')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('employees-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('employees-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
             </div>
         </div>
     </div>
 
-    <!-- ==================== نموذج الآبار والمنابع ==================== -->
+    <!-- ==================== نموذج الآبار والمنابع (محدث) ==================== -->
     <div id="wells-form" class="form-screen">
         <div class="form-header"><h2><i class="fas fa-tint"></i> الآبار والمنابع</h2><button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button></div>
         <div class="top-section">
@@ -302,6 +320,29 @@
             </div>
         </div>
         <div class="info-section">
+            <div class="section-title"><i class="fas fa-tachometer-alt"></i> الخصائص الفنية</div>
+            <div class="field-row">
+                <div class="field-box"><label>هيئة نقطة الماء</label>
+                    <select>
+                        <option value="">اختر...</option>
+                        <option value="prepared">مهيأ</option>
+                        <option value="not-prepared">غير مهيأ</option>
+                    </select>
+                </div>
+                <div class="field-box"><label>السعة (متر مكعب)</label><input type="number" step="0.01" placeholder="السعة بالمتر المكعب"></div>
+            </div>
+            <div class="field-row">
+                <div class="field-box"><label>نتيجة التحاليل</label>
+                    <select>
+                        <option value="">اختر...</option>
+                        <option value="negative">سلبي</option>
+                        <option value="positive">ايجابي</option>
+                    </select>
+                </div>
+                <div class="field-box"><label>تاريخ التحاليل</label><input type="date"></div>
+            </div>
+        </div>
+        <div class="info-section">
             <div class="section-title"><i class="fas fa-calendar-alt"></i> التواريخ</div>
             <div class="field-row">
                 <div class="field-box"><label>تاريخ الإنشاء</label><input type="date"></div>
@@ -318,24 +359,23 @@
         </div>
         <div class="action-section">
             <div class="action-buttons">
-                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ البيانات</button>
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
                 <button class="btn btn-warning"><i class="fas fa-edit"></i> تعديل</button>
                 <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
                 <button class="btn btn-secondary" onclick="clearForm('wells-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('wells-form', 'الآبار_والمنابع')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('wells-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('wells-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
             </div>
         </div>
     </div>
 
-    <!-- ==================== نموذج المؤسسات المصنفة ==================== -->
+    <!-- باقي النماذج مع أزرار التصدير والطباعة والإحصائيات -->
     <div id="classified-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-industry"></i> المؤسسات المصنفة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
             <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div><div class="field-box"><label>اسم المستغل</label><input type="text"></div></div>
-            <div class="field-row"><div class="field-box"><label>النشاط</label><input type="text"></div>
-                <div class="field-box"><label>التصنيف</label>
-                    <select><option value="">اختر التصنيف...</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
-                </div>
-            </div>
+            <div class="field-row"><div class="field-box"><label>النشاط</label><input type="text"></div><div class="field-box"><label>التصنيف</label><select><option value="">اختر التصنيف...</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div></div>
             <div class="field-row"><div class="field-box"><label>العنوان</label><input type="text"></div><div class="field-box"><label>رقم الهاتف</label><input type="text"></div></div>
             <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
                 <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-classified').click()">
@@ -344,28 +384,21 @@
                 </div>
                 <div id="preview-classified" class="preview-gallery"></div>
             </div>
-            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('classified-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="action-buttons" style="margin-top:1.5rem;">
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
+                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
+                <button class="btn btn-secondary" onclick="clearForm('classified-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('classified-form', 'المؤسسات_المصنفة')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('classified-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('classified-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
+            </div>
         </div>
     </div>
 
-    <!-- ==================== نموذج المراقبة والتفتيش ==================== -->
     <div id="inspection-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-search"></i> المراقبة والتفتيش</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
-            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div>
-                <div class="field-box"><label>تعيين النشاط</label>
-                    <select>
-                        <option value="">اختر النشاط...</option>
-                        <option value="restaurants">قصابات/مطاعم</option>
-                        <option value="catering">تغذية عامة</option>
-                        <option value="bakeries">مخابز</option>
-                        <option value="pastry">صنع وايداع الحلويات</option>
-                        <option value="milk">بيع الحليب ومشتقاته</option>
-                        <option value="slaughter">المذابح والمسالخ</option>
-                        <option value="complaints">الشكاوي</option>
-                    </select>
-                </div>
-            </div>
+            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div><div class="field-box"><label>تعيين النشاط</label><select><option value="">اختر النشاط...</option><option value="restaurants">قصابات/مطاعم</option><option value="catering">تغذية عامة</option><option value="bakeries">مخابز</option><option value="pastry">صنع وايداع الحلويات</option><option value="milk">بيع الحليب ومشتقاته</option><option value="slaughter">المذابح والمسالخ</option><option value="complaints">الشكاوي</option></select></div></div>
             <div class="field-row"><div class="field-box"><label>العنوان</label><input type="text"></div><div class="field-box"><label>رقم السجل</label><input type="text"></div></div>
             <div class="field-box" style="margin-bottom:1rem;"><label>الملاحظات المسجلة</label><textarea rows="3"></textarea></div>
             <div class="field-row"><div class="field-box"><label>الكمية المحجوزة</label><input type="text"></div><div class="field-box"><label>الإجراءات المتخذة</label><input type="text"></div></div>
@@ -376,26 +409,21 @@
                 </div>
                 <div id="preview-inspection" class="preview-gallery"></div>
             </div>
-            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('inspection-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="action-buttons" style="margin-top:1.5rem;">
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
+                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
+                <button class="btn btn-secondary" onclick="clearForm('inspection-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('inspection-form', 'المراقبة_والتفتيش')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('inspection-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('inspection-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
+            </div>
         </div>
     </div>
 
-    <!-- ==================== نموذج المؤسسات التربوية ==================== -->
     <div id="education-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-school"></i> المؤسسات التربوية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
-            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div>
-                <div class="field-box"><label>الصنف</label>
-                    <select>
-                        <option value="">اختر الصنف...</option>
-                        <option value="primary">ابتدائية</option>
-                        <option value="middle">متوسطة</option>
-                        <option value="secondary">ثانوية</option>
-                        <option value="university">جامعية</option>
-                        <option value="residence">اقامة جامعية</option>
-                    </select>
-                </div>
-            </div>
+            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div><div class="field-box"><label>الصنف</label><select><option value="">اختر الصنف...</option><option value="primary">ابتدائية</option><option value="middle">متوسطة</option><option value="secondary">ثانوية</option><option value="university">جامعية</option><option value="residence">اقامة جامعية</option></select></div></div>
             <div class="field-row"><div class="field-box"><label>اسم المؤسسة</label><input type="text"></div><div class="field-box"><label>العنوان</label><input type="text"></div></div>
             <div class="field-row"><div class="field-box"><label>رقم الهاتف</label><input type="text"></div><div class="field-box"><label>الإطعام</label><select><option>نعم</option><option>لا</option></select></div></div>
             <div class="field-box"><label>تحاليل المياه</label><select><option>مطابقة</option><option>غير مطابقة</option></select></div>
@@ -406,23 +434,24 @@
                 </div>
                 <div id="preview-education" class="preview-gallery"></div>
             </div>
-            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('education-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="action-buttons" style="margin-top:1.5rem;">
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
+                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
+                <button class="btn btn-secondary" onclick="clearForm('education-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('education-form', 'المؤسسات_التربوية')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('education-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('education-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
+            </div>
         </div>
     </div>
 
-    <!-- ==================== نموذج محاربة الكلاب الضالة ==================== -->
     <div id="stray-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-dog"></i> محاربة الكلاب الضالة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
             <div class="field-row"><div class="field-box"><label>رقم القرار الولائي</label><input type="text"></div><div class="field-box"><label>تاريخ اصدار القرار</label><input type="date"></div></div>
             <div class="field-row"><div class="field-box"><label>جمعية الصيد</label><input type="text"></div><div class="field-box"><label>مدة صلاحية</label><input type="text"></div></div>
             <div class="field-row"><div class="field-box"><label>تاريخ الحملة</label><input type="date"></div><div class="field-box"><label>عدد الكلاب</label><input type="number"></div></div>
-            <div class="field-row">
-                <div class="field-box"><label>عدد الخراطيش</label><input type="number" placeholder="العدد الكلي"></div>
-                <div class="field-box"><label>نوع الخراطيش</label>
-                    <select><option value="">اختر النوع...</option><option value="12">12</option><option value="16">16</option></select>
-                </div>
-            </div>
+            <div class="field-row"><div class="field-box"><label>عدد الخراطيش</label><input type="number" placeholder="العدد الكلي"></div><div class="field-box"><label>نوع الخراطيش</label><select><option value="">اختر النوع...</option><option value="12">12</option><option value="16">16</option></select></div></div>
             <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
                 <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-stray').click()">
                     <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span>
@@ -430,27 +459,22 @@
                 </div>
                 <div id="preview-stray" class="preview-gallery"></div>
             </div>
-            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('stray-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="action-buttons" style="margin-top:1.5rem;">
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
+                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
+                <button class="btn btn-secondary" onclick="clearForm('stray-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('stray-form', 'محاربة_الكلاب_الضالة')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('stray-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('stray-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
+            </div>
         </div>
     </div>
 
-    <!-- ==================== نموذج محاربة الناموس والجرذان (ديناميكي) ==================== -->
     <div id="mosquito-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-bug"></i> محاربة الناموس والجرذان</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
             <div class="field-row"><div class="field-box"><label>الهيئة المتدخلة</label><input type="text"></div><div class="field-box"><label>تاريخ الحملة</label><input type="date"></div></div>
-            <div class="field-row">
-                <div class="field-box"><label>نوع الحملة</label>
-                    <select id="campaign-type" onchange="updateMethodOptions()">
-                        <option value="">اختر نوع الحملة...</option>
-                        <option value="mosquito">محاربة الناموس</option>
-                        <option value="rodent">محاربة الجرذان</option>
-                    </select>
-                </div>
-                <div class="field-box"><label>الطريقة المستعملة</label>
-                    <select id="method-used"><option value="">اختر نوع الحملة أولاً...</option></select>
-                </div>
-            </div>
+            <div class="field-row"><div class="field-box"><label>نوع الحملة</label><select id="campaign-type" onchange="updateMethodOptions()"><option value="">اختر نوع الحملة...</option><option value="mosquito">محاربة الناموس</option><option value="rodent">محاربة الجرذان</option></select></div><div class="field-box"><label>الطريقة المستعملة</label><select id="method-used"><option value="">اختر نوع الحملة أولاً...</option></select></div></div>
             <div class="field-row"><div class="field-box"><label>تعيين أماكن</label><input type="text"></div><div class="field-box"><label>الكمية</label><input type="number"></div></div>
             <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
                 <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-mosquito').click()">
@@ -459,11 +483,17 @@
                 </div>
                 <div id="preview-mosquito" class="preview-gallery"></div>
             </div>
-            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('mosquito-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="action-buttons" style="margin-top:1.5rem;">
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
+                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
+                <button class="btn btn-secondary" onclick="clearForm('mosquito-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('mosquito-form', 'محاربة_الناموس_والجرذان')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('mosquito-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('mosquito-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
+            </div>
         </div>
     </div>
 
-    <!-- ==================== نموذج النظافة العمومية ==================== -->
     <div id="hygiene-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-broom"></i> النظافة العمومية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
@@ -476,7 +506,14 @@
                 </div>
                 <div id="preview-hygiene" class="preview-gallery"></div>
             </div>
-            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('hygiene-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="action-buttons" style="margin-top:1.5rem;">
+                <button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button>
+                <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
+                <button class="btn btn-secondary" onclick="clearForm('hygiene-form')"><i class="fas fa-eraser"></i> مسح</button>
+                <button class="btn btn-export" onclick="exportToExcel('hygiene-form', 'النظافة_العمومية')"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn btn-print" onclick="printForm('hygiene-form')"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn btn-stats" onclick="showStats('hygiene-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
+            </div>
         </div>
     </div>
 
@@ -489,6 +526,17 @@
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="closeModal()">إلغاء</button>
                 <button class="btn btn-danger" onclick="exitApp()">خروج</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal الإحصائيات -->
+    <div id="stats-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1rem; color: var(--primary-dark);"><i class="fas fa-chart-bar"></i> الإحصائيات</h2>
+            <div id="stats-content" class="stats-grid"></div>
+            <div class="modal-buttons" style="margin-top: 1.5rem;">
+                <button class="btn btn-secondary" onclick="closeStats()">إغلاق</button>
             </div>
         </div>
     </div>
@@ -574,7 +622,7 @@
         function confirmExit() { document.getElementById('exit-modal').style.display = 'flex'; }
         function closeModal() { document.getElementById('exit-modal').style.display = 'none'; }
         function exitApp() { location.reload(); }
-        window.onclick = function(e) { if (e.target === document.getElementById('exit-modal')) closeModal(); };
+        window.onclick = function(e) { if (e.target === document.getElementById('exit-modal')) closeModal(); }
 
         // --- وظائف GPS والعنوان ---
         function getGPSLocation() {
@@ -668,7 +716,6 @@
             }
         }
 
-        // --- دالة ديناميكية لنموذج الناموس والجرذان ---
         function updateMethodOptions() {
             const type = document.getElementById('campaign-type').value;
             const methodSelect = document.getElementById('method-used');
@@ -681,6 +728,64 @@
                 methodSelect.innerHTML += '<option value="spray">الرش بالمبيدات ضد الجرذان</option>';
                 methodSelect.innerHTML += '<option value="paste">عجينة ضد الجرذان</option>';
             }
+        }
+
+        // --- وظائف التصدير والطباعة والإحصائيات ---
+        function exportToExcel(formId, fileName) {
+            const form = document.getElementById(formId);
+            const inputs = form.querySelectorAll('input, select, textarea');
+            const data = [];
+            
+            inputs.forEach(input => {
+                const label = input.closest('.field-box')?.querySelector('label')?.textContent || input.placeholder || input.type;
+                const value = input.value || '-';
+                data.push({ [label]: value });
+            });
+            
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Data");
+            XLSX.writeFile(wb, `${fileName}_${new Date().toISOString().split('T')[0]}.xlsx`);
+        }
+
+        function printForm(formId) {
+            window.print();
+        }
+
+        function showStats(formId) {
+            const modal = document.getElementById('stats-modal');
+            const content = document.getElementById('stats-content');
+            const form = document.getElementById(formId);
+            
+            // إحصائيات بسيطة (يمكن تطويرها لاحقاً)
+            const totalInputs = form.querySelectorAll('input, select, textarea').length;
+            const filledInputs = form.querySelectorAll('input[value!=""], select option:checked, textarea:not(:empty)').length;
+            const photosCount = form.querySelectorAll('.preview-gallery img').length;
+            
+            content.innerHTML = `
+                <div class="stat-card">
+                    <div class="number">${totalInputs}</div>
+                    <div class="label">إجمالي الحقول</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${filledInputs}</div>
+                    <div class="label">الحقول المملوءة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${photosCount}</div>
+                    <div class="label">الصور المرفقة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${Math.round((filledInputs/totalInputs)*100)}%</div>
+                    <div class="label">نسبة الإكمال</div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeStats() {
+            document.getElementById('stats-modal').style.display = 'none';
         }
     </script>
 </body>

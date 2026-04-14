@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصلحة النظافة والوقاية الصحية - بلدية المدية</title>
-    <!-- خط عربي رسمي -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <!-- مكتبة الأيقونات -->
+    <title>مصلحة النظافة والوقاية الصحية - التصميم العصري</title>
+    <!-- خط عربي حديث -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- مكتبة الأيقونات الحديثة -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-overlay: rgba(255, 255, 255, 0.85);
-            --primary-dark: #004d40; /* أخضر غامق للعناوين */
-            --primary-light: #e0f2f1; /* خلفية النماذج */
-            --accent-green: #00695c; /* لون العناوين داخل النموذج */
-            --btn-bg: #d1f2eb;
-            --btn-border: #004d40;
-            --danger: #d32f2f;
+            --primary-gradient: linear-gradient(135deg, #00b09b, #96c93d);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.7);
+            --btn-hover: #009688;
         }
 
         * {
@@ -25,789 +26,537 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            user-select: none;
+            outline: none;
         }
 
         body {
             height: 100vh;
             overflow: hidden;
-            /* صورة الخلفية - يمكنك تغيير الرابط بصورتك المحلية */
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Medea_Algeria.jpg/1200px-Medea_Algeria.jpg') no-repeat center center fixed;
+            /* خلفية عصرية */
+            background: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
             background-size: cover;
         }
 
-        /* --- شاشة التحميل --- */
-        #splash-screen {
+        /* --- تأثير الزجاج العام --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* --- شاشة التحميل --- */        #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
+            background: rgba(0,0,0,0.8);
             z-index: 1000;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-                .splash-card {
-            background: var(--bg-overlay);
-            padding: 50px;
-            border-radius: 15px;
+
+        .splash-card {
+            width: 500px;
+            padding: 40px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 2px solid var(--primary-dark);
-            width: 70%;
+            color: white;
         }
 
-        .splash-title {
-            font-size: 2.2rem;
-            color: var(--primary-dark);
-            font-weight: 900;
+        .splash-card h1 {
+            font-size: 1.8rem;
             margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .progress-track {
-            width: 100%;
-            height: 20px;
-            background: #eee;
+        .progress-container {
+            height: 8px;
+            background: rgba(255,255,255,0.2);
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #ccc;
+            margin-bottom: 15px;
         }
 
-        .progress-fill {
+        .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #4caf50, #009688);
+            background: var(--primary-gradient);
             width: 0%;
-            transition: width 0.2s;
+            transition: width 0.3s;
+            border-radius: 10px;
         }
 
-        /* --- شاشة الدخول --- */
+        /* --- شاشة تسجيل الدخول --- */
         #login-screen {
             display: none;
             height: 100%;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding-top: 5vh;
+            flex-direction: column;
         }
 
-        .login-header {
+        .login-box {
+            width: 450px;            padding: 40px;
             text-align: center;
-            color: #004d40;
-            text-shadow: 0 0 10px white;
+        }
+
+        .login-header h2 {
+            color: #00695c;
+            font-weight: 700;
+        }
+        .login-header h3 {
+            color: #555;
+            font-size: 1.1rem;
             margin-bottom: 30px;
         }
 
-        .login-box {            background: rgba(200, 255, 200, 0.9);
-            padding: 30px;
-            border-radius: 10px;
-            border: 3px solid #fff;
-            width: 450px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: right;
         }
 
-        .input-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            justify-content: flex-end; /* RTL alignment */
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #444;
+            font-weight: 600;
         }
 
-        .input-row label {
-            font-weight: bold;
-            margin-left: 10px;
-            font-size: 1.1rem;
-            color: #004d40;
+        .input-wrapper {
+            position: relative;
         }
 
-        .input-row input {
-            padding: 8px;
-            border: 1px solid #888;
-            width: 220px;
+        .input-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #009688;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: var(--input-bg);
             font-size: 1rem;
+            transition: 0.3s;
         }
 
-        .login-btns {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+        .input-group input:focus {            border-color: #009688;
+            box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.1);
         }
 
-        /* --- الأزرار العامة --- */
         .btn {
-            padding: 8px 20px;
-            border: 2px solid #555;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
             font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
-        .btn-green { background: #d1f2eb; border-color: #004d40; color: #004d40; }
-        .btn-red { background: #ffcccc; border-color: #b71c1c; color: #b71c1c; }
-        .btn-blue { background: #bbdefb; border-color: #0d47a1; color: #0d47a1; }        .btn-grey { background: #e0e0e0; border-color: #666; }
 
-        /* --- لوحة التحكم (Dashboard) --- */
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 176, 155, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+
+        .btn-danger {
+            background: #ff4757;
+            color: white;
+        }
+        .btn-danger:hover { background: #e84118; }
+
+        /* --- القائمة الرئيسية --- */
         #dashboard-screen {
             display: none;
             height: 100%;
-            flex-direction: column;
             padding: 20px;
+            flex-direction: column;
         }
 
-        .dash-top-bar {
-            background: rgba(0, 77, 64, 0.9);
-            color: white;
-            padding: 10px;
+        .dash-header {
             text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
         }
 
         .dash-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            flex: 1;
+            flex: 1;            padding-bottom: 60px;
+            overflow-y: auto;
         }
 
-        .dash-col {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .dash-btn {
+        .dash-card {
             background: rgba(255, 255, 255, 0.9);
             padding: 20px;
+            border-radius: 12px;
             text-align: center;
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #004d40;
-            border: 2px solid #004d40;
-            border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .dash-btn:hover { background: #e0f2f1; transform: scale(1.02); }
-        .dash-center-img {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-        .dash-center-img img {
-            width: 100%;
-            max-height: 350px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* --- شاشات قواعد البيانات (Forms) --- */
+        .dash-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .dash-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dash-card span {
+            font-weight: 700;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        /* --- شاشات النماذج (Forms) --- */
         .db-screen {
             display: none;
             height: 100%;
+            padding: 20px;
             flex-direction: column;
-            padding: 10px;
         }
 
-        .db-header {
-            background: linear-gradient(to left, #004d40, #00695c);
-            color: white;
-            padding: 8px 15px;
+        .db-top-bar {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-
-        .db-body {
-            flex: 1;
-            background: rgba(230, 255, 230, 0.92);
-            border: 2px solid #fff;
-            border-radius: 10px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* تخطيط النموذج الدقيق */
-        .form-grid {
-            display: grid;            /* الصورة (1) + عمودين للحقول (2+2) + عمودين للحقول (2+2) */
-            /* التعديل: الصورة تأخذ حيز، ثم 4 أعمدة للحقول */
-            grid-template-columns: 140px 1fr 1fr 1fr 1fr; 
-            gap: 10px;
-            align-items: center;
+            justify-content: space-between;            align-items: center;
+            padding: 15px 25px;
             margin-bottom: 20px;
-        }
-
-        .field-label {
-            background-color: #00695c;
             color: white;
-            padding: 8px 5px;
-            text-align: center;
+            font-size: 1.2rem;
             font-weight: bold;
-            border-radius: 3px;
-            font-size: 1rem;
         }
 
-        .field-input {
-            padding: 8px;
-            border: 1px solid #999;
-            background: white;
-            font-size: 1rem;
-            width: 100%;
+        .form-container {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
         }
 
-        .image-box {
-            grid-row: span 6; /* الصورة تمتد على عدة صفوف */
-            background: #fff;
-            border: 2px dashed #00695c;
-            display: flex;
+        .form-grid {
+            display: grid;
+            grid-template-columns: 200px repeat(3, 1fr); /* صورة + 3 أعمدة حقول */
+            gap: 20px;
             align-items: center;
-            justify-content: center;
-            color: #aaa;
-            font-weight: bold;
-            border-radius: 5px;
         }
 
-        .bottom-bar {
-            margin-top: auto;
-            border-top: 2px solid #aaa;
-            padding-top: 10px;
+        .field-group {
             display: flex;
-            gap: 10px;
-            align-items: center;
-            background: rgba(255,255,255,0.5);
+            flex-direction: column;
+        }
+
+        .field-group label {
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .field-group input, .field-group select {
             padding: 10px;
-            border-radius: 5px;
-        }
-        .search-btn {
-            background: #e0e0e0;
-            border: 1px solid #999;
-            padding: 5px 12px;
-            cursor: pointer;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
             font-size: 0.95rem;
         }
 
+        .photo-placeholder {
+            grid-row: span 4;
+            background: #f5f6fa;
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #95a5a6;
+            font-size: 3rem;            min-height: 200px;
+        }
+
+        .bottom-actions {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .action-btns {
-            margin-right: auto; /* يدفع الأزرار لليسار */
             display: flex;
             gap: 10px;
         }
 
-        /* --- Modal --- */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-btn {
+            background: #f1f2f6;
+            color: #2f3640;
+            border: 1px solid #dcdde1;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+        .search-btn:hover { background: #dfe4ea; }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.5);
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
-        .modal-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
+        
+        .modal-content {            background: white;
+            padding: 30px;
+            border-radius: 15px;
             text-align: center;
-            width: 350px;
-            border: 2px solid #004d40;
-        }
-        .modal-header {
-            background: #004d40;
-            color: white;
-            padding: 5px;
-            margin: -20px -20px 15px -20px;
-            border-radius: 6px 6px 0 0;
-            text-align: right;
-            padding-right: 15px;
+            width: 400px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            animation: popIn 0.3s ease;
         }
 
-        /* Time Display */
-        .time-display {
-            font-family: monospace;
-            font-size: 1.2rem;            direction: ltr;
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
+
+        .modal-content h3 { color: #333; margin-bottom: 15px; }
+        .modal-content p { color: #666; margin-bottom: 20px; }
 
     </style>
 </head>
 <body>
 
-    <!-- 1. Splash Screen -->
+    <!-- 1. شاشة التحميل -->
     <div id="splash-screen">
-        <div class="splash-card">
-            <h1 class="splash-title">قاعدة البيانات مصلحة النظافة والوقاية الصحية</h1>
-            <div class="progress-track">
-                <div class="progress-fill" id="progress-bar"></div>
+        <div class="glass-panel splash-card">
+            <i class="fas fa-shield-virus" style="font-size: 3rem; margin-bottom: 20px; color: #fff;"></i>
+            <h1>مصلحة النظافة والوقاية الصحية</h1>
+            <h3 style="font-weight: 300; margin-bottom: 30px; color: #eee;">بلدية المدية - مديرية البيئة</h3>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <p style="margin-top: 15px; font-weight: bold;">إعداد وبرمجة : رابحي فتحي</p>
+            <p style="font-size: 0.9rem; color: #eee;">إعداد وبرمجة : رابحي فتحي</p>
         </div>
     </div>
 
-    <!-- 2. Login Screen -->
+    <!-- 2. شاشة تسجيل الدخول -->
     <div id="login-screen">
-        <div class="login-header">
-            <h2>مديرية البيئة وحماية المحيط لبلدية المدية</h2>
-            <h3>مصلحة النظافة والوقاية الصحية</h3>
-            <div class="time-display" id="login-time"></div>
-        </div>
+        <div class="glass-panel login-box">
+            <div class="login-header">
+                <i class="fas fa-building" style="font-size: 3rem; color: #00b09b; margin-bottom: 15px;"></i>
+                <h2>مرحباً بك</h2>
+                <h3>الرجاء تسجيل الدخول للمتابعة</h3>
+            </div>
+            
+            <div class="input-group">
+                <label>اسم المستخدم</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم">
+                </div>            </div>
 
-        <div class="login-box">
-            <div class="input-row">
-                <label>إسم المستخدم</label>
-                <input type="text" id="username" value="bhc">
-                <i class="fas fa-user-tie" style="color:#004d40; font-size: 1.5rem; margin-right: 10px;"></i>
-            </div>
-            <div class="input-row">
-                <label>كلمة السر</label>
-                <input type="password" id="password" value="***">
-                <i class="fas fa-lock" style="color:#004d40; font-size: 1.5rem; margin-right: 10px;"></i>
-            </div>
-            <div style="text-align: center; margin: 10px 0;">
-                <input type="checkbox" id="show-pass"> <label for="show-pass">إظهار كلمة المرور</label>
+            <div class="input-group">
+                <label>كلمة المرور</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="أدخل كلمة المرور">
+                </div>
             </div>
 
-            <div class="login-btns">
-                <button class="btn btn-green" onclick="doLogin()">دخول</button>
-                <button class="btn btn-red" onclick="showExitModal()">الخروج</button>
+            <div style="text-align: right; margin-bottom: 20px;">
+                <label style="font-size: 0.9rem; cursor: pointer;">
+                    <input type="checkbox" id="show-pass"> إظهار كلمة المرور
+                </label>
             </div>
-            <p style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: #004d40; font-weight: bold;">
-                من إعداد الطبيب البيطري الرئيسي للإدارة الإقليمية رابحي فتحي
-            </p>
+
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-primary" onclick="login()">دخول <i class="fas fa-sign-in-alt"></i></button>
+                <button class="btn btn-danger" onclick="confirmExit()">خروج <i class="fas fa-power-off"></i></button>
+            </div>
         </div>
     </div>
-    <!-- 3. Dashboard -->
+
+    <!-- 3. القائمة الرئيسية -->
     <div id="dashboard-screen">
-        <div class="dash-top-bar">المنصة الرئيسية</div>
-        
+        <div class="dash-header">
+            <h1><i class="fas fa-city"></i> المنصة الرئيسية</h1>
+            <p style="opacity: 0.8;">إدارة شاملة لمصلحة النظافة والوقاية الصحية</p>
+        </div>
+
         <div class="dash-grid">
-            <!-- Right Column -->
-            <div class="dash-col">
-                <div class="dash-btn" onclick="openForm('form-employees')">قاعدة بيانات الموظفين</div>
-                <div class="dash-btn" onclick="openForm('form-classified')">المؤسسات المصنفة</div>
-                <div class="dash-btn" onclick="openForm('form-wells')">الأبار والمنابع</div>
-                <div class="dash-btn" onclick="openForm('form-stray')">محاربة الحيوانات الضالة</div>
+            <div class="dash-card" onclick="openForm('form-employees')">
+                <i class="fas fa-users"></i>
+                <span>بيانات الموظفين</span>
             </div>
-
-            <!-- Center Image -->
-            <div class="dash-center-img">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Medea_Algeria.jpg/1200px-Medea_Algeria.jpg" alt="Building">
-                <div style="text-align: center; margin-top: 15px; color: #004d40; font-weight: bold; font-size: 1.2rem; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 5px;">
-                    بلدية المدية<br>
-                    مديرية البيئة وحماية المحيط<br>
-                    مصلحة النظافة والوقاية الصحية<br>
-                    <span class="time-display" id="dash-time"></span>
-                </div>
+            <div class="dash-card" onclick="openForm('form-classified')">
+                <i class="fas fa-industry"></i>
+                <span>المؤسسات المصنفة</span>
             </div>
-
-            <!-- Left Column -->
-            <div class="dash-col">
-                <div class="dash-btn" onclick="openForm('form-edu')">المؤسسات التربوية</div>
-                <div class="dash-btn" onclick="openForm('form-mosquito')">محاربة الناموس والجرذان</div>
-                <div class="dash-btn" onclick="openForm('form-inspection')">المراقبة والتفتيش</div>
-                <div class="dash-btn" onclick="openForm('form-hygiene')">النظافة العمومية</div>
+            <div class="dash-card" onclick="openForm('form-wells')">
+                <i class="fas fa-tint"></i>
+                <span>الآبار والمنابع</span>
+            </div>
+            <div class="dash-card" onclick="openForm('form-stray')">
+                <i class="fas fa-dog"></i>
+                <span>محاربة الكلاب الضالة</span>
+            </div>
+            <div class="dash-card" onclick="openForm('form-edu')">
+                <i class="fas fa-school"></i>
+                <span>المؤسسات التربوية</span>            </div>
+            <div class="dash-card" onclick="openForm('form-mosquito')">
+                <i class="fas fa-bug"></i>
+                <span>محاربة الناموس والجرذان</span>
+            </div>
+            <div class="dash-card" onclick="openForm('form-inspection')">
+                <i class="fas fa-search-location"></i>
+                <span>المراقبة والتفتيش</span>
+            </div>
+            <div class="dash-card" onclick="openForm('form-hygiene')">
+                <i class="fas fa-broom"></i>
+                <span>النظافة العمومية</span>
             </div>
         </div>
 
-        <button class="btn btn-red" style="position: absolute; bottom: 20px; left: 20px; font-size: 1.2rem; padding: 10px 30px;" onclick="showExitModal()">
-            <i class="fas fa-sign-out-alt"></i> الخروج
-        </button>
+        <div style="position: fixed; bottom: 20px; left: 20px;">
+            <button class="btn btn-danger" onclick="confirmExit()" style="box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);">
+                <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+            </button>
+        </div>
     </div>
 
-    <!-- === FORMS === -->
-    <!-- Template for Forms: I will create specific HTML for each based on screenshots -->
+    <!-- === نماذج البيانات (Forms) === -->
 
-    <!-- 1. Employees -->
+    <!-- 1. الموظفين -->
     <div id="form-employees" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات الموظفين</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>
+        <div class="glass-panel db-top-bar">
+            <span><i class="fas fa-users"></i> قاعدة بيانات الموظفين</span>
+            <button class="btn" style="background: rgba(255,255,255,0.2); color: white;" onclick="goHome()">
+                <i class="fas fa-arrow-right"></i> رجوع
+            </button>
         </div>
-        <div class="db-body">            <div class="form-grid">
-                <!-- Image -->
-                <div class="image-box">الصورة</div>
+        <div class="glass-panel form-container">
+            <div class="form-grid">
+                <div class="photo-placeholder"><i class="fas fa-camera"></i></div>
                 
-                <!-- Middle Col -->
-                <div class="field-label">العنوان</div><input class="field-input" type="text">
-                <!-- Right Col -->
-                <div class="field-label">رقم الموظف</div><input class="field-input" type="text">
-
-                <div class="field-label">نوع العطلة</div><select class="field-input"><option></option></select>
-                <div class="field-label">إسم الموظف</div><input class="field-input" type="text">
-
-                <div class="field-label">تاريخ الخروج</div><input class="field-input" type="text">
-                <div class="field-label">الوظيفة</div><input class="field-input" type="text">
-
-                <div class="field-label">مدة العطلة</div><input class="field-input" type="text">
-                <div class="field-label">القسم</div><input class="field-input" type="text">
-
-                <div class="field-label">تاريخ الدخول</div><input class="field-input" type="text">
-                <div class="field-label">رقم الهاتف</div><input class="field-input" type="text">
+                <div class="field-group"><label>رقم الموظف</label><input type="text"></div>
+                <div class="field-group"><label>العنوان</label><input type="text"></div>
+                <div class="field-group"><label>القسم</label><input type="text"></div>
+                
+                <div class="field-group"><label>اسم الموظف</label><input type="text"></div>
+                <div class="field-group"><label>نوع العطلة</label><select><option>سنوية</option><option>مرضية</option></select></div>
+                <div class="field-group"><label>الوظيفة</label><input type="text"></div>
+                
+                <div class="field-group"><label>تاريخ الخروج</label><input type="date"></div>
+                <div class="field-group"><label>مدة العطلة</label><input type="number"></div>
+                <div class="field-group"><label>رقم الهاتف</label><input type="text"></div>
+                
+                <div class="field-group"><label>تاريخ الدخول</label><input type="date"></div>
             </div>
-
-            <div class="bottom-bar">
+            <div class="bottom-actions">
                 <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>
+                    <button class="btn btn-primary"><i class="fas fa-save"></i> حفظ</button>
+                    <button class="btn" style="background: #f1f2f6; color: #333;"><i class="fas fa-edit"></i> تعديل</button>
+                    <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
                 </div>
-                <button class="search-btn"><i class="fas fa-search"></i> رقم الموظف</button>
-                <button class="search-btn"><i class="fas fa-search"></i> اسم الموظف</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الوظيفة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> نوع العطلة</button>
+                <div class="search-bar">
+                    <button class="search-btn"><i class="fas fa-search"></i> رقم الموظف</button>
+                    <button class="search-btn"><i class="fas fa-search"></i> اسم الموظف</button>
+                    <button class="search-btn"><i class="fas fa-search"></i> الوظيفة</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 2. Classified -->
+    <!-- 2. المؤسسات المصنفة -->
     <div id="form-classified" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات مؤسسات المصنفة</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>
+        <div class="glass-panel db-top-bar">
+            <span><i class="fas fa-industry"></i> المؤسسات المصنفة</span>
+            <button class="btn" style="background: rgba(255,255,255,0.2); color: white;" onclick="goHome()">رجوع</button>
         </div>
-        <div class="db-body">
+        <div class="glass-panel form-container">
             <div class="form-grid">
-                <div class="image-box"></div>
-                <div class="field-label">التصنيف</div><input class="field-input" type="text">
-                <div class="field-label">رقم</div><input class="field-input" type="text">
-
-                <div class="field-label">رقم الهاتف</div><input class="field-input" type="text">                <div class="field-label">إسم المستغل</div><input class="field-input" type="text">
-
-                <div class="field-label">تاريخ الإستلام</div><input class="field-input" type="text">
-                <div class="field-label">النشاط</div><input class="field-input" type="text">
-
-                <div class="field-label">رقم المقرر</div><input class="field-input" type="text">
-                <div class="field-label">العنوان</div><input class="field-input" type="text">
+                <div class="photo-placeholder"><i class="fas fa-building"></i></div>
+                
+                <div class="field-group"><label>رقم</label><input type="text"></div>
+                <div class="field-group"><label>التصنيف</label><input type="text"></div>
+                <div class="field-group"><label>اسم المستغل</label><input type="text"></div>
+                
+                <div class="field-group"><label>النشاط</label><input type="text"></div>
+                <div class="field-group"><label>رقم الهاتف</label><input type="text"></div>
+                <div class="field-group"><label>تاريخ الاستلام</label><input type="date"></div>
+                
+                <div class="field-group"><label>العنوان</label><input type="text"></div>
+                <div class="field-group"><label>رقم المقرر</label><input type="text"></div>
             </div>
-            <div class="bottom-bar">
+            <div class="bottom-actions">
                 <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>
+                    <button class="btn btn-primary"><i class="fas fa-save"></i> حفظ</button>
+                    <button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button>
                 </div>
-                <button class="search-btn"><i class="fas fa-search"></i> رقم المقرر</button>
-                <button class="search-btn"><i class="fas fa-search"></i> اسم المستغل</button>
-                <button class="search-btn"><i class="fas fa-search"></i> النشاط</button>
-                <button class="search-btn"><i class="fas fa-search"></i> العنوان</button>
-                <button class="search-btn"><i class="fas fa-search"></i> التصنيف</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. Wells -->
-    <div id="form-wells" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات للآبار والمنابع</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>
-        </div>
-        <div class="db-body">
-            <div class="form-grid">
-                <div class="image-box"></div>
-                <div class="field-label">طبيعة نقطة الماء</div><select class="field-input"><option></option></select>
-                <div class="field-label">الرقم</div><input class="field-input" type="text">
-
-                <div class="field-label">تاريخ الإنشاء</div><input class="field-input" type="text">
-                <div class="field-label">إسم مالك البئر</div><input class="field-input" type="text">
-
-                <div class="field-label">تاريخ المعالجة</div><input class="field-input" type="text">
-                <div class="field-label">العنوان أو الموقع</div><input class="field-input" type="text">
-
-                <div class="field-label">احداثيات نقطة المياه</div><input class="field-input" type="text">
-                <div class="field-label">رقم الهاتف</div><input class="field-input" type="text">
-            </div>
-            <div class="bottom-bar">
-                <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>                </div>
-                <button class="search-btn"><i class="fas fa-search"></i> تاريخ المعالجة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> طبيعة نقطة الماء</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الموقع</button>
-                <button class="search-btn"><i class="fas fa-search"></i> المالك</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الرقم</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. Stray Animals -->
-    <div id="form-stray" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات محاربة الكلاب الضالة</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>
-        </div>
-        <div class="db-body">
-            <div class="form-grid">
-                <div class="image-box"></div>
-                <div class="field-label">جمعية الصيد</div><input class="field-input" type="text">
-                <div class="field-label">رقم القرار الولائي</div><input class="field-input" type="text">
-
-                <div class="field-label">عدد الخراديش 12</div><input class="field-input" type="text" value="12">
-                <div class="field-label">تاريخ اصدار القرار</div><input class="field-input" type="text">
-
-                <div class="field-label">عدد الخراديش 16</div><input class="field-input" type="text" value="16">
-                <div class="field-label">مدة صلاحية</div><input class="field-input" type="text">
-
-                <div class="field-label">عدد الكلاب</div><input class="field-input" type="text">
-                <div class="field-label">تاريخ الحملة</div><input class="field-input" type="text">
-            </div>
-            <div class="bottom-bar">
-                <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>
+                <div class="search-bar">
+                    <button class="search-btn"><i class="fas fa-search"></i> بحث...</button>
                 </div>
-                <button class="search-btn"><i class="fas fa-search"></i> تاريخ الحملة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> رقم القرار</button>
             </div>
         </div>
     </div>
 
-    <!-- 5. Edu Inst -->
-    <div id="form-edu" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات المؤسسات التربوية</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>        </div>
-        <div class="db-body">
+    <!-- 3. الآبار -->    <div id="form-wells" class="db-screen">
+        <div class="glass-panel db-top-bar">
+            <span><i class="fas fa-tint"></i> الآبار والمنابع</span>
+            <button class="btn" style="background: rgba(255,255,255,0.2); color: white;" onclick="goHome()">رجوع</button>
+        </div>
+        <div class="glass-panel form-container">
             <div class="form-grid">
-                <div class="image-box"></div>
-                <div class="field-label">الإطعام</div><input class="field-input" type="text">
-                <div class="field-label">الرقم</div><input class="field-input" type="text">
-
-                <div class="field-label">تحاليل المياه</div><select class="field-input"><option></option></select>
-                <div class="field-label">إسم المؤسسة</div><input class="field-input" type="text">
-
-                <div class="field-label">رقم الهاتف</div><input class="field-input" type="text">
-                <div class="field-label">الصنف</div><select class="field-input"><option></option></select>
-
-                <div class="field-label">ت.آخر خرحة ميدانية</div><input class="field-input" type="text">
-                <div class="field-label">العنوان</div><input class="field-input" type="text">
+                <div class="photo-placeholder"><i class="fas fa-water"></i></div>
+                
+                <div class="field-group"><label>الرقم</label><input type="text"></div>
+                <div class="field-group"><label>طبيعة نقطة الماء</label><select><option>بئر</option><option>عين</option></select></div>
+                <div class="field-group"><label>اسم مالك البئر</label><input type="text"></div>
+                
+                <div class="field-group"><label>العنوان أو الموقع</label><input type="text"></div>
+                <div class="field-group"><label>تاريخ الإنشاء</label><input type="date"></div>
+                <div class="field-group"><label>تاريخ المعالجة</label><input type="date"></div>
+                
+                <div class="field-group"><label>رقم الهاتف</label><input type="text"></div>
+                <div class="field-group"><label>احداثيات نقطة المياه</label><input type="text"></div>
             </div>
-            <div class="bottom-bar">
+            <div class="bottom-actions">
                 <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>
-                </div>
-                <button class="search-btn"><i class="fas fa-search"></i> الإطعام</button>
-                <button class="search-btn"><i class="fas fa-search"></i> العنوان</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الصنف</button>
-                <button class="search-btn"><i class="fas fa-search"></i> اسم المؤسسة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الرقم</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. Mosquito -->
-    <div id="form-mosquito" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات محاربة الناموس والجرذان</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>
-        </div>
-        <div class="db-body">
-            <div class="form-grid">
-                <div class="image-box"></div>
-                <div class="field-label">الهيأة المتدخلة</div><select class="field-input"><option></option></select>
-                <div class="field-label">الرقم</div><input class="field-input" type="text">
-
-                <div class="field-label">تعيين أماكن</div><input class="field-input" type="text">
-                <div class="field-label">تاريخ الحملة</div><input class="field-input" type="text">
-
-                <div class="field-label">رقم الهاتف</div><input class="field-input" type="text">
-                <div class="field-label">نوع الحملة</div><select class="field-input"><option></option></select>
-                <div class="field-label">الكمية</div><input class="field-input" type="text">
-                <div class="field-label">الطريقة المستعملة</div><select class="field-input"><option></option></select>
-            </div>
-            <div class="bottom-bar">
-                <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>
-                </div>
-                <button class="search-btn"><i class="fas fa-search"></i> الكمية</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الهيأة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الطريقة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> نوع الحملة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الرقم</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 7. Inspection -->
-    <div id="form-inspection" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات المراقبة والتفتيش</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>
-        </div>
-        <div class="db-body">
-            <div class="form-grid">
-                <div class="image-box"></div>
-                <div class="field-label">الملاحظات المسجلة</div><input class="field-input" type="text">
-                <div class="field-label">الرقم</div><input class="field-input" type="text">
-
-                <div class="field-label">الكمية المحجوزة</div><select class="field-input"><option></option></select>
-                <div class="field-label">تعيين النشاط</div><select class="field-input"><option></option></select>
-
-                <div class="field-label">الإجراءات المتخذة</div><input class="field-input" type="text">
-                <div class="field-label">العنوان</div><input class="field-input" type="text">
-
-                <div class="field-label">مدة العقوبة</div><input class="field-input" type="text">
-                <div class="field-label">رقم السجل</div><input class="field-input" type="text">
-            </div>
-            <div class="bottom-bar">
-                <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>
-                </div>
-                <button class="search-btn"><i class="fas fa-search"></i> الاجراءات المتخذة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> العنوان</button>
-                <button class="search-btn"><i class="fas fa-search"></i> تعيين النشاط</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الرقم</button>            </div>
-        </div>
-    </div>
-
-    <!-- 8. Hygiene -->
-    <div id="form-hygiene" class="db-screen">
-        <div class="db-header">
-            <span>قاعدة بيانات النظافة العمومية</span>
-            <span class="time-display header-time"></span>
-            <button class="btn btn-green" onclick="goHome()">الرجوع</button>
-        </div>
-        <div class="db-body">
-            <div class="form-grid">
-                <div class="image-box"></div>
-                <div class="field-label">الهيأة المستخدمة</div><select class="field-input"><option></option></select>
-                <div class="field-label">الرقم</div><input class="field-input" type="text">
-
-                <div class="field-label">الكمية</div><input class="field-input" type="text">
-                <div class="field-label">تعيين</div><select class="field-input"><option></option></select>
-
-                <!-- Spanning inputs for Date -->
-                <div class="field-input" style="grid-column: span 2; margin-right: 10px;"></div>
-                <div class="field-label">الشهر/السنة</div>
-            </div>
-            <div class="bottom-bar">
-                <div class="action-btns">
-                    <button class="btn btn-green"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-blue"><i class="fas fa-pencil-alt"></i> تعديل</button>
-                    <button class="btn btn-red"><i class="fas fa-trash"></i> حذف</button>
-                </div>
-                <button class="search-btn"><i class="fas fa-search"></i> الهيأة المستخدمة</button>
-                <button class="search-btn"><i class="fas fa-search"></i> تعيين</button>
-                <button class="search-btn"><i class="fas fa-search"></i> الرقم</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modals -->
-    <div id="exit-modal" class="modal">
-        <div class="modal-box">
-            <div class="modal-header">تنبيه</div>
-            <p style="font-size: 1.1rem; margin: 20px 0;">هل تريد إغلاق البرنامج؟</p>
-            <div style="display: flex; justify-content: center; gap: 20px;">
-                <button class="btn btn-grey" onclick="closeModal('exit-modal')">Non</button>
-                <button class="btn btn-green" onclick="window.close()">Oui</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="thanks-modal" class="modal">        <div class="modal-box">
-            <div class="modal-header" style="background: #2196F3;">شكرا</div>
-            <p style="font-size: 1.1rem; margin: 20px 0;">شكرا لاستخدامك البرنامج<br>تقبلوا تحيات رابحي فتحي</p>
-            <button class="btn btn-green" onclick="closeModal('thanks-modal')">OK</button>
-        </div>
-    </div>
-
-    <script>
-        // --- Time Logic ---
-        function updateTime() {
-            const now = new Date();
-            // Format: DD-MM-YYYY HH:MM:SS
-            const d = String(now.getDate()).padStart(2, '0');
-            const m = String(now.getMonth() + 1).padStart(2, '0');
-            const y = now.getFullYear();
-            const h = String(now.getHours()).padStart(2, '0');
-            const min = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            
-            const timeStr = `${d}-${m}-${y} ${h}:${min}:${s}`;
-            
-            document.querySelectorAll('.time-display').forEach(el => {
-                el.innerText = timeStr;
-            });
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        // --- Splash Logic ---
-        let progress = 0;
-        const bar = document.getElementById('progress-bar');
-        const splashInterval = setInterval(() => {
-            progress += 2;
-            bar.style.width = progress + '%';
-            if (progress >= 100) {
-                clearInterval(splashInterval);
-                setTimeout(() => {
-                    document.getElementById('splash-screen').style.display = 'none';
-                    document.getElementById('login-screen').style.display = 'flex';
-                }, 500);
-            }
-        }, 50);
-
-        // --- Navigation ---
-        function doLogin() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('dashboard-screen').style.display = 'flex';
-        }
-
-        function openForm(id) {            document.getElementById('dashboard-screen').style.display = 'none';
-            document.getElementById(id).style.display = 'flex';
-        }
-
-        function goHome() {
-            document.querySelectorAll('.db-screen').forEach(el => el.style.display = 'none');
-            document.getElementById('dashboard-screen').style.display = 'flex';
-        }
-
-        function showExitModal() {
-            document.getElementById('exit-modal').style.display = 'flex';
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-            if(id === 'thanks-modal') {
-                 // Optional: close window or go to login
-            }
-        }
-
-        // --- Checkbox ---
-        document.getElementById('show-pass').addEventListener('change', function() {
-            const p = document.getElementById('password');
-            p.type = this.checked ? 'text' : 'password';
-        });
-
-    </script>
-</body>
-</html>
+                    <b

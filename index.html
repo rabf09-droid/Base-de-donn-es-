@@ -23,7 +23,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; overflow-x: hidden; color: var(--text-dark); }
         
-        /* --- شاشة التحميل --- */
         #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; }
         .splash-icon { font-size: 4rem; margin-bottom: 1.5rem; animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
@@ -33,7 +32,6 @@
         .progress-bar { height: 100%; background: #fff; width: 0%; transition: width 0.1s linear; }
         .splash-footer { font-size: 0.9rem; opacity: 0.8; }
         
-        /* --- تسجيل الدخول --- */
         #login-screen { display: none; min-height: 100vh; padding: 2rem 1rem; justify-content: center; align-items: center; }
         .login-container { background: rgba(255,255,255,0.95); padding: 2.5rem 2rem; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 100%; max-width: 400px; }
         .login-header { text-align: center; margin-bottom: 2rem; }
@@ -47,7 +45,7 @@
         .checkbox-group { display: flex; align-items: center; margin-bottom: 1.5rem; }
         .btn-group { display: flex; gap: 1rem; }
         
-        /* --- الأزرار العامة --- */        .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; }
         .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-warning { background: var(--warning); color: white; }
@@ -57,7 +55,6 @@
         .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
         .btn:active { transform: translateY(0); }
         
-        /* --- القائمة الرئيسية --- */
         #dashboard-screen { display: none; padding: 1.5rem 1rem; max-width: 1200px; margin: 0 auto; }
         .dashboard-header { text-align: center; color: white; margin-bottom: 2rem; }
         .dashboard-header i { font-size: 2.5rem; margin-bottom: 0.5rem; }
@@ -68,7 +65,6 @@
         .card h3 { color: var(--text-dark); font-size: 1rem; }
         .logout-btn { display: block; width: 100%; max-width: 300px; margin: 0 auto; padding: 12px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 1rem; cursor: pointer; }
         
-        /* --- تصميم النماذج الجميل --- */
         .form-screen, .simple-form { display: none; padding: 0.5rem; max-width: 800px; margin: 0 auto; }
         .form-header { background: white; padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); }
         .form-header h2 { color: var(--text-dark); font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
@@ -96,14 +92,14 @@
         .field-box { position: relative; }
         .field-box label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
         .field-box input, .field-box select, .field-box textarea { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.95rem; color: var(--text-dark); background: var(--bg-light); transition: 0.3s; font-family: 'Cairo'; }
-        .field-box input:focus, .field-box select:focus, .field-box textarea:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); outline: none; }        .field-box input[readonly] { background: #f0f2f5; cursor: default; }
+        .field-box input:focus, .field-box select:focus, .field-box textarea:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); outline: none; }
+        .field-box input[readonly] { background: #f0f2f5; cursor: default; }
         .field-box textarea { resize: vertical; min-height: 80px; }
         
         .address-field { margin-bottom: 1rem; }
         .address-field label { display: flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
         .address-field .auto-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
         
-        /* --- بطاقة GPS --- */
         .gps-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; color: white; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
         .gps-card .section-title { color: white; border-bottom-color: rgba(255,255,255,0.2); }
         .gps-card .section-title i { background: rgba(255,255,255,0.2); }
@@ -126,11 +122,13 @@
         .manual-input-area input:focus { border-color: white; background: rgba(255,255,255,0.25); outline: none; }
         .btn-get-address { width: 100%; padding: 10px; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Cairo'; }
         
+        .preview-gallery { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .preview-gallery img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); }
+        
         .action-section { background: white; border-radius: 15px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
         .action-buttons { display: flex; gap: 0.8rem; }
         .action-buttons .btn { flex: 1; padding: 14px; font-size: 1rem; }
         
-        /* --- Modal --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 2rem; border-radius: 20px; text-align: center; max-width: 350px; width: 90%; }
         .modal-buttons { display: flex; gap: 1rem; margin-top: 1.5rem; }
@@ -146,6 +144,7 @@
     </style>
 </head>
 <body>
+
     <!-- شاشة التحميل -->
     <div id="splash-screen">
         <div class="splash-icon"><i class="fas fa-shield-alt"></i></div>
@@ -158,10 +157,7 @@
     <!-- شاشة تسجيل الدخول -->
     <div id="login-screen">
         <div class="login-container">
-            <div class="login-header">
-                <i class="fas fa-building"></i>
-                <h2>تسجيل الدخول</h2>
-            </div>
+            <div class="login-header"><i class="fas fa-building"></i><h2>تسجيل الدخول</h2></div>
             <form onsubmit="event.preventDefault(); login();">
                 <div class="input-group">
                     <label>اسم المستخدم</label>
@@ -194,7 +190,8 @@
             <div class="card" onclick="openForm('employees-form')"><i class="fas fa-users"></i><h3>بيانات الموظفين</h3></div>
             <div class="card" onclick="openForm('wells-form')"><i class="fas fa-tint"></i><h3>الآبار والمنابع</h3></div>
             <div class="card" onclick="openForm('classified-form')"><i class="fas fa-industry"></i><h3>المؤسسات المصنفة</h3></div>
-            <div class="card" onclick="openForm('stray-form')"><i class="fas fa-dog"></i><h3>محاربة الكلاب الضالة</h3></div>            <div class="card" onclick="openForm('education-form')"><i class="fas fa-school"></i><h3>المؤسسات التربوية</h3></div>
+            <div class="card" onclick="openForm('stray-form')"><i class="fas fa-dog"></i><h3>محاربة الكلاب الضالة</h3></div>
+            <div class="card" onclick="openForm('education-form')"><i class="fas fa-school"></i><h3>المؤسسات التربوية</h3></div>
             <div class="card" onclick="openForm('mosquito-form')"><i class="fas fa-bug"></i><h3>محاربة الناموس والجرذان</h3></div>
             <div class="card" onclick="openForm('inspection-form')"><i class="fas fa-search"></i><h3>المراقبة والتفتيش</h3></div>
             <div class="card" onclick="openForm('hygiene-form')"><i class="fas fa-broom"></i><h3>النظافة العمومية</h3></div>
@@ -202,22 +199,16 @@
         <button class="logout-btn" onclick="confirmExit()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
     </div>
 
-    <!-- ==================== نموذج الموظفين (تصميم جميل) ==================== -->
+    <!-- ==================== نموذج الموظفين ==================== -->
     <div id="employees-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-users"></i> بيانات الموظفين</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
+        <div class="form-header"><h2><i class="fas fa-users"></i> بيانات الموظفين</h2><button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button></div>
         <div class="top-section">
             <div class="photo-upload-box" onclick="document.getElementById('photo-emp').click()">
-                <i class="fas fa-camera"></i><span>اضغط لإضافة<br>صورة</span>
+                <i class="fas fa-camera"></i><span>اضغط لإضافة صورة</span>
                 <input type="file" id="photo-emp" accept="image/*" style="display:none" onchange="previewPhoto(this)">
             </div>
             <div class="top-fields">
-                <div class="number-field">
-                    <label>رقم الموظف</label><i class="fas fa-id-card"></i>
-                    <input type="text" id="emp-number" placeholder="الرقم التسلسلي">
-                </div>
+                <div class="number-field"><label>رقم الموظف</label><i class="fas fa-id-card"></i><input type="text" placeholder="الرقم التسلسلي"></div>
             </div>
         </div>
         <div class="info-section">
@@ -235,15 +226,22 @@
         <div class="info-section">
             <div class="section-title"><i class="fas fa-calendar-alt"></i> معلومات العطلة</div>
             <div class="field-row">
-                <div class="field-box"><label>نوع العطلة</label>
-                    <select><option value="">اختر نوع العطلة...</option><option value="annual">عطلة سنوية</option><option value="sick">عطلة مرضية</option><option value="exceptional">عطلة استثنائية</option><option value="maternity">عطلة أمومة</option></select>
-                </div>
+                <div class="field-box"><label>نوع العطلة</label><select><option value="">اختر نوع العطلة...</option><option value="annual">عطلة سنوية</option><option value="sick">عطلة مرضية</option><option value="exceptional">عطلة استثنائية</option><option value="maternity">عطلة أمومة</option></select></div>
                 <div class="field-box"><label>مدة العطلة</label><input type="number" placeholder="عدد الأيام"></div>
             </div>
             <div class="field-row">
                 <div class="field-box"><label>تاريخ الخروج</label><input type="date"></div>
                 <div class="field-box"><label>تاريخ الدخول</label><input type="date"></div>
-            </div>        </div>
+            </div>
+        </div>
+        <div class="info-section">
+            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
+            <div class="photo-upload-box" style="width:100%; height:auto; padding:20px;" onclick="document.getElementById('photos-emp').click()">
+                <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور (صورة أو أكثر)</span>
+                <input type="file" id="photos-emp" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-emp')">
+            </div>
+            <div id="preview-emp" class="preview-gallery"></div>
+        </div>
         <div class="action-section">
             <div class="action-buttons">
                 <button class="btn btn-success"><i class="fas fa-save"></i> حفظ البيانات</button>
@@ -254,22 +252,16 @@
         </div>
     </div>
 
-    <!-- ==================== نموذج الآبار والمنابع (تصميم جميل + GPS) ==================== -->
+    <!-- ==================== نموذج الآبار والمنابع ==================== -->
     <div id="wells-form" class="form-screen">
-        <div class="form-header">
-            <h2><i class="fas fa-tint"></i> الآبار والمنابع</h2>
-            <button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button>
-        </div>
+        <div class="form-header"><h2><i class="fas fa-tint"></i> الآبار والمنابع</h2><button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button></div>
         <div class="top-section">
             <div class="photo-upload-box" onclick="document.getElementById('photo-well').click()">
-                <i class="fas fa-camera"></i><span>اضغط لإضافة<br>صورة</span>
+                <i class="fas fa-camera"></i><span>اضغط لإضافة صورة</span>
                 <input type="file" id="photo-well" accept="image/*" style="display:none" onchange="previewPhoto(this)">
             </div>
             <div class="top-fields">
-                <div class="number-field">
-                    <label>رقم البئر/المنبع</label><i class="fas fa-hashtag"></i>
-                    <input type="text" id="well-number" placeholder="الرقم التسلسلي">
-                </div>
+                <div class="number-field"><label>رقم البئر/المنبع</label><i class="fas fa-hashtag"></i><input type="text" placeholder="الرقم التسلسلي"></div>
             </div>
         </div>
         <div class="gps-card">
@@ -292,7 +284,8 @@
             </div>
         </div>
         <div class="info-section">
-            <div class="section-title"><i class="fas fa-user"></i> معلومات المالك</div>            <div class="field-row">
+            <div class="section-title"><i class="fas fa-user"></i> معلومات المالك</div>
+            <div class="field-row">
                 <div class="field-box"><label>اسم مالك البئر</label><input type="text" placeholder="الاسم الكامل"></div>
                 <div class="field-box"><label>رقم الهاتف</label><input type="tel" placeholder="05XX XXX XXX"></div>
             </div>
@@ -315,6 +308,14 @@
                 <div class="field-box"><label>تاريخ المعالجة</label><input type="date"></div>
             </div>
         </div>
+        <div class="info-section">
+            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
+            <div class="photo-upload-box" style="width:100%; height:auto; padding:20px;" onclick="document.getElementById('photos-well').click()">
+                <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور (صورة أو أكثر)</span>
+                <input type="file" id="photos-well" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-well')">
+            </div>
+            <div id="preview-well" class="preview-gallery"></div>
+        </div>
         <div class="action-section">
             <div class="action-buttons">
                 <button class="btn btn-success"><i class="fas fa-save"></i> حفظ البيانات</button>
@@ -325,64 +326,157 @@
         </div>
     </div>
 
-    <!-- باقي النماذج (منسقة بنفس النسق الجمالي) -->
+    <!-- ==================== نموذج المؤسسات المصنفة ==================== -->
     <div id="classified-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-industry"></i> المؤسسات المصنفة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
             <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div><div class="field-box"><label>اسم المستغل</label><input type="text"></div></div>
-            <div class="field-row"><div class="field-box"><label>النشاط</label><input type="text"></div><div class="field-box"><label>التصنيف</label><select><option>أ</option><option>ب</option><option>ج</option></select></div></div>
+            <div class="field-row"><div class="field-box"><label>النشاط</label><input type="text"></div>
+                <div class="field-box"><label>التصنيف</label>
+                    <select><option value="">اختر التصنيف...</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+                </div>
+            </div>
             <div class="field-row"><div class="field-box"><label>العنوان</label><input type="text"></div><div class="field-box"><label>رقم الهاتف</label><input type="text"></div></div>
-            <div class="action-buttons" style="margin-top:1rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('classified-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
+                <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-classified').click()">
+                    <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span>
+                    <input type="file" id="photos-classified" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-classified')">
+                </div>
+                <div id="preview-classified" class="preview-gallery"></div>
+            </div>
+            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('classified-form')"><i class="fas fa-eraser"></i> مسح</button></div>
         </div>
     </div>
 
+    <!-- ==================== نموذج المراقبة والتفتيش ==================== -->
     <div id="inspection-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-search"></i> المراقبة والتفتيش</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
-            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div><div class="field-box"><label>تعيين النشاط</label><input type="text"></div></div>
+            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div>
+                <div class="field-box"><label>تعيين النشاط</label>
+                    <select>
+                        <option value="">اختر النشاط...</option>
+                        <option value="restaurants">قصابات/مطاعم</option>
+                        <option value="catering">تغذية عامة</option>
+                        <option value="bakeries">مخابز</option>
+                        <option value="pastry">صنع وايداع الحلويات</option>
+                        <option value="milk">بيع الحليب ومشتقاته</option>
+                        <option value="slaughter">المذابح والمسالخ</option>
+                        <option value="complaints">الشكاوي</option>
+                    </select>
+                </div>
+            </div>
             <div class="field-row"><div class="field-box"><label>العنوان</label><input type="text"></div><div class="field-box"><label>رقم السجل</label><input type="text"></div></div>
-            <div class="field-box" style="margin-bottom:1rem;"><label>الملاحظات المسجلة</label><textarea rows="3"></textarea></div>            <div class="field-row"><div class="field-box"><label>الكمية المحجوزة</label><input type="text"></div><div class="field-box"><label>الإجراءات المتخذة</label><input type="text"></div></div>
-            <div class="action-buttons" style="margin-top:1rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('inspection-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="field-box" style="margin-bottom:1rem;"><label>الملاحظات المسجلة</label><textarea rows="3"></textarea></div>
+            <div class="field-row"><div class="field-box"><label>الكمية المحجوزة</label><input type="text"></div><div class="field-box"><label>الإجراءات المتخذة</label><input type="text"></div></div>
+            <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
+                <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-inspection').click()">
+                    <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span>
+                    <input type="file" id="photos-inspection" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-inspection')">
+                </div>
+                <div id="preview-inspection" class="preview-gallery"></div>
+            </div>
+            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('inspection-form')"><i class="fas fa-eraser"></i> مسح</button></div>
         </div>
     </div>
 
+    <!-- ==================== نموذج المؤسسات التربوية ==================== -->
     <div id="education-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-school"></i> المؤسسات التربوية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
-            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div><div class="field-box"><label>اسم المؤسسة</label><input type="text"></div></div>
-            <div class="field-row"><div class="field-box"><label>الصنف</label><select><option>ابتدائية</option><option>متوسطة</option><option>ثانوية</option></select></div><div class="field-box"><label>الإطعام</label><select><option>نعم</option><option>لا</option></select></div></div>
-            <div class="field-row"><div class="field-box"><label>العنوان</label><input type="text"></div><div class="field-box"><label>رقم الهاتف</label><input type="text"></div></div>
+            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text"></div>
+                <div class="field-box"><label>الصنف</label>
+                    <select>
+                        <option value="">اختر الصنف...</option>
+                        <option value="primary">ابتدائية</option>
+                        <option value="middle">متوسطة</option>
+                        <option value="secondary">ثانوية</option>
+                        <option value="university">جامعية</option>
+                        <option value="residence">اقامة جامعية</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row"><div class="field-box"><label>اسم المؤسسة</label><input type="text"></div><div class="field-box"><label>العنوان</label><input type="text"></div></div>
+            <div class="field-row"><div class="field-box"><label>رقم الهاتف</label><input type="text"></div><div class="field-box"><label>الإطعام</label><select><option>نعم</option><option>لا</option></select></div></div>
             <div class="field-box"><label>تحاليل المياه</label><select><option>مطابقة</option><option>غير مطابقة</option></select></div>
-            <div class="action-buttons" style="margin-top:1rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('education-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
+                <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-education').click()">
+                    <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span>
+                    <input type="file" id="photos-education" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-education')">
+                </div>
+                <div id="preview-education" class="preview-gallery"></div>
+            </div>
+            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('education-form')"><i class="fas fa-eraser"></i> مسح</button></div>
         </div>
     </div>
 
+    <!-- ==================== نموذج محاربة الكلاب الضالة ==================== -->
     <div id="stray-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-dog"></i> محاربة الكلاب الضالة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
             <div class="field-row"><div class="field-box"><label>رقم القرار الولائي</label><input type="text"></div><div class="field-box"><label>تاريخ اصدار القرار</label><input type="date"></div></div>
             <div class="field-row"><div class="field-box"><label>جمعية الصيد</label><input type="text"></div><div class="field-box"><label>مدة صلاحية</label><input type="text"></div></div>
             <div class="field-row"><div class="field-box"><label>تاريخ الحملة</label><input type="date"></div><div class="field-box"><label>عدد الكلاب</label><input type="number"></div></div>
-            <div class="action-buttons" style="margin-top:1rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('stray-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="field-row">
+                <div class="field-box"><label>عدد الخراطيش</label><input type="number" placeholder="العدد الكلي"></div>
+                <div class="field-box"><label>نوع الخراطيش</label>
+                    <select><option value="">اختر النوع...</option><option value="12">12</option><option value="16">16</option></select>
+                </div>
+            </div>
+            <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
+                <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-stray').click()">
+                    <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span>
+                    <input type="file" id="photos-stray" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-stray')">
+                </div>
+                <div id="preview-stray" class="preview-gallery"></div>
+            </div>
+            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('stray-form')"><i class="fas fa-eraser"></i> مسح</button></div>
         </div>
     </div>
 
+    <!-- ==================== نموذج محاربة الناموس والجرذان (ديناميكي) ==================== -->
     <div id="mosquito-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-bug"></i> محاربة الناموس والجرذان</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
             <div class="field-row"><div class="field-box"><label>الهيئة المتدخلة</label><input type="text"></div><div class="field-box"><label>تاريخ الحملة</label><input type="date"></div></div>
-            <div class="field-row"><div class="field-box"><label>نوع الحملة</label><select><option>رذاذ</option><option>ضباب حراري</option><option>مبيدات</option></select></div><div class="field-box"><label>تعيين أماكن</label><input type="text"></div></div>
-            <div class="field-row"><div class="field-box"><label>الطريقة المستعملة</label><input type="text"></div><div class="field-box"><label>الكمية</label><input type="number"></div></div>
-            <div class="action-buttons" style="margin-top:1rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('mosquito-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="field-row">
+                <div class="field-box"><label>نوع الحملة</label>
+                    <select id="campaign-type" onchange="updateMethodOptions()">
+                        <option value="">اختر نوع الحملة...</option>
+                        <option value="mosquito">محاربة الناموس</option>
+                        <option value="rodent">محاربة الجرذان</option>
+                    </select>
+                </div>
+                <div class="field-box"><label>الطريقة المستعملة</label>
+                    <select id="method-used"><option value="">اختر نوع الحملة أولاً...</option></select>
+                </div>
+            </div>
+            <div class="field-row"><div class="field-box"><label>تعيين أماكن</label><input type="text"></div><div class="field-box"><label>الكمية</label><input type="number"></div></div>
+            <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
+                <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-mosquito').click()">
+                    <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span>
+                    <input type="file" id="photos-mosquito" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-mosquito')">
+                </div>
+                <div id="preview-mosquito" class="preview-gallery"></div>
+            </div>
+            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('mosquito-form')"><i class="fas fa-eraser"></i> مسح</button></div>
         </div>
     </div>
 
+    <!-- ==================== نموذج النظافة العمومية ==================== -->
     <div id="hygiene-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-broom"></i> النظافة العمومية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="form-container" style="background:white;border-radius:15px;padding:1.5rem;box-shadow:var(--shadow);">
             <div class="field-row"><div class="field-box"><label>الهيئة المستخدمة</label><input type="text"></div><div class="field-box"><label>تعيين</label><input type="text"></div></div>
             <div class="field-row"><div class="field-box"><label>الكمية</label><input type="number"></div><div class="field-box"><label>الشهر/السنة</label><input type="month"></div></div>
-            <div class="action-buttons" style="margin-top:1rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('hygiene-form')"><i class="fas fa-eraser"></i> مسح</button></div>
+            <div class="info-section" style="box-shadow:none; padding:0; margin-bottom:0; background:transparent;">
+                <div class="photo-upload-box" style="width:100%; height:auto; padding:15px; margin-top:10px;" onclick="document.getElementById('photos-hygiene').click()">
+                    <i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span>
+                    <input type="file" id="photos-hygiene" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-hygiene')">
+                </div>
+                <div id="preview-hygiene" class="preview-gallery"></div>
+            </div>
+            <div class="action-buttons" style="margin-top:1.5rem;"><button class="btn btn-success"><i class="fas fa-save"></i> حفظ</button><button class="btn btn-danger"><i class="fas fa-trash"></i> حذف</button><button class="btn btn-secondary" onclick="clearForm('hygiene-form')"><i class="fas fa-eraser"></i> مسح</button></div>
         </div>
     </div>
 
@@ -390,7 +484,8 @@
     <div id="exit-modal" class="modal">
         <div class="modal-content">
             <i class="fas fa-exclamation-circle fa-3x" style="color: var(--danger); margin-bottom: 1rem;"></i>
-            <h2>تأكيد الخروج</h2>            <p>هل أنت متأكد من رغبتك في الخروج؟</p>
+            <h2>تأكيد الخروج</h2>
+            <p>هل أنت متأكد من رغبتك في الخروج؟</p>
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="closeModal()">إلغاء</button>
                 <button class="btn btn-danger" onclick="exitApp()">خروج</button>
@@ -422,27 +517,25 @@
                 document.getElementById('dashboard-screen').style.display = 'block';
             }
         }
-
         function togglePassword() {
             const p = document.getElementById('password');
             p.type = p.type === 'password' ? 'text' : 'password';
         }
-
         function openForm(formId) {
             document.getElementById('dashboard-screen').style.display = 'none';
             document.getElementById(formId).style.display = 'block';
             window.scrollTo(0, 0);
         }
-
         function goHome() {
             document.querySelectorAll('.form-screen, .simple-form').forEach(el => el.style.display = 'none');
             document.getElementById('dashboard-screen').style.display = 'block';
         }
-
-        function clearForm(formId) {            if (confirm('هل أنت متأكد من مسح جميع البيانات في هذا النموذج؟')) {
+        function clearForm(formId) {
+            if (confirm('هل أنت متأكد من مسح جميع البيانات في هذا النموذج؟')) {
                 const form = document.getElementById(formId);
-                form.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"], input[type="number"], textarea').forEach(i => i.value = '');
+                form.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"], input[type="number"], input[type="month"], textarea').forEach(i => i.value = '');
                 form.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+                form.querySelectorAll('.preview-gallery').forEach(g => g.innerHTML = '');
                 if(formId === 'wells-form') {
                     document.getElementById('gps-status').className = 'gps-status';
                     document.getElementById('gps-status').innerHTML = '';
@@ -453,7 +546,6 @@
                 }
             }
         }
-
         function previewPhoto(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -464,7 +556,21 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
+        function previewMultiplePhotos(input, previewId) {
+            const previewContainer = document.getElementById(previewId);
+            previewContainer.innerHTML = '';
+            if (input.files) {
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
         function confirmExit() { document.getElementById('exit-modal').style.display = 'flex'; }
         function closeModal() { document.getElementById('exit-modal').style.display = 'none'; }
         function exitApp() { location.reload(); }
@@ -479,7 +585,7 @@
 
             if (!navigator.geolocation) {
                 statusDiv.className = 'gps-status error';
-                statusDiv.innerHTML = '<i class="fas fa-times-circle"></i> GPS غير مدعوم في هذا المتصفح';
+                statusDiv.innerHTML = '<i class="fas fa-times-circle"></i> GPS غير مدعوم';
                 return;
             }
 
@@ -488,24 +594,22 @@
             coordsDiv.style.display = 'none';
             btnGps.classList.add('active');
             btnManual.classList.remove('active');
+
             navigator.geolocation.getCurrentPosition(
                 async (pos) => {
                     const lat = pos.coords.latitude.toFixed(6);
                     const lng = pos.coords.longitude.toFixed(6);
-
                     document.getElementById('lat-value').textContent = lat;
                     document.getElementById('lng-value').textContent = lng;
                     document.getElementById('coords-input').value = `${lat}, ${lng}`;
                     coordsDiv.style.display = 'grid';
-
                     statusDiv.className = 'gps-status success';
-                    statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> تم تحديد الموقع بنجاح';
-
+                    statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> تم تحديد الموقع';
                     await getAddressFromCoords(lat, lng);
                 },
                 (err) => {
                     statusDiv.className = 'gps-status error';
-                    statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> فشل في تحديد الموقع (تأكد من تفعيل GPS)';
+                    statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> فشل في تحديد الموقع';
                 },
                 { enableHighAccuracy: true, timeout: 15000 }
             );
@@ -515,10 +619,8 @@
             const statusDiv = document.getElementById('gps-status');
             const addressField = document.getElementById('address-field');
             if (!lat || !lng) return;
-
             statusDiv.className = 'gps-status loading';
             statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث عن العنوان...';
-
             try {
                 const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`);
                 const data = await res.json();
@@ -534,9 +636,10 @@
             } catch (e) {
                 addressField.value = `الإحداثيات: ${lat}, ${lng}`;
                 statusDiv.className = 'gps-status error';
-                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> خطأ في الاتصال بالإنترنت';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> خطأ في الاتصال';
             }
         }
+
         function toggleManualInput() {
             const manualArea = document.getElementById('manual-area');
             const btnGps = document.getElementById('btn-gps');
@@ -562,6 +665,21 @@
                 getAddressFromCoords(lat, lng);
             } else {
                 alert('الرجاء إدخال الإحداثيات يدوياً أولاً');
+            }
+        }
+
+        // --- دالة ديناميكية لنموذج الناموس والجرذان ---
+        function updateMethodOptions() {
+            const type = document.getElementById('campaign-type').value;
+            const methodSelect = document.getElementById('method-used');
+            methodSelect.innerHTML = '<option value="">اختر...</option>';
+            
+            if (type === 'mosquito') {
+                methodSelect.innerHTML += '<option value="larvae">الرش بالمبيدات ضد اليرقات</option>';
+                methodSelect.innerHTML += '<option value="adults">الرش بالمبيدات ضد الحشرات الكاملة</option>';
+            } else if (type === 'rodent') {
+                methodSelect.innerHTML += '<option value="spray">الرش بالمبيدات ضد الجرذان</option>';
+                methodSelect.innerHTML += '<option value="paste">عجينة ضد الجرذان</option>';
             }
         }
     </script>

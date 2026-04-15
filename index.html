@@ -6,6 +6,7 @@
     <title>مصلحة النظافة والوقاية الصحية - بلدية المدية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبات التصدير -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
@@ -425,7 +426,7 @@
         </div>
     </div>
 
-    <!-- باقي النماذج بنفس التنسيق -->
+    <!-- ==================== نموذج المؤسسات المصنفة ==================== -->
     <div id="classified-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-industry"></i> المؤسسات المصنفة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -476,6 +477,7 @@
         </div>
     </div>
 
+    <!-- ==================== نموذج المراقبة والتفتيش ==================== -->
     <div id="inspection-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-search"></i> المراقبة والتفتيش</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -527,6 +529,7 @@
         </div>
     </div>
 
+    <!-- ==================== نموذج المؤسسات التربوية ==================== -->
     <div id="education-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-school"></i> المؤسسات التربوية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -578,6 +581,7 @@
         </div>
     </div>
 
+    <!-- ==================== نموذج محاربة الكلاب الضالة ==================== -->
     <div id="stray-form" class="form-screen">
         <div class="form-header"><h2><i class="fas fa-dog"></i> محاربة الكلاب الضالة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -648,6 +652,7 @@
         </div>
     </div>
 
+    <!-- ==================== نموذج محاربة الناموس والجرذان ==================== -->
     <div id="mosquito-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-bug"></i> محاربة الناموس والجرذان</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -701,6 +706,7 @@
         </div>
     </div>
 
+    <!-- ==================== نموذج النظافة العمومية ==================== -->
     <div id="hygiene-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-broom"></i> النظافة العمومية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -799,7 +805,6 @@
                 }
             }, 80);
             
-            // ضمان عدم التعليق: إذا لم يكتمل التحميل خلال 4 ثواني، انتقل مباشرة
             setTimeout(function() {
                 if (splashScreen && splashScreen.style.display !== 'none') {
                     clearInterval(interval);
@@ -809,7 +814,6 @@
             }, 4000);
             
         } catch(e) {
-            // في حالة وجود خطأ، انتقل مباشرة لشاشة الدخول
             setTimeout(function() {
                 document.getElementById('splash-screen').style.display = 'none';
                 document.getElementById('login-screen').style.display = 'flex';
@@ -942,7 +946,6 @@
             var toDate = document.getElementById(formType + '-search-to').value;
             if (!fromDate || !toDate) { alert('الرجاء تحديد تاريخ البدء وتاريخ الانتهاء'); return; }
             
-            // بيانات تجريبية
             var sampleData = {
                 employees: [
                     { num: '001', name: 'أحمد محمد', job: 'موظف', dept: 'الإدارة', phone: '0555123456', leaveType: 'سنوية', leaveOut: '2024-01-15', leaveIn: '2024-01-20' }
@@ -995,15 +998,102 @@
             container.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // --- طباعة الجدول ---
+        // --- طباعة التقرير (توليد PDF ثم الطباعة) ---
         function printTable(formType) {
-            var table = document.getElementById(formType + '-table');
-            var printWindow = window.open('', '_blank');
-            printWindow.document.write('<html dir="rtl"><head><title>تقرير</title><style>body { font-family: Arial, sans-serif; padding: 20px; } table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ddd; padding: 10px; text-align: right; } th { background: #667eea; color: white; } h2 { text-align: center; }</style></head><body><h2>تقرير البيانات</h2>' + table.outerHTML + '<script>window.onload = function() { window.print(); window.close(); }<\/script></body></html>');
-            printWindow.document.close();
+            try {
+                // استخراج عنوان الصفحة
+                var titleElement = document.querySelector('#' + formType + '-form .form-header h2');
+                var pageTitle = titleElement ? titleElement.innerText : 'تقرير البيانات';
+
+                // استخراج الجدول
+                var table = document.getElementById(formType + '-table');
+                if (!table) { alert('لا توجد نتائج لطباعتها'); return; }
+                
+                var tableHTML = table.outerHTML;
+                
+                // فتح نافذة جديدة وتنسيقها كصفحة PDF/طباعة
+                var printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html dir="rtl">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>طباعة التقرير</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+                        <style>
+                            body { 
+                                font-family: 'Cairo', sans-serif; 
+                                direction: rtl; 
+                                padding: 20px; 
+                                color: #333;
+                            }
+                            .report-header {
+                                text-align: center;
+                                margin-bottom: 30px;
+                                border-bottom: 3px solid #667eea;
+                                padding-bottom: 15px;
+                            }
+                            .report-header h1 { color: #2a5298; margin: 5px 0; font-size: 22px; }
+                            .report-header h2 { color: #667eea; margin: 5px 0; font-size: 18px; }
+                            .report-header p { color: #666; font-size: 14px; margin: 5px 0; }
+                            
+                            table { 
+                                width: 100%; 
+                                border-collapse: collapse; 
+                                margin-top: 20px;
+                                font-size: 12px;
+                            }
+                            th { 
+                                background-color: #667eea; 
+                                color: white; 
+                                padding: 10px; 
+                                text-align: center; 
+                                border: 1px solid #ddd;
+                            }
+                            td { 
+                                padding: 8px; 
+                                text-align: center; 
+                                border: 1px solid #ddd;
+                            }
+                            tr:nth-child(even) { background-color: #f2f6ff; }
+                            .footer {
+                                margin-top: 30px;
+                                text-align: center;
+                                font-size: 10px;
+                                color: #888;
+                                border-top: 1px solid #eee;
+                                padding-top: 10px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="report-header">
+                            <h1>الجمهورية الجزائرية الديمقراطية الشعبية</h1>
+                            <h2>بلدية المدية - مديرية البيئة</h2>
+                            <h2>${pageTitle}</h2>
+                            <p>تاريخ الطباعة: ${new Date().toLocaleDateString('ar-DZ')}</p>
+                        </div>
+                        ${tableHTML}
+                        <div class="footer">
+                            <p>تم إنشاء هذا التقرير آلياً بواسطة مصلحة النظافة والوقاية الصحية</p>
+                        </div>
+                        <script>
+                            window.onload = function() { 
+                                window.print(); 
+                                // window.close(); // يمكن تفعيل هذا السطر لإغلاق النافذة تلقائياً بعد الطباعة
+                            };
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+            } catch (e) {
+                console.error(e);
+                alert('حدث خطأ أثناء تجهيز التقرير للطباعة');
+            }
         }
 
-        // --- تصدير إلى PDF ---
+        // --- تصدير إلى PDF (ملف) ---
         async function exportTableToPDF(formType) {
             try {
                 var { jsPDF } = window.jspdf;

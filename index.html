@@ -22,7 +22,7 @@
             --border: #e0e5ee;
             --shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', Tahoma, Arial, sans-serif; }
         body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; overflow-x: hidden; color: var(--text-dark); }
         
         #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; }
@@ -98,7 +98,7 @@
         .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
         .field-box { position: relative; }
         .field-box label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
-        .field-box input, .field-box select, .field-box textarea { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.95rem; color: var(--text-dark); background: var(--bg-light); transition: 0.3s; font-family: 'Cairo'; }
+        .field-box input, .field-box select, .field-box textarea { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.95rem; color: var(--text-dark); background: var(--bg-light); transition: 0.3s; font-family: 'Cairo', Tahoma, sans-serif; }
         .field-box input:focus, .field-box select:focus, .field-box textarea:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); outline: none; }
         .field-box input[readonly] { background: #f0f2f5; cursor: default; }
         .field-box textarea { resize: vertical; min-height: 80px; }
@@ -111,7 +111,7 @@
         .gps-card .section-title { color: white; border-bottom-color: rgba(255,255,255,0.2); }
         .gps-card .section-title i { background: rgba(255,255,255,0.2); }
         .gps-buttons { display: flex; gap: 0.8rem; margin-bottom: 1rem; }
-        .gps-btn { flex: 1; padding: 12px; border: 2px solid rgba(255,255,255,0.4); border-radius: 10px; background: rgba(255,255,255,0.15); color: white; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: 0.3s; font-family: 'Cairo'; }
+        .gps-btn { flex: 1; padding: 12px; border: 2px solid rgba(255,255,255,0.4); border-radius: 10px; background: rgba(255,255,255,0.15); color: white; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: 0.3s; }
         .gps-btn:hover { background: rgba(255,255,255,0.25); }
         .gps-btn.active { background: white; color: #667eea; border-color: white; }
         .gps-status { text-align: center; padding: 8px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.8rem; display: none; }
@@ -127,7 +127,7 @@
         .manual-input-area input { width: 100%; padding: 10px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; background: rgba(255,255,255,0.15); color: white; font-size: 0.95rem; text-align: center; }
         .manual-input-area input::placeholder { color: rgba(255,255,255,0.5); }
         .manual-input-area input:focus { border-color: white; background: rgba(255,255,255,0.25); outline: none; }
-        .btn-get-address { width: 100%; padding: 10px; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Cairo'; }
+        .btn-get-address { width: 100%; padding: 10px; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
         
         .preview-gallery { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
         .preview-gallery img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); }
@@ -136,7 +136,6 @@
         .action-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
         .action-buttons .btn { flex: 1; min-width: 120px; padding: 14px; font-size: 1rem; }
         
-        /* قسم البحث الموحد */
         .search-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem; color: white; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
         .search-section .section-title { color: white; border-bottom-color: rgba(255,255,255,0.3); }
         .search-section .section-title i { background: rgba(255,255,255,0.2); }
@@ -145,892 +144,6 @@
         .search-form .field-box input { background: rgba(255,255,255,0.95); }
         .search-form .btn { min-width: 150px; }
         
-        /* جدول النتائج */
-        .results-container { background: white; border-radius: 15px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); display: none; }
-        .results-container.show { display: block; }
-        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); flex-wrap: wrap; gap: 0.5rem; }
-        .table-title { font-size: 1.2rem; font-weight: 700; color: var(--primary-dark); }
-        .table-actions { display: flex; gap: 0.5rem; }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; overflow-x: auto; display: block; }
-        .data-table thead, .data-table tbody { display: table; width: 100%; table-layout: fixed; }
-        .data-table th, .data-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
-        .data-table th { background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-weight: 600; white-space: nowrap; }
-        .data-table tr:hover { background: var(--bg-light); }
-        .table-wrapper { overflow-x: auto; }
-        
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 2rem; border-radius: 20px; text-align: center; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; }
-        .modal-buttons { display: flex; gap: 1rem; margin-top: 1.5rem; }
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
-        .stat-card { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1.5rem; border-radius: 10px; text-align: center; }
-        .stat-card .number { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .stat-card .label { font-size: 0.9rem; opacity: 0.9; }
-        .stat-card.detailed { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .stat-card.success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .stat-card.warning { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        
-        @media print { .no-print { display: none !important; } body { background: white; } }
-        @media (max-width: 768px) {
-            .cards-grid { grid-template-columns: repeat(2, 1fr); }
-            .top-section { flex-direction: column; align-items: center; }
-            .photo-upload-box { width: 100%; height: 100px; min-width: unset; }
-            .field-row { grid-template-columns: 1fr; }
-            .action-buttons { flex-direction: column; }
-            .gps-buttons { flex-direction: column; }
-            .search-form { grid-template-columns: 1fr; }
-            .table-header { flex-direction: column; align-items: flex-start; }
-            .data-table th, .data-table td { padding: 6px 4px; font-size: 0.75rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- شاشة التحميل -->
-    <div id="splash-screen">
-        <div class="splash-icon"><i class="fas fa-shield-alt"></i></div>
-        <h1 class="splash-title">مصلحة النظافة والوقاية الصحية</h1>
-        <p class="splash-subtitle">بلدية المدية - مديرية البيئة</p>
-        <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
-        <p class="splash-footer">إعداد وبرمجة: رابحي فتحي</p>
-    </div>
-
-    <!-- شاشة تسجيل الدخول -->
-    <div id="login-screen">
-        <div class="login-container">
-            <div class="login-header"><i class="fas fa-building"></i><h2>تسجيل الدخول</h2></div>
-            <form onsubmit="event.preventDefault(); login();">
-                <div class="input-group"><label>اسم المستخدم</label><div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="username" required placeholder="أدخل اسم المستخدم"></div></div>
-                <div class="input-group"><label>كلمة المرور</label><div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="password" required placeholder="أدخل كلمة المرور"></div></div>
-                <div class="checkbox-group"><input type="checkbox" id="show-pass" onchange="togglePassword()"><label for="show-pass">إظهار كلمة المرور</label></div>
-                <div class="btn-group"><button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> دخول</button><button type="button" class="btn btn-danger" onclick="confirmExit()"><i class="fas fa-power-off"></i> خروج</button></div>
-            </form>
-        </div>
-    </div>
-
-    <!-- القائمة الرئيسية -->
-    <div id="dashboard-screen">
-        <div class="dashboard-header"><i class="fas fa-city"></i><h1>المنصة الرئيسية</h1><p>إدارة شاملة لمصلحة النظافة والوقاية الصحية</p></div>
-        <div class="cards-grid">
-            <div class="card" onclick="openForm('employees-form')"><i class="fas fa-users"></i><h3>بيانات الموظفين</h3></div>
-            <div class="card" onclick="openForm('wells-form')"><i class="fas fa-tint"></i><h3>الآبار والمنابع</h3></div>
-            <div class="card" onclick="openForm('classified-form')"><i class="fas fa-industry"></i><h3>المؤسسات المصنفة</h3></div>
-            <div class="card" onclick="openForm('stray-form')"><i class="fas fa-dog"></i><h3>محاربة الكلاب الضالة</h3></div>
-            <div class="card" onclick="openForm('education-form')"><i class="fas fa-school"></i><h3>المؤسسات التربوية</h3></div>
-            <div class="card" onclick="openForm('mosquito-form')"><i class="fas fa-bug"></i><h3>محاربة الناموس والجرذان</h3></div>
-            <div class="card" onclick="openForm('inspection-form')"><i class="fas fa-search"></i><h3>المراقبة والتفتيش</h3></div>
-            <div class="card" onclick="openForm('hygiene-form')"><i class="fas fa-broom"></i><h3>النظافة العمومية</h3></div>
-        </div>
-        <button class="logout-btn" onclick="confirmExit()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
-    </div>
-
-    <!-- ==================== نموذج الموظفين ==================== -->
-    <div id="employees-form" class="form-screen">
-        <div class="form-header"><h2><i class="fas fa-users"></i> بيانات الموظفين</h2><button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button></div>
-        <div class="top-section">
-            <div class="photo-upload-box" onclick="document.getElementById('photo-emp').click()"><i class="fas fa-camera"></i><span>اضغط لإضافة صورة</span><input type="file" id="photo-emp" accept="image/*" style="display:none" onchange="previewPhoto(this)"></div>
-            <div class="top-fields"><div class="number-field"><label>رقم الموظف</label><i class="fas fa-id-card"></i><input type="text" id="emp-number" placeholder="الرقم التسلسلي"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-user-circle"></i> المعلومات الشخصية</div>
-            <div class="field-row"><div class="field-box"><label>اسم الموظف</label><input type="text" id="emp-name" placeholder="الاسم واللقب"></div><div class="field-box"><label>الوظيفة</label><input type="text" id="emp-job" placeholder="المسمى الوظيفي"></div></div>
-            <div class="field-row"><div class="field-box"><label>القسم</label><input type="text" id="emp-dept" placeholder="اسم القسم/المصلحة"></div><div class="field-box"><label>رقم الهاتف</label><input type="tel" id="emp-phone" placeholder="05XX XXX XXX"></div></div>
-            <div class="field-box"><label>العنوان</label><input type="text" id="emp-address" placeholder="عنوان السكن"></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-calendar-alt"></i> معلومات العطلة</div>
-            <div class="field-row"><div class="field-box"><label>نوع العطلة</label><select id="emp-leave-type"><option value="">اختر...</option><option>سنوية</option><option>مرضية</option><option>استثنائية</option><option>أمومة</option></select></div><div class="field-box"><label>مدة العطلة</label><input type="number" id="emp-leave-duration" placeholder="عدد الأيام"></div></div>
-            <div class="field-row"><div class="field-box"><label>تاريخ الخروج</label><input type="date" id="emp-leave-start"></div><div class="field-box"><label>تاريخ الدخول</label><input type="date" id="emp-leave-end"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:20px;" onclick="document.getElementById('photos-emp').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-emp" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-emp')"></div>
-            <div id="preview-emp" class="preview-gallery"></div>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="emp-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="emp-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('employees')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="emp-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('emp-results-table', 'بيانات_الموظفين')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('emp-results-table', 'بيانات_الموظفين')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('emp-results-table', 'بيانات_الموظفين')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="emp-results-table"><thead><tr><th>م</th><th>الرقم</th><th>الاسم</th><th>الوظيفة</th><th>القسم</th><th>الهاتف</th><th>نوع العطلة</th><th>تاريخ الخروج</th><th>تاريخ الدخول</th></tr></thead><tbody id="emp-table-body"></tbody></table></div>
-        </div>
-
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('employees')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('employees-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('employees-form', 'بيانات_الموظفين')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('employees-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showStats('employees-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== نموذج الآبار والمنابع ==================== -->
-    <div id="wells-form" class="form-screen">
-        <div class="form-header"><h2><i class="fas fa-tint"></i> الآبار والمنابع</h2><button class="btn btn-secondary" onclick="goHome()"><i class="fas fa-arrow-right"></i> رجوع</button></div>
-        <div class="top-section">
-            <div class="photo-upload-box" onclick="document.getElementById('photo-well').click()"><i class="fas fa-camera"></i><span>اضغط لإضافة صورة</span><input type="file" id="photo-well" accept="image/*" style="display:none" onchange="previewPhoto(this)"></div>
-            <div class="top-fields"><div class="number-field"><label>رقم البئر/المنبع</label><i class="fas fa-hashtag"></i><input type="text" id="well-number" placeholder="الرقم التسلسلي"></div></div>
-        </div>
-        <div class="gps-card">
-            <div class="section-title"><i class="fas fa-map-marker-alt"></i> تحديد الموقع والعنوان</div>
-            <div class="gps-buttons">
-                <button class="gps-btn" id="btn-gps" onclick="getGPSLocation()"><i class="fas fa-crosshairs"></i> تحديد تلقائي (GPS)</button>
-                <button class="gps-btn" id="btn-manual" onclick="toggleManualInput()"><i class="fas fa-keyboard"></i> إدخال يدوي</button>
-            </div>
-            <div id="gps-status" class="gps-status"></div>
-            <div class="coords-display" id="coords-display" style="display: none;">
-                <div class="coord-item"><div class="label">خط العرض</div><div class="value" id="lat-value">-</div></div>
-                <div class="coord-item"><div class="label">خط الطول</div><div class="value" id="lng-value">-</div></div>
-            </div>
-            <div class="manual-input-area" id="manual-area">
-                <div class="field-row"><input type="number" step="any" id="manual-lat" placeholder="خط العرض"><input type="number" step="any" id="manual-lng" placeholder="خط الطول"></div>
-                <button class="btn-get-address" onclick="getAddressFromManual()"><i class="fas fa-search-location"></i> الحصول على العنوان</button>
-            </div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-user"></i> معلومات المالك</div>
-            <div class="field-row"><div class="field-box"><label>اسم مالك البئر</label><input type="text" id="well-owner" placeholder="الاسم الكامل"></div><div class="field-box"><label>رقم الهاتف</label><input type="tel" id="well-phone" placeholder="05XX XXX XXX"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-map"></i> العنوان والموقع</div>
-            <div class="address-field"><label><i class="fas fa-map-pin" style="color: var(--primary);"></i> العنوان / الموقع <span class="auto-badge">تلقائي</span></label><textarea id="well-address" placeholder="سيتم ملء العنوان تلقائياً عند تحديد الموقع، أو يمكنك كتابته يدوياً"></textarea></div>
-            <div class="field-row"><div class="field-box"><label>طبيعة نقطة الماء</label><select id="well-nature"><option value="">اختر...</option><option>بئر</option><option>عين</option><option>منبع</option></select></div><div class="field-box"><label>الإحداثيات</label><input type="text" id="coords-input" readonly placeholder="تظهر تلقائياً"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-tachometer-alt"></i> الخصائص الفنية</div>
-            <div class="field-row"><div class="field-box"><label>هيئة نقطة الماء</label><select id="well-status"><option value="">اختر...</option><option>مهيأ</option><option>غير مهيأ</option></select></div><div class="field-box"><label>السعة (متر مكعب)</label><input type="number" step="0.01" id="well-capacity" placeholder="السعة بالمتر المكعب"></div></div>
-            <div class="field-row"><div class="field-box"><label>نتيجة التحاليل</label><select id="well-analysis"><option value="">اختر...</option><option>سلبي</option><option>ايجابي</option></select></div><div class="field-box"><label>تاريخ التحاليل</label><input type="date" id="well-analysis-date"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-calendar-alt"></i> التواريخ</div>
-            <div class="field-row"><div class="field-box"><label>تاريخ الإنشاء</label><input type="date" id="well-create-date"></div><div class="field-box"><label>تاريخ المعالجة</label><input type="date" id="well-treat-date"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:20px;" onclick="document.getElementById('photos-well').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-well" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-well')"></div>
-            <div id="preview-well" class="preview-gallery"></div>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="well-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="well-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('wells')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="well-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('well-results-table', 'الآبار_والمنابع')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('well-results-table', 'الآبار_والمنابع')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('well-results-table', 'الآبار_والمنابع')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="well-results-table"><thead><tr><th>م</th><th>الرقم</th><th>المالك</th><th>العنوان</th><th>الطبيعة</th><th>الهيئة</th><th>السعة</th><th>التحاليل</th><th>تاريخ المعالجة</th></tr></thead><tbody id="well-table-body"></tbody></table></div>
-        </div>
-
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('wells')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('wells-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('wells-form', 'الآبار_والمنابع')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('wells-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showStats('wells-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== نموذج المؤسسات المصنفة ==================== -->
-    <div id="classified-form" class="simple-form">
-        <div class="form-header"><h2><i class="fas fa-industry"></i> المؤسسات المصنفة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
-        <div class="info-section">
-            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text" id="class-number"></div><div class="field-box"><label>اسم المستغل</label><input type="text" id="class-owner"></div></div>
-            <div class="field-row"><div class="field-box"><label>النشاط</label><input type="text" id="class-activity"></div><div class="field-box"><label>التصنيف</label><select id="class-rank"><option value="">اختر...</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div></div>
-            <div class="field-row"><div class="field-box"><label>العنوان</label><input type="text" id="class-address"></div><div class="field-box"><label>رقم الهاتف</label><input type="text" id="class-phone"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:15px;" onclick="document.getElementById('photos-classified').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-classified" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-classified')"></div>
-            <div id="preview-classified" class="preview-gallery"></div>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="class-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="class-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('classified')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="class-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('class-results-table', 'المؤسسات_المصنفة')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('class-results-table', 'المؤسسات_المصنفة')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('class-results-table', 'المؤسسات_المصنفة')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="class-results-table"><thead><tr><th>م</th><th>الرقم</th><th>اسم المستغل</th><th>النشاط</th><th>التصنيف</th><th>العنوان</th><th>الهاتف</th></tr></thead><tbody id="class-table-body"></tbody></table></div>
-        </div>
-
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('classified')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('classified-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('classified-form', 'المؤسسات_المصنفة')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('classified-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showStats('classified-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== نموذج المراقبة والتفتيش ==================== -->
-    <div id="inspection-form" class="simple-form">
-        <div class="form-header"><h2><i class="fas fa-search"></i> المراقبة والتفتيش</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
-        <div class="info-section">
-            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text" id="insp-number"></div><div class="field-box"><label>تعيين النشاط</label><select id="insp-activity"><option value="">اختر...</option><option>قصابات/مطاعم</option><option>تغذية عامة</option><option>مخابز</option><option>صنع وايداع الحلويات</option><option>بيع الحليب ومشتقاته</option><option>المذابح والمسالخ</option><option>الشكاوي</option></select></div></div>
-            <div class="field-row"><div class="field-box"><label>العنوان</label><input type="text" id="insp-address"></div><div class="field-box"><label>رقم السجل</label><input type="text" id="insp-reg"></div></div>
-            <div class="field-box" style="margin-bottom:1rem;"><label>الملاحظات المسجلة</label><textarea rows="3" id="insp-notes"></textarea></div>
-            <div class="field-row"><div class="field-box"><label>الكمية المحجوزة</label><input type="text" id="insp-qty"></div><div class="field-box"><label>الإجراءات المتخذة</label><input type="text" id="insp-actions"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:15px;" onclick="document.getElementById('photos-inspection').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-inspection" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-inspection')"></div>
-            <div id="preview-inspection" class="preview-gallery"></div>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="insp-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="insp-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('inspection')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="insp-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('insp-results-table', 'المراقبة_والتفتيش')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('insp-results-table', 'المراقبة_والتفتيش')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('insp-results-table', 'المراقبة_والتفتيش')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="insp-results-table"><thead><tr><th>م</th><th>الرقم</th><th>النشاط</th><th>العنوان</th><th>الكمية المحجوزة</th><th>الإجراءات</th><th>الملاحظات</th></tr></thead><tbody id="insp-table-body"></tbody></table></div>
-        </div>
-
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('inspection')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('inspection-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('inspection-form', 'المراقبة_والتفتيش')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('inspection-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showStats('inspection-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== نموذج المؤسسات التربوية ==================== -->
-    <div id="education-form" class="simple-form">
-        <div class="form-header"><h2><i class="fas fa-school"></i> المؤسسات التربوية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
-        <div class="info-section">
-            <div class="field-row"><div class="field-box"><label>الرقم</label><input type="text" id="edu-number"></div><div class="field-box"><label>الصنف</label><select id="edu-type"><option value="">اختر...</option><option>ابتدائية</option><option>متوسطة</option><option>ثانوية</option><option>جامعية</option><option>اقامة جامعية</option></select></div></div>
-            <div class="field-row"><div class="field-box"><label>اسم المؤسسة</label><input type="text" id="edu-name"></div><div class="field-box"><label>العنوان</label><input type="text" id="edu-address"></div></div>
-            <div class="field-row"><div class="field-box"><label>رقم الهاتف</label><input type="text" id="edu-phone"></div><div class="field-box"><label>الإطعام</label><select id="edu-food"><option>نعم</option><option>لا</option></select></div></div>
-            <div class="field-box"><label>تحاليل المياه</label><select id="edu-water"><option>مطابقة</option><option>غير مطابقة</option></select></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:15px;" onclick="document.getElementById('photos-education').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-education" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-education')"></div>
-            <div id="preview-education" class="preview-gallery"></div>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="edu-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="edu-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('education')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="edu-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('edu-results-table', 'المؤسسات_التربوية')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('edu-results-table', 'المؤسسات_التربوية')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('edu-results-table', 'المؤسسات_التربوية')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="edu-results-table"><thead><tr><th>م</th><th>الرقم</th><th>اسم المؤسسة</th><th>الصنف</th><th>العنوان</th><th>الإطعام</th><th>تحاليل المياه</th></tr></thead><tbody id="edu-table-body"></tbody></table></div>
-        </div>
-
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('education')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('education-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('education-form', 'المؤسسات_التربوية')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('education-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showStats('education-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== نموذج محاربة الكلاب الضالة ==================== -->
-    <div id="stray-form" class="form-screen">
-        <div class="form-header"><h2><i class="fas fa-dog"></i> محاربة الكلاب الضالة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-file-alt"></i> معلومات القرار الولائي</div>
-            <div class="field-row"><div class="field-box"><label>رقم القرار الولائي</label><input type="text" id="decision-number" placeholder="مثال: 123/2024"></div><div class="field-box"><label>تاريخ إصدار القرار</label><input type="date" id="decision-date"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-calendar-alt"></i> معلومات الحملة</div>
-            <div class="field-row"><div class="field-box"><label>جمعية الصيد</label><input type="text" id="hunting-association" placeholder="اسم الجمعية"></div><div class="field-box"><label>تاريخ الحملة</label><input type="date" id="campaign-date"></div></div>
-            <div class="field-row"><div class="field-box"><label>مدة صلاحية القرار</label><input type="text" id="validity-period" placeholder="مثال: سنة واحدة"></div><div class="field-box"><label>عدد الكلاب</label><input type="number" id="dogs-count" placeholder="العدد"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-bullseye"></i> معلومات الذخيرة</div>
-            <div class="field-row"><div class="field-box"><label>عدد الخراطيش</label><input type="number" id="cartridges-count" placeholder="العدد الكلي"></div><div class="field-box"><label>نوع الخراطيش</label><select id="cartridges-type"><option value="">اختر...</option><option value="12">12</option><option value="16">16</option></select></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:20px;" onclick="document.getElementById('photos-stray').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-stray" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-stray')"></div>
-            <div id="preview-stray" class="preview-gallery"></div>
-        </div>
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="stray-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="stray-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('stray')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="stray-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('stray-results-table', 'محاربة_الكلاب_الضالة')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('stray-results-table', 'محاربة_الكلاب_الضالة')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('stray-results-table', 'محاربة_الكلاب_الضالة')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="stray-results-table"><thead><tr><th>م</th><th>رقم القرار</th><th>تاريخ القرار</th><th>تاريخ الحملة</th><th>الجمعية</th><th>عدد الكلاب</th><th>عدد الخراطيش</th><th>نوع الخراطيش</th></tr></thead><tbody id="stray-table-body"></tbody></table></div>
-        </div>
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('stray')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('stray-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('stray-form', 'محاربة_الكلاب_الضالة')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('stray-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showAdvancedStats()"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== نموذج محاربة الناموس والجرذان ==================== -->
-    <div id="mosquito-form" class="simple-form">
-        <div class="form-header"><h2><i class="fas fa-bug"></i> محاربة الناموس والجرذان</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
-        <div class="info-section">
-            <div class="field-row"><div class="field-box"><label>الهيئة المتدخلة</label><input type="text" id="mosq-authority"></div><div class="field-box"><label>تاريخ الحملة</label><input type="date" id="mosq-date"></div></div>
-            <div class="field-row"><div class="field-box"><label>نوع الحملة</label><select id="campaign-type" onchange="updateMethodOptions()"><option value="">اختر...</option><option value="mosquito">محاربة الناموس</option><option value="rodent">محاربة الجرذان</option></select></div><div class="field-box"><label>الطريقة المستعملة</label><select id="method-used"><option value="">اختر نوع الحملة أولاً...</option></select></div></div>
-            <div class="field-row"><div class="field-box"><label>تعيين أماكن</label><input type="text" id="mosq-places"></div><div class="field-box"><label>الكمية</label><input type="number" id="mosq-qty"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:15px;" onclick="document.getElementById('photos-mosquito').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-mosquito" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-mosquito')"></div>
-            <div id="preview-mosquito" class="preview-gallery"></div>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="mosq-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="mosq-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('mosquito')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="mosq-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('mosq-results-table', 'محاربة_الناموس_والجرذان')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('mosq-results-table', 'محاربة_الناموس_والجرذان')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('mosq-results-table', 'محاربة_الناموس_والجرذان')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="mosq-results-table"><thead><tr><th>م</th><th>الهيئة</th><th>نوع الحملة</th><th>الطريقة</th><th>الأماكن</th><th>الكمية</th><th>التاريخ</th></tr></thead><tbody id="mosq-table-body"></tbody></table></div>
-        </div>
-
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('mosquito')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('mosquito-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('mosquito-form', 'محاربة_الناموس_والجرذان')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('mosquito-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showStats('mosquito-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== نموذج النظافة العمومية ==================== -->
-    <div id="hygiene-form" class="simple-form">
-        <div class="form-header"><h2><i class="fas fa-broom"></i> النظافة العمومية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
-        <div class="info-section">
-            <div class="field-row"><div class="field-box"><label>الهيئة المستخدمة</label><input type="text" id="hyg-authority"></div><div class="field-box"><label>تعيين</label><input type="text" id="hyg-place"></div></div>
-            <div class="field-row"><div class="field-box"><label>الكمية</label><input type="number" id="hyg-qty"></div><div class="field-box"><label>الشهر/السنة</label><input type="month" id="hyg-date"></div></div>
-        </div>
-        <div class="info-section">
-            <div class="section-title"><i class="fas fa-images"></i> المرفقات</div>
-            <div class="photo-upload-box" style="width:100%; height:auto; padding:15px;" onclick="document.getElementById('photos-hygiene').click()"><i class="fas fa-cloud-upload-alt fa-2x"></i><span style="margin-top:5px;">اضغط لإضافة صور</span><input type="file" id="photos-hygiene" accept="image/*" multiple style="display:none" onchange="previewMultiplePhotos(this, 'preview-hygiene')"></div>
-            <div id="preview-hygiene" class="preview-gallery"></div>
-        </div>
-
-        <!-- قسم البحث -->
-        <div class="search-section">
-            <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
-            <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="hyg-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="hyg-search-to"></div>
-                <button class="btn btn-search" onclick="searchByDate('hygiene')"><i class="fas fa-search"></i> بحث</button>
-            </div>
-        </div>
-        <div id="hyg-results-container" class="results-container">
-            <div class="table-header">
-                <div class="table-title"><i class="fas fa-table"></i> نتائج البحث</div>
-                <div class="table-actions">
-                    <button class="btn btn-print" onclick="printTable('hyg-results-table', 'النظافة_العمومية')"><i class="fas fa-print"></i> طباعة</button>
-                    <button class="btn btn-pdf" onclick="exportTableToPDF('hyg-results-table', 'النظافة_العمومية')"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button class="btn btn-export" onclick="exportTableToExcel('hyg-results-table', 'النظافة_العمومية')"><i class="fas fa-file-excel"></i> Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper"><table class="data-table" id="hyg-results-table"><thead><tr><th>م</th><th>الهيئة</th><th>التعيين</th><th>الكمية</th><th>الشهر/السنة</th></tr></thead><tbody id="hyg-table-body"></tbody></table></div>
-        </div>
-
-        <div class="action-section">
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="saveData('hygiene')"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-warning" onclick="editData()"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn btn-danger" onclick="deleteData()"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn btn-secondary" onclick="clearForm('hygiene-form')"><i class="fas fa-eraser"></i> مسح</button>
-                <button class="btn btn-export" onclick="exportToExcel('hygiene-form', 'النظافة_العمومية')"><i class="fas fa-file-excel"></i> Excel</button>
-                <button class="btn btn-print" onclick="printForm('hygiene-form')"><i class="fas fa-print"></i> طباعة</button>
-                <button class="btn btn-stats" onclick="showStats('hygiene-form')"><i class="fas fa-chart-bar"></i> إحصائيات</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal الخروج -->
-    <div id="exit-modal" class="modal">
-        <div class="modal-content">
-            <i class="fas fa-exclamation-circle fa-3x" style="color: var(--danger); margin-bottom: 1rem;"></i>
-            <h2>تأكيد الخروج</h2>
-            <p>هل أنت متأكد من رغبتك في الخروج؟</p>
-            <div class="modal-buttons"><button class="btn btn-primary" onclick="closeModal()">إلغاء</button><button class="btn btn-danger" onclick="exitApp()">خروج</button></div>
-        </div>
-    </div>
-
-    <!-- Modal الإحصائيات -->
-    <div id="stats-modal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 1rem; color: var(--primary-dark);"><i class="fas fa-chart-bar"></i> الإحصائيات</h2>
-            <div id="stats-content" class="stats-grid"></div>
-            <div class="modal-buttons" style="margin-top: 1.5rem;"><button class="btn btn-secondary" onclick="closeStats()">إغلاق</button></div>
-        </div>
-    </div>
-
-    <script>
-        // --- تهيئة التطبيق ---
-        document.addEventListener('DOMContentLoaded', function() {
-            let progress = 0;
-            const progressBar = document.getElementById('progress-bar');
-            const interval = setInterval(function() {
-                progress += 2;
-                progressBar.style.width = progress + '%';
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(function() {
-                        document.getElementById('splash-screen').style.display = 'none';
-                        document.getElementById('login-screen').style.display = 'flex';
-                    }, 300);
-                }
-            }, 40);
-        });
-
-        function login() {
-            if (document.getElementById('username').value && document.getElementById('password').value) {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard-screen').style.display = 'block';
-            }
-        }
-        function togglePassword() {
-            const p = document.getElementById('password');
-            p.type = p.type === 'password' ? 'text' : 'password';
-        }
-        function openForm(formId) {
-            document.getElementById('dashboard-screen').style.display = 'none';
-            document.getElementById(formId).style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-        function goHome() {
-            document.querySelectorAll('.form-screen, .simple-form').forEach(el => el.style.display = 'none');
-            document.getElementById('dashboard-screen').style.display = 'block';
-        }
-        function clearForm(formId) {
-            if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
-                const form = document.getElementById(formId);
-                form.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"], input[type="number"], input[type="month"], textarea').forEach(i => i.value = '');
-                form.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-                form.querySelectorAll('.preview-gallery').forEach(g => g.innerHTML = '');
-                form.querySelectorAll('.results-container').forEach(c => c.classList.remove('show'));
-                if(formId === 'wells-form') {
-                    document.getElementById('gps-status').className = 'gps-status';
-                    document.getElementById('gps-status').innerHTML = '';
-                    document.getElementById('coords-display').style.display = 'none';
-                    document.getElementById('manual-area').style.display = 'none';
-                    document.getElementById('btn-gps').classList.remove('active');
-                    document.getElementById('btn-manual').classList.remove('active');
-                }
-            }
-        }
-        function previewPhoto(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const box = input.closest('.photo-upload-box');
-                    box.innerHTML = `<img src="${e.target.result}" alt="صورة">`;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        function previewMultiplePhotos(input, previewId) {
-            const previewContainer = document.getElementById(previewId);
-            previewContainer.innerHTML = '';
-            if (input.files) {
-                Array.from(input.files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        previewContainer.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-        }
-        function confirmExit() { document.getElementById('exit-modal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('exit-modal').style.display = 'none'; }
-        function exitApp() { location.reload(); }
-        window.onclick = function(e) { if (e.target === document.getElementById('exit-modal')) closeModal(); }
-
-        // --- GPS ---
-        function getGPSLocation() {
-            const statusDiv = document.getElementById('gps-status');
-            const coordsDiv = document.getElementById('coords-display');
-            const btnGps = document.getElementById('btn-gps');
-            const btnManual = document.getElementById('btn-manual');
-            if (!navigator.geolocation) { statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-times-circle"></i> GPS غير مدعوم'; return; }
-            statusDiv.className = 'gps-status loading'; statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري تحديد الموقع...';
-            coordsDiv.style.display = 'none'; btnGps.classList.add('active'); btnManual.classList.remove('active');
-            navigator.geolocation.getCurrentPosition(
-                async (pos) => {
-                    const lat = pos.coords.latitude.toFixed(6); const lng = pos.coords.longitude.toFixed(6);
-                    document.getElementById('lat-value').textContent = lat; document.getElementById('lng-value').textContent = lng;
-                    document.getElementById('coords-input').value = `${lat}, ${lng}`; coordsDiv.style.display = 'grid';
-                    statusDiv.className = 'gps-status success'; statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> تم تحديد الموقع';
-                    await getAddressFromCoords(lat, lng);
-                }, (err) => { statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> فشل في تحديد الموقع'; },
-                { enableHighAccuracy: true, timeout: 15000 }
-            );
-        }
-        async function getAddressFromCoords(lat, lng) {
-            const statusDiv = document.getElementById('gps-status'); const addressField = document.getElementById('well-address');
-            if (!lat || !lng) return;
-            statusDiv.className = 'gps-status loading'; statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث عن العنوان...';
-            try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`);
-                const data = await res.json();
-                if (data && data.display_name) { addressField.value = data.display_name; statusDiv.className = 'gps-status success'; statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> تم تحديد الموقع والعنوان'; }
-                else { addressField.value = `الإحداثيات: ${lat}, ${lng}`; statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> لم يتم العثور على عنوان'; }
-            } catch (e) { addressField.value = `الإحداثيات: ${lat}, ${lng}`; statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> خطأ في الاتصال'; }
-        }
-        function toggleManualInput() {
-            const manualArea = document.getElementById('manual-area');
-            const btnGps = document.getElementById('btn-gps');
-            const btnManual = document.getElementById('btn-manual');
-            if (manualArea.style.display === 'none' || manualArea.style.display === '') { manualArea.style.display = 'block'; btnManual.classList.add('active'); btnGps.classList.remove('active'); }
-            else { manualArea.style.display = 'none'; btnManual.classList.remove('active'); }
-        }
-        function getAddressFromManual() {
-            const lat = document.getElementById('manual-lat').value; const lng = document.getElementById('manual-lng').value;
-            if (lat && lng) { document.getElementById('coords-input').value = `${lat}, ${lng}`; document.getElementById('lat-value').textContent = lat; document.getElementById('lng-value').textContent = lng; document.getElementById('coords-display').style.display = 'grid'; getAddressFromCoords(lat, lng); }
-            else { alert('الرجاء إدخال الإحداثيات يدوياً أولاً'); }
-        }
-
-        // --- نموذج الناموس والجرذان الديناميكي ---
-        function updateMethodOptions() {
-            const type = document.getElementById('campaign-type').value;
-            const methodSelect = document.getElementById('method-used');
-            methodSelect.innerHTML = '<option value="">اختر...</option>';
-            if (type === 'mosquito') {
-                methodSelect.innerHTML += '<option value="larvae">الرش بالمبيدات ضد اليرقات</option>';
-                methodSelect.innerHTML += '<option value="adults">الرش بالمبيدات ضد الحشرات الكاملة</option>';
-            } else if (type === 'rodent') {
-                methodSelect.innerHTML += '<option value="spray">الرش بالمبيدات ضد الجرذان</option>';
-                methodSelect.innerHTML += '<option value="paste">عجينة ضد الجرذان</option>';
-            }
-        }
-
-        // --- قاعدة البيانات (مخزنة في localStorage) ---
-        let allData = {
-            employees: JSON.parse(localStorage.getItem('employees_data') || '[]'),
-            wells: JSON.parse(localStorage.getItem('wells_data') || '[]'),
-            classified: JSON.parse(localStorage.getItem('classified_data') || '[]'),
-            inspection: JSON.parse(localStorage.getItem('inspection_data') || '[]'),
-            education: JSON.parse(localStorage.getItem('education_data') || '[]'),
-            stray: JSON.parse(localStorage.getItem('stray_data') || '[]'),
-            mosquito: JSON.parse(localStorage.getItem('mosquito_data') || '[]'),
-            hygiene: JSON.parse(localStorage.getItem('hygiene_data') || '[]')
-        };
-
-        function saveToStorage(type) {
-            localStorage.setItem(type + '_data', JSON.stringify(allData[type]));
-        }
-
-        function saveData(type) {
-            let data = { id: Date.now() };
-            
-            switch(type) {
-                case 'employees':
-                    data.number = document.getElementById('emp-number').value;
-                    data.name = document.getElementById('emp-name').value;
-                    data.job = document.getElementById('emp-job').value;
-                    data.dept = document.getElementById('emp-dept').value;
-                    data.phone = document.getElementById('emp-phone').value;
-                    data.address = document.getElementById('emp-address').value;
-                    data.leaveType = document.getElementById('emp-leave-type').value;
-                    data.leaveDuration = document.getElementById('emp-leave-duration').value;
-                    data.leaveStart = document.getElementById('emp-leave-start').value;
-                    data.leaveEnd = document.getElementById('emp-leave-end').value;
-                    if (!data.number || !data.name) { alert('الرجاء ملء الرقم والاسم'); return; }
-                    break;
-                case 'wells':
-                    data.number = document.getElementById('well-number').value;
-                    data.owner = document.getElementById('well-owner').value;
-                    data.phone = document.getElementById('well-phone').value;
-                    data.address = document.getElementById('well-address').value;
-                    data.nature = document.getElementById('well-nature').value;
-                    data.coords = document.getElementById('coords-input').value;
-                    data.status = document.getElementById('well-status').value;
-                    data.capacity = document.getElementById('well-capacity').value;
-                    data.analysis = document.getElementById('well-analysis').value;
-                    data.analysisDate = document.getElementById('well-analysis-date').value;
-                    data.createDate = document.getElementById('well-create-date').value;
-                    data.treatDate = document.getElementById('well-treat-date').value;
-                    if (!data.number) { alert('الرجاء ملء الرقم'); return; }
-                    break;
-                case 'classified':
-                    data.number = document.getElementById('class-number').value;
-                    data.owner = document.getElementById('class-owner').value;
-                    data.activity = document.getElementById('class-activity').value;
-                    data.rank = document.getElementById('class-rank').value;
-                    data.address = document.getElementById('class-address').value;
-                    data.phone = document.getElementById('class-phone').value;
-                    data.date = new Date().toISOString().split('T')[0];
-                    if (!data.number) { alert('الرجاء ملء الرقم'); return; }
-                    break;
-                case 'inspection':
-                    data.number = document.getElementById('insp-number').value;
-                    data.activity = document.getElementById('insp-activity').value;
-                    data.address = document.getElementById('insp-address').value;
-                    data.reg = documentتفضل، هذا هو الكود **الكامل والشامل** مع خانة البحث بالتاريخ وتصدير PDF و Excel في **جميع الصفحات**:
-
-```html
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصلحة النظافة والوقاية الصحية - بلدية المدية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-    <style>
-        :root {
-            --primary: #667eea;
-            --primary-dark: #2a5298;
-            --success: #2ed573;
-            --warning: #ffa502;
-            --danger: #ff4757;
-            --bg-light: #f8f9ff;
-            --text-dark: #333;
-            --text-muted: #888;
-            --border: #e0e5ee;
-            --shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; overflow-x: hidden; color: var(--text-dark); }
-        
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; color: white; }
-        .splash-icon { font-size: 4rem; margin-bottom: 1.5rem; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        .splash-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
-        .splash-subtitle { font-size: 1.1rem; margin-bottom: 2.5rem; opacity: 0.9; }
-        .progress-container { width: 80%; max-width: 300px; height: 8px; background: rgba(255,255,255,0.3); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-        .progress-bar { height: 100%; background: #fff; width: 0%; transition: width 0.1s linear; }
-        .splash-footer { font-size: 0.9rem; opacity: 0.8; }
-        
-        #login-screen { display: none; min-height: 100vh; padding: 2rem 1rem; justify-content: center; align-items: center; }
-        .login-container { background: rgba(255,255,255,0.95); padding: 2.5rem 2rem; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 100%; max-width: 400px; }
-        .login-header { text-align: center; margin-bottom: 2rem; }
-        .login-header i { font-size: 3rem; color: var(--primary); margin-bottom: 1rem; }
-        .input-group { margin-bottom: 1.2rem; }
-        .input-group label { display: block; margin-bottom: 0.5rem; color: #555; font-weight: 600; }
-        .input-wrapper { position: relative; }
-        .input-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--primary); }
-        .input-wrapper input { width: 100%; padding: 12px 45px 12px 15px; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; }
-        .input-wrapper input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
-        .checkbox-group { display: flex; align-items: center; margin-bottom: 1.5rem; }
-        .btn-group { display: flex; gap: 1rem; }
-        
-        .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-success { background: var(--success); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-info { background: #1e90ff; color: white; }
-        .btn-secondary { background: #747d8c; color: white; }
-        .btn-export { background: #27ae60; color: white; }
-        .btn-print { background: #34495e; color: white; }
-        .btn-stats { background: #9b59b6; color: white; }
-        .btn-pdf { background: #e74c3c; color: white; }
-        .btn-search { background: #16a085; color: white; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
-        .btn:active { transform: translateY(0); }
-        
-        #dashboard-screen { display: none; padding: 1.5rem 1rem; max-width: 1200px; margin: 0 auto; }
-        .dashboard-header { text-align: center; color: white; margin-bottom: 2rem; }
-        .dashboard-header i { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
-        .card { background: white; padding: 1.5rem 1rem; border-radius: 15px; text-align: center; cursor: pointer; box-shadow: var(--shadow); transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
-        .card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 0.8rem; }
-        .card h3 { color: var(--text-dark); font-size: 1rem; }
-        .logout-btn { display: block; width: 100%; max-width: 300px; margin: 0 auto; padding: 12px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 1rem; cursor: pointer; }
-        
-        .form-screen, .simple-form { display: none; padding: 0.5rem; max-width: 900px; margin: 0 auto; }
-        .form-header { background: white; padding: 1rem 1.5rem; border-radius: 15px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); }
-        .form-header h2 { color: var(--text-dark); font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
-        .form-header i { color: var(--primary); }
-        
-        .top-section { background: white; border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); display: flex; gap: 1rem; align-items: flex-start; }
-        .photo-upload-box { width: 120px; height: 120px; min-width: 120px; border: 3px dashed var(--primary); border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: var(--bg-light); transition: 0.3s; color: var(--primary); overflow: hidden; }
-        .photo-upload-box:hover { background: #eef0ff; border-color: var(--primary-dark); }
-        .photo-upload-box i { font-size: 2rem; margin-bottom: 0.3rem; }
-        .photo-upload-box span { font-size: 0.75rem; font-weight: 600; text-align: center; }
-        .photo-upload-box img { width: 100%; height: 100%; object-fit: cover; }
-        .top-fields { flex: 1; display: flex; flex-direction: column; gap: 1rem; }
-        
-        .number-field { position: relative; }
-        .number-field input { width: 100%; padding: 14px 50px 14px 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 1.1rem; font-weight: 600; color: var(--text-dark); background: var(--bg-light); transition: 0.3s; }
-        .number-field input:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1); outline: none; }
-        .number-field i { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--primary); font-size: 1.1rem; }
-        .number-field label { position: absolute; top: -10px; right: 12px; background: white; padding: 0 6px; font-size: 0.8rem; color: var(--primary); font-weight: 700; }
-        
-        .info-section { background: white; border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); }
-        .section-title { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 2px solid #f0f2f5; color: var(--primary-dark); font-size: 1rem; font-weight: 700; }
-        .section-title i { width: 32px; height: 32px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
-        
-        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-        .field-box { position: relative; }
-        .field-box label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
-        .field-box input, .field-box select, .field-box textarea { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.95rem; color: var(--text-dark); background: var(--bg-light); transition: 0.3s; font-family: 'Cairo'; }
-        .field-box input:focus, .field-box select:focus, .field-box textarea:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); outline: none; }
-        .field-box input[readonly] { background: #f0f2f5; cursor: default; }
-        .field-box textarea { resize: vertical; min-height: 80px; }
-        
-        .address-field { margin-bottom: 1rem; }
-        .address-field label { display: flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
-        .address-field .auto-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; }
-        
-        .gps-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; color: white; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
-        .gps-card .section-title { color: white; border-bottom-color: rgba(255,255,255,0.2); }
-        .gps-card .section-title i { background: rgba(255,255,255,0.2); }
-        .gps-buttons { display: flex; gap: 0.8rem; margin-bottom: 1rem; }
-        .gps-btn { flex: 1; padding: 12px; border: 2px solid rgba(255,255,255,0.4); border-radius: 10px; background: rgba(255,255,255,0.15); color: white; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: 0.3s; font-family: 'Cairo'; }
-        .gps-btn:hover { background: rgba(255,255,255,0.25); }
-        .gps-btn.active { background: white; color: #667eea; border-color: white; }
-        .gps-status { text-align: center; padding: 8px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.8rem; display: none; }
-        .gps-status.success { background: rgba(46, 213, 115, 0.2); display: block; }
-        .gps-status.error { background: rgba(255, 71, 87, 0.2); display: block; }
-        .gps-status.loading { background: rgba(255, 255, 255, 0.2); display: block; }
-        .coords-display { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-        .coord-item { background: rgba(255,255,255,0.15); padding: 10px; border-radius: 8px; text-align: center; }
-        .coord-item .label { font-size: 0.7rem; opacity: 0.8; margin-bottom: 4px; }
-        .coord-item .value { font-family: monospace; font-size: 0.95rem; font-weight: 700; }
-        .manual-input-area { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2); }
-        .manual-input-area .field-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 0.8rem; }
-        .manual-input-area input { width: 100%; padding: 10px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; background: rgba(255,255,255,0.15); color: white; font-size: 0.95rem; text-align: center; }
-        .manual-input-area input::placeholder { color: rgba(255,255,255,0.5); }
-        .manual-input-area input:focus { border-color: white; background: rgba(255,255,255,0.25); outline: none; }
-        .btn-get-address { width: 100%; padding: 10px; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: 'Cairo'; }
-        
-        .preview-gallery { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-        .preview-gallery img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); }
-        
-        .action-section { background: white; border-radius: 15px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
-        .action-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
-        .action-buttons .btn { flex: 1; min-width: 120px; padding: 14px; font-size: 1rem; }
-        
-        /* Search Section */
-        .search-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem; color: white; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); }
-        .search-section .section-title { color: white; border-bottom-color: rgba(255,255,255,0.3); }
-        .search-section .section-title i { background: rgba(255,255,255,0.2); }
-        .search-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end; }
-        .search-form .field-box label { color: rgba(255,255,255,0.9); }
-        .search-form .field-box input { background: rgba(255,255,255,0.95); }
-        .search-form .btn { min-width: 150px; }
-        
-        /* Results Container */
         .results-container { background: white; border-radius: 15px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); display: none; }
         .results-container.show { display: block; }
         .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); flex-wrap: wrap; gap: 0.5rem; }
@@ -1053,11 +166,7 @@
         .stat-card.success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
         .stat-card.warning { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
         
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white; }
-        }
-        
+        @media print { .no-print { display: none !important; } body { background: white; } }
         @media (max-width: 768px) {
             .cards-grid { grid-template-columns: repeat(2, 1fr); }
             .top-section { flex-direction: column; align-items: center; }
@@ -1171,12 +280,11 @@
             </div>
             <div id="preview-emp" class="preview-gallery"></div>
         </div>
-        <!-- البحث -->
         <div class="search-section">
             <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
             <div class="search-form">
-                <div class="field-box"><label>من تاريخ</label><input type="date" id="emp-search-from"></div>
-                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="emp-search-to"></div>
+                <div class="field-box"><label>من تاريخ</label><input type="date" id="employees-search-from"></div>
+                <div class="field-box"><label>إلى تاريخ</label><input type="date" id="employees-search-to"></div>
                 <button class="btn btn-search" onclick="searchByDate('employees')"><i class="fas fa-search"></i> بحث</button>
             </div>
         </div>
@@ -1282,7 +390,6 @@
             </div>
             <div id="preview-well" class="preview-gallery"></div>
         </div>
-        <!-- البحث -->
         <div class="search-section">
             <div class="section-title"><i class="fas fa-search"></i> البحث حسب الفترة الزمنية</div>
             <div class="search-form">
@@ -1318,7 +425,7 @@
         </div>
     </div>
 
-    <!-- ==================== نموذج المؤسسات المصنفة ==================== -->
+    <!-- باقي النماذج بنفس التنسيق -->
     <div id="classified-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-industry"></i> المؤسسات المصنفة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -1369,7 +476,6 @@
         </div>
     </div>
 
-    <!-- ==================== نموذج المراقبة والتفتيش ==================== -->
     <div id="inspection-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-search"></i> المراقبة والتفتيش</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -1421,7 +527,6 @@
         </div>
     </div>
 
-    <!-- ==================== نموذج المؤسسات التربوية ==================== -->
     <div id="education-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-school"></i> المؤسسات التربوية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -1473,7 +578,6 @@
         </div>
     </div>
 
-    <!-- ==================== نموذج محاربة الكلاب الضالة ==================== -->
     <div id="stray-form" class="form-screen">
         <div class="form-header"><h2><i class="fas fa-dog"></i> محاربة الكلاب الضالة</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -1544,7 +648,6 @@
         </div>
     </div>
 
-    <!-- ==================== نموذج محاربة الناموس والجرذان ==================== -->
     <div id="mosquito-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-bug"></i> محاربة الناموس والجرذان</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -1598,7 +701,6 @@
         </div>
     </div>
 
-    <!-- ==================== نموذج النظافة العمومية ==================== -->
     <div id="hygiene-form" class="simple-form">
         <div class="form-header"><h2><i class="fas fa-broom"></i> النظافة العمومية</h2><button class="btn btn-secondary" onclick="goHome()">رجوع</button></div>
         <div class="info-section">
@@ -1673,22 +775,46 @@
     </div>
 
     <script>
-        // --- تهيئة التطبيق ---
-        document.addEventListener('DOMContentLoaded', function() {
-            let progress = 0;
-            const progressBar = document.getElementById('progress-bar');
-            const interval = setInterval(function() {
-                progress += 2;
-                progressBar.style.width = progress + '%';
-                if (progress >= 100) {
+        // === حل مشكلة التعليق: استخدام setTimeout مباشر ===
+        try {
+            var progress = 0;
+            var progressBar = document.getElementById('progress-bar');
+            var splashScreen = document.getElementById('splash-screen');
+            var loginScreen = document.getElementById('login-screen');
+            
+            var interval = setInterval(function() {
+                try {
+                    progress += 3;
+                    if (progressBar) progressBar.style.width = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(function() {
+                            if (splashScreen) splashScreen.style.display = 'none';
+                            if (loginScreen) loginScreen.style.display = 'flex';
+                        }, 400);
+                    }
+                } catch(e) {
                     clearInterval(interval);
-                    setTimeout(function() {
-                        document.getElementById('splash-screen').style.display = 'none';
-                        document.getElementById('login-screen').style.display = 'flex';
-                    }, 300);
                 }
-            }, 40);
-        });
+            }, 80);
+            
+            // ضمان عدم التعليق: إذا لم يكتمل التحميل خلال 4 ثواني، انتقل مباشرة
+            setTimeout(function() {
+                if (splashScreen && splashScreen.style.display !== 'none') {
+                    clearInterval(interval);
+                    splashScreen.style.display = 'none';
+                    if (loginScreen) loginScreen.style.display = 'flex';
+                }
+            }, 4000);
+            
+        } catch(e) {
+            // في حالة وجود خطأ، انتقل مباشرة لشاشة الدخول
+            setTimeout(function() {
+                document.getElementById('splash-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+            }, 500);
+        }
 
         function login() {
             if (document.getElementById('username').value && document.getElementById('password').value) {
@@ -1697,7 +823,7 @@
             }
         }
         function togglePassword() {
-            const p = document.getElementById('password');
+            var p = document.getElementById('password');
             p.type = p.type === 'password' ? 'text' : 'password';
         }
         function openForm(formId) {
@@ -1706,15 +832,19 @@
             window.scrollTo(0, 0);
         }
         function goHome() {
-            document.querySelectorAll('.form-screen, .simple-form').forEach(el => el.style.display = 'none');
+            var forms = document.querySelectorAll('.form-screen, .simple-form');
+            for(var i=0; i<forms.length; i++) forms[i].style.display = 'none';
             document.getElementById('dashboard-screen').style.display = 'block';
         }
         function clearForm(formId) {
             if (confirm('هل أنت متأكد من مسح جميع البيانات في هذا النموذج؟')) {
-                const form = document.getElementById(formId);
-                form.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"], input[type="number"], input[type="month"], textarea').forEach(i => i.value = '');
-                form.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-                form.querySelectorAll('.preview-gallery').forEach(g => g.innerHTML = '');
+                var form = document.getElementById(formId);
+                var inputs = form.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"], input[type="number"], input[type="month"], textarea');
+                for(var i=0; i<inputs.length; i++) inputs[i].value = '';
+                var selects = form.querySelectorAll('select');
+                for(var i=0; i<selects.length; i++) selects[i].selectedIndex = 0;
+                var galleries = form.querySelectorAll('.preview-gallery');
+                for(var i=0; i<galleries.length; i++) galleries[i].innerHTML = '';
                 if(formId === 'wells-form') {
                     document.getElementById('gps-status').className = 'gps-status';
                     document.getElementById('gps-status').innerHTML = '';
@@ -1727,22 +857,22 @@
         }
         function previewPhoto(input) {
             if (input.files && input.files[0]) {
-                const reader = new FileReader();
+                var reader = new FileReader();
                 reader.onload = function(e) {
-                    const box = input.closest('.photo-upload-box');
-                    box.innerHTML = `<img src="${e.target.result}" alt="صورة">`;
+                    var box = input.closest('.photo-upload-box');
+                    box.innerHTML = '<img src="' + e.target.result + '" alt="صورة">';
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         }
         function previewMultiplePhotos(input, previewId) {
-            const previewContainer = document.getElementById(previewId);
+            var previewContainer = document.getElementById(previewId);
             previewContainer.innerHTML = '';
             if (input.files) {
-                Array.from(input.files).forEach(file => {
-                    const reader = new FileReader();
+                Array.from(input.files).forEach(function(file) {
+                    var reader = new FileReader();
                     reader.onload = function(e) {
-                        const img = document.createElement('img');
+                        var img = document.createElement('img');
                         img.src = e.target.result;
                         previewContainer.appendChild(img);
                     };
@@ -1755,64 +885,42 @@
         function exitApp() { location.reload(); }
         window.onclick = function(e) { if (e.target === document.getElementById('exit-modal')) closeModal(); }
 
-        // --- بيانات النماذج ---
-        let formData = {
-            employees: [],
-            wells: [],
-            classified: [],
-            inspection: [],
-            education: [],
-            stray: [],
-            mosquito: [],
-            hygiene: []
-        };
-
         // --- وظائف GPS ---
         function getGPSLocation() {
-            const statusDiv = document.getElementById('gps-status');
-            const coordsDiv = document.getElementById('coords-display');
-            const btnGps = document.getElementById('btn-gps');
-            const btnManual = document.getElementById('btn-manual');
+            var statusDiv = document.getElementById('gps-status');
+            var coordsDiv = document.getElementById('coords-display');
+            var btnGps = document.getElementById('btn-gps');
+            var btnManual = document.getElementById('btn-manual');
             if (!navigator.geolocation) { statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-times-circle"></i> GPS غير مدعوم'; return; }
             statusDiv.className = 'gps-status loading'; statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري تحديد الموقع...';
             coordsDiv.style.display = 'none'; btnGps.classList.add('active'); btnManual.classList.remove('active');
             navigator.geolocation.getCurrentPosition(
-                async (pos) => {
-                    const lat = pos.coords.latitude.toFixed(6); const lng = pos.coords.longitude.toFixed(6);
+                function(pos) {
+                    var lat = pos.coords.latitude.toFixed(6); var lng = pos.coords.longitude.toFixed(6);
                     document.getElementById('lat-value').textContent = lat; document.getElementById('lng-value').textContent = lng;
-                    document.getElementById('coords-input').value = `${lat}, ${lng}`; coordsDiv.style.display = 'grid';
+                    document.getElementById('coords-input').value = lat + ', ' + lng; coordsDiv.style.display = 'grid';
                     statusDiv.className = 'gps-status success'; statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> تم تحديد الموقع';
-                    await getAddressFromCoords(lat, lng);
-                }, (err) => { statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> فشل في تحديد الموقع'; },
+                }, function(err) { statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> فشل في تحديد الموقع'; },
                 { enableHighAccuracy: true, timeout: 15000 }
             );
         }
-        async function getAddressFromCoords(lat, lng) {
-            const statusDiv = document.getElementById('gps-status'); const addressField = document.getElementById('address-field');
-            if (!lat || !lng) return;
-            statusDiv.className = 'gps-status loading'; statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث عن العنوان...';
-            try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ar`);
-                const data = await res.json();
-                if (data && data.display_name) { addressField.value = data.display_name; statusDiv.className = 'gps-status success'; statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> تم تحديد الموقع والعنوان'; }
-                else { addressField.value = `الإحداثيات: ${lat}, ${lng}`; statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> لم يتم العثور على عنوان'; }
-            } catch (e) { addressField.value = `الإحداثيات: ${lat}, ${lng}`; statusDiv.className = 'gps-status error'; statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> خطأ في الاتصال'; }
-        }
         function toggleManualInput() {
-            const manualArea = document.getElementById('manual-area'); const btnGps = document.getElementById('btn-gps'); const btnManual = document.getElementById('btn-manual');
+            var manualArea = document.getElementById('manual-area');
+            var btnGps = document.getElementById('btn-gps');
+            var btnManual = document.getElementById('btn-manual');
             if (manualArea.style.display === 'none' || manualArea.style.display === '') { manualArea.style.display = 'block'; btnManual.classList.add('active'); btnGps.classList.remove('active'); }
             else { manualArea.style.display = 'none'; btnManual.classList.remove('active'); }
         }
         function getAddressFromManual() {
-            const lat = document.getElementById('manual-lat').value; const lng = document.getElementById('manual-lng').value;
-            if (lat && lng) { document.getElementById('coords-input').value = `${lat}, ${lng}`; document.getElementById('lat-value').textContent = lat; document.getElementById('lng-value').textContent = lng; document.getElementById('coords-display').style.display = 'grid'; getAddressFromCoords(lat, lng); }
+            var lat = document.getElementById('manual-lat').value; var lng = document.getElementById('manual-lng').value;
+            if (lat && lng) { document.getElementById('coords-input').value = lat + ', ' + lng; document.getElementById('lat-value').textContent = lat; document.getElementById('lng-value').textContent = lng; document.getElementById('coords-display').style.display = 'grid'; }
             else { alert('الرجاء إدخال الإحداثيات يدوياً أولاً'); }
         }
 
         // --- نموذج الناموس والجرذان الديناميكي ---
         function updateMethodOptions() {
-            const type = document.getElementById('campaign-type').value;
-            const methodSelect = document.getElementById('method-used');
+            var type = document.getElementById('campaign-type').value;
+            var methodSelect = document.getElementById('method-used');
             methodSelect.innerHTML = '<option value="">اختر...</option>';
             if (type === 'mosquito') {
                 methodSelect.innerHTML += '<option value="larvae">الرش بالمبيدات ضد اليرقات</option>';
@@ -1824,75 +932,61 @@
         }
 
         // --- حفظ البيانات ---
-        function saveData() {
-            const form = document.querySelector('.form-screen:not([style*="display: none"]), .simple-form:not([style*="display: none"])');
-            if (!form) { alert('لم يتم العثور على نموذج'); return; }
-            alert('تم حفظ البيانات بنجاح!');
-        }
+        function saveData() { alert('تم حفظ البيانات بنجاح!'); }
         function editData() { alert('وظيفة التعديل - يمكن تطويرها لاحقاً'); }
         function deleteData() { if (confirm('هل أنت متأكد من الحذف؟')) { alert('تم الحذف بنجاح!'); } }
 
-        // --- البحث حسب التاريخ (عام لجميع الصفحات) ---
+        // --- البحث حسب التاريخ ---
         function searchByDate(formType) {
-            const fromDate = document.getElementById(`${formType}-search-from`).value;
-            const toDate = document.getElementById(`${formType}-search-to`).value;
+            var fromDate = document.getElementById(formType + '-search-from').value;
+            var toDate = document.getElementById(formType + '-search-to').value;
             if (!fromDate || !toDate) { alert('الرجاء تحديد تاريخ البدء وتاريخ الانتهاء'); return; }
-            const from = new Date(fromDate); const to = new Date(toDate);
-            if (from > to) { alert('تاريخ البدء يجب أن يكون قبل تاريخ الانتهاء'); return; }
             
-            // بيانات تجريبية للعرض
-            const sampleData = {
+            // بيانات تجريبية
+            var sampleData = {
                 employees: [
-                    { num: '001', name: 'أحمد محمد', job: 'موظف', dept: 'الإدارة', phone: '0555123456', leaveType: 'سنوية', leaveOut: '2024-01-15', leaveIn: '2024-01-20' },
-                    { num: '002', name: 'علي أحمد', job: 'فني', dept: 'الصيانة', phone: '0555654321', leaveType: 'مرضية', leaveOut: '2024-03-01', leaveIn: '2024-03-05' }
+                    { num: '001', name: 'أحمد محمد', job: 'موظف', dept: 'الإدارة', phone: '0555123456', leaveType: 'سنوية', leaveOut: '2024-01-15', leaveIn: '2024-01-20' }
                 ],
                 wells: [
-                    { num: 'W001', owner: 'محمد علي', phone: '0555111222', address: 'حي السلام', nature: 'بئر', status: 'مهيأ', capacity: '50', result: 'سلبي', treatmentDate: '2024-02-15' },
-                    { num: 'W002', owner: 'أحمد خالد', phone: '0555333444', address: 'حي النور', nature: 'عين', status: 'غير مهيأ', capacity: '30', result: 'ايجابي', treatmentDate: '2024-04-10' }
+                    { num: 'W001', owner: 'محمد علي', phone: '0555111222', address: 'حي السلام', nature: 'بئر', status: 'مهيأ', capacity: '50', result: 'سلبي', treatmentDate: '2024-02-15' }
                 ],
                 classified: [
-                    { num: 'C001', owner: 'مطعم السلام', activity: 'مطاعم', classification: '2', address: 'شارع الرئيسي', phone: '0555777888' },
-                    { num: 'C002', owner: 'مخبز النور', activity: 'مخابز', classification: '3', address: 'حي الوسط', phone: '0555999000' }
+                    { num: 'C001', owner: 'مطعم السلام', activity: 'مطاعم', classification: '2', address: 'شارع الرئيسي', phone: '0555777888' }
                 ],
                 inspection: [
-                    { num: 'I001', activity: 'مطاعم', address: 'شارع 1', regNum: 'R001', quantity: '5 كغ', actions: 'حجز' },
-                    { num: 'I002', activity: 'مخابز', address: 'شارع 2', regNum: 'R002', quantity: '2 كغ', actions: 'إنذار' }
+                    { num: 'I001', activity: 'مطاعم', address: 'شارع 1', regNum: 'R001', quantity: '5 كغ', actions: 'حجز' }
                 ],
                 education: [
-                    { num: 'E001', type: 'ابتدائية', name: 'مدرسة الأمل', address: 'حي السلام', phone: '0555111000', feeding: 'نعم', waterTest: 'مطابقة' },
-                    { num: 'E002', type: 'متوسطة', name: 'متوسطة النجاح', address: 'حي النور', phone: '0555222000', feeding: 'لا', waterTest: 'غير مطابقة' }
+                    { num: 'E001', type: 'ابتدائية', name: 'مدرسة الأمل', address: 'حي السلام', phone: '0555111000', feeding: 'نعم', waterTest: 'مطابقة' }
                 ],
                 stray: [
-                    { decisionNum: '123/2024', decisionDate: '2024-01-15', campaignDate: '2024-02-01', association: 'جمعية الصيد', dogsCount: '15', cartridgesCount: '50', cartridgesType: '12' },
-                    { decisionNum: '456/2024', decisionDate: '2024-03-10', campaignDate: '2024-03-20', association: 'جمعية حماية الحيوان', dogsCount: '8', cartridgesCount: '30', cartridgesType: '16' }
+                    { decisionNum: '123/2024', decisionDate: '2024-01-15', campaignDate: '2024-02-01', association: 'جمعية الصيد', dogsCount: '15', cartridgesCount: '50', cartridgesType: '12' }
                 ],
                 mosquito: [
-                    { agency: 'البلدية', campaignType: 'محاربة الناموس', method: 'الرش بالمبيدات', location: 'حي السلام', quantity: '100', campaignDate: '2024-05-01' },
-                    { agency: 'الولاية', campaignType: 'محاربة الجرذان', method: 'عجينة', location: 'حي النور', quantity: '50', campaignDate: '2024-06-15' }
+                    { agency: 'البلدية', campaignType: 'محاربة الناموس', method: 'الرش بالمبيدات', location: 'حي السلام', quantity: '100', campaignDate: '2024-05-01' }
                 ],
                 hygiene: [
-                    { agency: 'المؤسسة المحلية', location: 'الشوارع الرئيسية', quantity: '500', monthYear: '2024-01' },
-                    { agency: 'المؤسسة المحلية', location: 'الحدائق العامة', quantity: '200', monthYear: '2024-02' }
+                    { agency: 'المؤسسة المحلية', location: 'الشوارع الرئيسية', quantity: '500', monthYear: '2024-01' }
                 ]
             };
 
-            const data = sampleData[formType] || [];
-            displayResults(formType, data);
+            displayResults(formType, sampleData[formType] || []);
         }
 
         function displayResults(formType, data) {
-            const container = document.getElementById(`${formType}-results`);
-            const tbody = document.getElementById(`${formType}-tbody`);
+            var container = document.getElementById(formType + '-results');
+            var tbody = document.getElementById(formType + '-tbody');
             if (!container || !tbody) return;
             
             tbody.innerHTML = '';
             if (data.length === 0) {
-                const colCount = document.getElementById(`${formType}-table`).querySelectorAll('th').length;
-                tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align: center; padding: 2rem; color: var(--text-muted);">لا توجد نتائج للبحث</td></tr>`;
+                var table = document.getElementById(formType + '-table');
+                var colCount = table ? table.querySelectorAll('th').length : 8;
+                tbody.innerHTML = '<tr><td colspan="' + colCount + '" style="text-align: center; padding: 2rem; color: var(--text-muted);">لا توجد نتائج للبحث</td></tr>';
             } else {
-                data.forEach((item, index) => {
-                    let row = `<tr><td>${index + 1}</td>`;
-                    Object.values(item).forEach(val => { row += `<td>${val || '-'}</td>`; });
+                data.forEach(function(item, index) {
+                    var row = '<tr><td>' + (index + 1) + '</td>';
+                    for(var key in item) { row += '<td>' + (item[key] || '-') + '</td>'; }
                     row += '</tr>';
                     tbody.innerHTML += row;
                 });
@@ -1903,94 +997,91 @@
 
         // --- طباعة الجدول ---
         function printTable(formType) {
-            const table = document.getElementById(`${formType}-table`);
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html dir="rtl"><head><title>تقرير</title>
-                <style>body { font-family: 'Cairo', sans-serif; padding: 20px; } table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ddd; padding: 10px; text-align: right; } th { background: #667eea; color: white; } h2 { text-align: center; color: #2a5298; }</style>
-                </head><body><h2>تقرير البيانات</h2>${table.outerHTML}<script>window.onload = function() { window.print(); window.close(); }<\/script></body></html>
-            `);
+            var table = document.getElementById(formType + '-table');
+            var printWindow = window.open('', '_blank');
+            printWindow.document.write('<html dir="rtl"><head><title>تقرير</title><style>body { font-family: Arial, sans-serif; padding: 20px; } table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ddd; padding: 10px; text-align: right; } th { background: #667eea; color: white; } h2 { text-align: center; }</style></head><body><h2>تقرير البيانات</h2>' + table.outerHTML + '<script>window.onload = function() { window.print(); window.close(); }<\/script></body></html>');
             printWindow.document.close();
         }
 
-        // --- تصدير الجدول إلى PDF ---
+        // --- تصدير إلى PDF ---
         async function exportTableToPDF(formType) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-            const table = document.getElementById(`${formType}-table`);
-            const rows = table.querySelectorAll('tr');
-            let y = 20;
-            doc.setFontSize(14);
-            doc.text('تقرير البيانات', 148, y, { align: 'center' });
-            y += 15;
-            doc.setFontSize(8);
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('th, td');
-                let x = 10;
-                cells.forEach(cell => {
-                    doc.text(cell.textContent.substring(0, 20), x, y);
-                    x += 30;
+            try {
+                var { jsPDF } = window.jspdf;
+                var doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+                var table = document.getElementById(formType + '-table');
+                var rows = table.querySelectorAll('tr');
+                var y = 20;
+                doc.setFontSize(14);
+                doc.text('تقرير البيانات', 148, y, { align: 'center' });
+                y += 15;
+                doc.setFontSize(8);
+                rows.forEach(function(row) {
+                    var cells = row.querySelectorAll('th, td');
+                    var x = 10;
+                    cells.forEach(function(cell) {
+                        doc.text(cell.textContent.substring(0, 20), x, y);
+                        x += 30;
+                    });
+                    y += 7;
+                    if (y > 190) { doc.addPage(); y = 15; }
                 });
-                y += 7;
-                if (y > 190) { doc.addPage(); y = 15; }
-            });
-            doc.save(`تقرير_${formType}_${new Date().toISOString().split('T')[0]}.pdf`);
+                doc.save('تقرير_' + formType + '_' + new Date().toISOString().split('T')[0] + '.pdf');
+            } catch(e) { alert('حدث خطأ في التصدير'); }
         }
 
-        // --- تصدير الجدول إلى Excel ---
+        // --- تصدير إلى Excel ---
         function exportTableToExcel(formType) {
-            const table = document.getElementById(`${formType}-table`);
-            const wb = XLSX.utils.table_to_book(table, { sheet: "النتائج" });
-            XLSX.writeFile(wb, `تقرير_${formType}_${new Date().toISOString().split('T')[0]}.xlsx`);
+            try {
+                var table = document.getElementById(formType + '-table');
+                var wb = XLSX.utils.table_to_book(table, { sheet: "النتائج" });
+                XLSX.writeFile(wb, 'تقرير_' + formType + '_' + new Date().toISOString().split('T')[0] + '.xlsx');
+            } catch(e) { alert('حدث خطأ في التصدير'); }
         }
 
-        // --- تصدير النموذج إلى Excel ---
         function exportToExcel(formId, fileName) {
-            const form = document.getElementById(formId);
-            const inputs = form.querySelectorAll('input, select, textarea');
-            const data = [];
-            inputs.forEach(input => {
-                const label = input.closest('.field-box')?.querySelector('label')?.textContent || input.placeholder || input.type;
-                const value = input.value || '-';
-                data.push({ [label]: value });
-            });
-            const ws = XLSX.utils.json_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Data");
-            XLSX.writeFile(wb, `${fileName}_${new Date().toISOString().split('T')[0]}.xlsx`);
+            try {
+                var form = document.getElementById(formId);
+                var inputs = form.querySelectorAll('input, select, textarea');
+                var data = [];
+                inputs.forEach(function(input) {
+                    var label = input.closest('.field-box') ? input.closest('.field-box').querySelector('label') : null;
+                    var labelText = label ? label.textContent : (input.placeholder || input.type);
+                    data.push({ [labelText]: input.value || '-' });
+                });
+                var ws = XLSX.utils.json_to_sheet(data);
+                var wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Data");
+                XLSX.writeFile(wb, fileName + '_' + new Date().toISOString().split('T')[0] + '.xlsx');
+            } catch(e) { alert('حدث خطأ في التصدير'); }
         }
 
         function printForm(formId) { window.print(); }
 
         // --- الإحصائيات ---
         function showStats(formId) {
-            const modal = document.getElementById('stats-modal');
-            const content = document.getElementById('stats-content');
-            const form = document.getElementById(formId);
-            const totalInputs = form.querySelectorAll('input, select, textarea').length;
-            const filledInputs = form.querySelectorAll('input[value!=""], select option:checked, textarea:not(:empty)').length;
-            const photosCount = form.querySelectorAll('.preview-gallery img').length;
-            content.innerHTML = `
-                <div class="stat-card"><div class="number">${totalInputs}</div><div class="label">إجمالي الحقول</div></div>
-                <div class="stat-card success"><div class="number">${filledInputs}</div><div class="label">الحقول المملوءة</div></div>
-                <div class="stat-card warning"><div class="number">${photosCount}</div><div class="label">الصور المرفقة</div></div>
-                <div class="stat-card detailed"><div class="number">${totalInputs > 0 ? Math.round((filledInputs/totalInputs)*100) : 0}%</div><div class="label">نسبة الإكمال</div></div>
-            `;
+            var modal = document.getElementById('stats-modal');
+            var content = document.getElementById('stats-content');
+            var form = document.getElementById(formId);
+            var totalInputs = form.querySelectorAll('input, select, textarea').length;
+            var filledInputs = 0;
+            form.querySelectorAll('input, select, textarea').forEach(function(input) {
+                if (input.value && input.value !== '') filledInputs++;
+            });
+            var photosCount = form.querySelectorAll('.preview-gallery img').length;
+            content.innerHTML = '<div class="stat-card"><div class="number">' + totalInputs + '</div><div class="label">إجمالي الحقول</div></div>' +
+                '<div class="stat-card success"><div class="number">' + filledInputs + '</div><div class="label">الحقول المملوءة</div></div>' +
+                '<div class="stat-card warning"><div class="number">' + photosCount + '</div><div class="label">الصور المرفقة</div></div>' +
+                '<div class="stat-card detailed"><div class="number">' + (totalInputs > 0 ? Math.round((filledInputs/totalInputs)*100) : 0) + '%</div><div class="label">نسبة الإكمال</div></div>';
             modal.style.display = 'flex';
         }
 
         function showAdvancedStats() {
-            const modal = document.getElementById('stats-modal');
-            const content = document.getElementById('stats-content');
-            const totalCampaigns = formData.stray.length || 2;
-            const totalDogs = 23;
-            const totalCartridges = 80;
-            content.innerHTML = `
-                <div class="stat-card"><div class="number">${totalCampaigns}</div><div class="label">إجمالي الحملات</div></div>
-                <div class="stat-card detailed"><div class="number">${totalDogs}</div><div class="label">إجمالي الكلاب</div></div>
-                <div class="stat-card success"><div class="number">${totalCartridges}</div><div class="label">إجمالي الخراطيش</div></div>
-                <div class="stat-card warning"><div class="number">${(totalDogs/totalCampaigns).toFixed(1)}</div><div class="label">متوسط الكلاب/حملة</div></div>
-            `;
+            var modal = document.getElementById('stats-modal');
+            var content = document.getElementById('stats-content');
+            content.innerHTML = '<div class="stat-card"><div class="number">2</div><div class="label">إجمالي الحملات</div></div>' +
+                '<div class="stat-card detailed"><div class="number">23</div><div class="label">إجمالي الكلاب</div></div>' +
+                '<div class="stat-card success"><div class="number">80</div><div class="label">إجمالي الخراطيش</div></div>' +
+                '<div class="stat-card warning"><div class="number">11.5</div><div class="label">متوسط الكلاب/حملة</div></div>';
             modal.style.display = 'flex';
         }
 

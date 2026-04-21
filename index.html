@@ -2289,8 +2289,20 @@ select.input {
       <button class="btn btn-primary ripple" style="margin-bottom:12px" onclick="showPage('driverTonnage')">
         <i class="fas fa-plus"></i> <span data-i18n="newTonnage">تسجيل نفايات جديدة</span>
       </button>
-      <h3 style="margin-bottom:10px;color:var(--primary)"><i class="fas fa-tasks"></i> تتبع التبليغات</h3>
-      <div id="tasksList"></div>
+      
+      <!-- أيقونة تتبع التبليغات الجديدة -->
+      <button class="btn btn-info mb ripple" style="background: linear-gradient(135deg, #2196F3, #1976D2); margin-bottom:15px;" onclick="renderDriverTasks()">
+        <i class="fas fa-clipboard-list" style="font-size:2.5rem"></i>
+        <span style="margin-top:10px; font-weight:800;">تتبع التبليغات المحولة</span>
+      </button>
+
+      <div id="driverTasksContainer" style="display:none; background: var(--bg); padding: 10px; border-radius: var(--radius); border: 2px solid var(--info); margin-bottom: 15px;">
+        <h3 style="margin-bottom:10px;color:var(--primary); text-align:center;"><i class="fas fa-tasks"></i> قائمة المهام الحالية</h3>
+        <div id="tasksList"></div>
+        <button class="btn btn-dark ripple" onclick="document.getElementById('driverTasksContainer').style.display='none'" style="margin-top:10px; height:40px; font-size:0.9rem;">
+          <i class="fas fa-times"></i> إغلاق القائمة
+        </button>
+      </div>
       <button class="btn btn-secondary ripple" onclick="endMission()" id="endMissionBtn" style="display:none">
         <i class="fas fa-flag-checkered"></i> <span data-i18n="endMission">إنهاء المهمة</span>
       </button>
@@ -3986,11 +3998,15 @@ function endMission() {
 // ===== مهام السائق =====
 function renderDriverTasks() {
   try {
+    // إظهار الحاوية عند النقر
+    document.getElementById('driverTasksContainer').style.display = 'block';
+    document.getElementById('driverTasksContainer').scrollIntoView({behavior: 'smooth'});
+
     const t = allReports.filter(r => r.driverName === currentDriver && r.status !== 'done');
     const c = document.getElementById('tasksList');
     
     if(!t.length) {
-      c.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle"></i><p>لا توجد مهام</p></div>';
+      c.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle"></i><p>لا توجد مهام محولة حالياً</p></div>';
       return;
     }
     

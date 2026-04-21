@@ -2289,7 +2289,7 @@ select.input {
       <button class="btn btn-primary ripple" style="margin-bottom:12px" onclick="showPage('driverTonnage')">
         <i class="fas fa-plus"></i> <span data-i18n="newTonnage">تسجيل نفايات جديدة</span>
       </button>
-      <h3 style="margin-bottom:10px;color:var(--primary)"><i class="fas fa-tasks"></i> مهامك</h3>
+      <h3 style="margin-bottom:10px;color:var(--primary)"><i class="fas fa-tasks"></i> تتبع التبليغات</h3>
       <div id="tasksList"></div>
       <button class="btn btn-secondary ripple" onclick="endMission()" id="endMissionBtn" style="display:none">
         <i class="fas fa-flag-checkered"></i> <span data-i18n="endMission">إنهاء المهمة</span>
@@ -3995,21 +3995,27 @@ function renderDriverTasks() {
     }
     
     c.innerHTML = t.map(x => {
-      const img = x.image ? `<div class="img-container"><img src="${x.image}"><div class="img-label">📷 صورة البلاغ (${x.date} ${x.time})</div></div>` : '';
-      const mapLink = x.gps ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${x.gps.split(',')[0]},${x.gps.split(',')[1]}" target="_blank" class="btn btn-info ripple" style="margin-top:8px"><i class="fas fa-map"></i> الدخول للخريطة</a>` : '';
-      
-      return `
-        <div class="report-card assigned">
-          <div class="info-row"><b>📍 العنوان:</b> ${x.addr}</div>
-          <div class="info-row"><b>🌍 GPS:</b> ${x.gps}</div>
-          ${img}
-          ${mapLink}
-          <button class="btn btn-success ripple" onclick="completeTask(${x.id})" style="margin-top:10px">
-            <i class="fas fa-check"></i> تأكيد الإنجاز
-          </button>
-        </div>
-      `;
-    }).join('');
+	      const imgBefore = x.image ? `<div class="img-container"><img src="${x.image}"><div class="img-label">📷 صورة البلاغ (${x.date} ${x.time})</div></div>` : '';
+	      const mapLink = x.gps ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${x.gps.split(',')[0]},${x.gps.split(',')[1]}" target="_blank" class="btn btn-info ripple" style="margin-top:8px"><i class="fas fa-map-marker-alt"></i> الوصول إلى موقع التبليغ</a>` : '';
+	      
+	      return `
+	        <div class="report-card assigned">
+	          <div class="info-row"><b>📍 العنوان:</b> ${x.addr}</div>
+	          <div class="info-row"><b>🌍 GPS:</b> ${x.gps}</div>
+	          <div class="info-row"><b>📅 التاريخ:</b> ${x.date} ${x.time}</div>
+	          ${imgBefore}
+	          ${mapLink}
+	          <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px">
+	            <button class="btn btn-purple ripple" onclick="driverTakePhoto(${x.id})">
+	              <i class="fas fa-camera"></i> أخذ صورة بعد إتمام المهمة
+	            </button>
+	            <button class="btn btn-success ripple" onclick="completeTask(${x.id})">
+	              <i class="fas fa-paper-plane"></i> تحويل الإرسال إلى الإدارة
+	            </button>
+	          </div>
+	        </div>
+	      `;
+	    }).join('');
   } catch(e) {}
 }
 

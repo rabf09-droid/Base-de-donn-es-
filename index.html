@@ -3509,6 +3509,17 @@ function showToast(msg, type='success') {
 }
 
 // ===== Firebase Sync =====
+function normalizeReport(r) {
+  // توحيد أسماء الحقول — يضمن عمل البلاغات القديمة والجديدة
+  if(!r) return r;
+  r.addr  = r.addr  || r.address  || r.location  || r.title  || '—';
+  r.gps   = r.gps   || r.coords   || r.gpsCoords || r.coordinates || '';
+  r.date  = r.date  || r.reportDate || r.createdDate || '—';
+  r.time  = r.time  || r.reportTime || r.createdTime || '—';
+  r.image = r.image || r.photo    || r.img        || r.beforeImage || null;
+  return r;
+}
+
 function setupSync() {
   try {
     const connectedRef = db.ref('.info/connected');
@@ -3528,8 +3539,10 @@ function setupSync() {
     db.ref('reports').on('value', (snapshot) => {
       try {
         const data = snapshot && snapshot.val ? snapshot.val() : null;
-        allReports = data ? Object.values(data) : [];
+        allReports = data ? Object.values(data).map(normalizeReport) : [];
         updateStats();
+        // تحديث مهام السائق لو كانت الصفحة مفتوحة
+        if(currentDriver && document.getElementById('tasksList')) renderDriverTasks();
       } catch(e) {}
     });
   } catch(e) {}
@@ -3995,36 +4008,86 @@ function renderDriverTasks() {
     }
     
     c.innerHTML = t.map(x => {
-      const img = x.image ? `<div class="img-container"><img src="${x.image}"><div class="img-label">📷 صورة البلاغ (${x.date} ${x.time})</div></div>` : '';
-      const mapLink = x.gps && x.gps !== 'غير محدد' ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(x.gps)}" target="_blank" class="btn btn-info ripple" style="margin-top:8px"><i class="fas fa-map-marked-alt"></i> 🗺️ فتح الموقع على الخريطة</a>` : '';
+      // ===== إصلاح: استخراج البيانات مع fallback لكل حقل =====
+      const addr  = x.addr  || x.address  || x.location || '—';
+      const gps   = x.gps   || x.coords   || x.gpsCoords || '';
+      const date  = x.date  || x.reportDate || '—';
+      const time  = x.time  || x.reportTime || '—';
+      const imgSrc = x.image || x.photo || x.img || null;
+
+      // صورة البلاغ قبل
+      const imgBefore = imgSrc
+        ? `<div class="img-container"><img src="${imgSrc}"><div class="img-label">📷 صورة البلاغ — ${date} ${time}</div></div>`
+        : '';
+
+      // زر الخريطة — يظهر دائماً إذا وُجد GPS أو عنوان
+      let mapHref = '';
+      if(gps && gps !== 'غير محدد' && gps.trim() !== '') {
+        // GPS coordinates
+        mapHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(gps)}`;
+      } else if(addr && addr !== '—') {
+        // fallback: search by address text
+        mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr + ' المدية الجزائر')}`;
+      }
+      const mapLink = mapHref
+        ? `<a href="${mapHref}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#1565C0,#1976D2);color:#fff;padding:13px;border-radius:10px;font-weight:700;font-size:0.95rem;text-decoration:none;margin-top:10px;box-shadow:0 4px 12px rgba(25,118,210,0.4)"><i class="fas fa-map-marked-alt"></i> 🗺️ فتح الموقع على الخريطة</a>`
+        : `<div style="padding:10px;background:#f5f5f5;border-radius:8px;color:#aaa;text-align:center;font-size:0.85rem;margin-top:8px"><i class="fas fa-map-marker-slash"></i> لا تتوفر إحداثيات</div>`;
+
+      // صورة بعد التنفيذ
       const afterImgSection = (window._driverAfterImages && window._driverAfterImages[x.id])
-        ? `<div class="img-container" style="border:2px solid var(--success)"><img src="${window._driverAfterImages[x.id]}"><div class="img-label" style="background:rgba(76,175,80,0.85)">✅ صورة بعد التنفيذ</div></div>` : '';
+        ? `<div class="img-container" style="border:2px solid var(--success);margin-bottom:8px"><img src="${window._driverAfterImages[x.id]}"><div class="img-label" style="background:rgba(76,175,80,0.85)">✅ صورة بعد التنفيذ — محفوظة</div></div>`
+        : '';
       
       return `
-        <div class="report-card assigned" style="border-right-color:var(--warning)">
-          <div style="background:linear-gradient(135deg,#fff3e0,#ffe0b2);padding:10px;border-radius:8px;margin-bottom:10px">
-            <div style="font-weight:700;color:var(--warning);font-size:0.9rem;margin-bottom:4px"><i class="fas fa-bell"></i> تبليغ موجّه إليك</div>
-            <div class="info-row"><b>📍 العنوان:</b> ${x.addr}</div>
-            <div class="info-row"><b>🌍 الإحداثيات:</b> <span style="font-size:0.82rem;color:var(--primary)">${x.gps}</span></div>
-            <div class="info-row"><b>📅 التاريخ:</b> ${x.date}</div>
-            <div class="info-row"><b>🕐 الوقت:</b> ${x.time}</div>
+        <div class="report-card assigned" style="border-right:5px solid var(--warning);margin-bottom:18px">
+          <!-- رأس التبليغ -->
+          <div style="background:linear-gradient(135deg,#fff3e0,#ffe0b2);padding:12px 14px;border-radius:10px;margin-bottom:12px">
+            <div style="font-weight:800;color:#e65100;font-size:0.95rem;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+              <i class="fas fa-bell" style="animation:blink 1.5s infinite"></i> تبليغ موجّه إليك
+            </div>
+            <div class="info-row" style="border-color:rgba(0,0,0,0.08)">
+              <b>📍 العنوان:</b>
+              <span style="color:#1a1a2e;font-weight:600;text-align:left;max-width:60%;font-size:0.88rem">${addr}</span>
+            </div>
+            <div class="info-row" style="border-color:rgba(0,0,0,0.08)">
+              <b>🌍 الإحداثيات:</b>
+              <span style="color:var(--primary);font-weight:700;font-size:0.8rem;font-family:monospace">${gps || 'غير محدد'}</span>
+            </div>
+            <div class="info-row" style="border-color:rgba(0,0,0,0.08)">
+              <b>📅 التاريخ:</b>
+              <span style="color:#1a1a2e;font-weight:600">${date}</span>
+            </div>
+            <div class="info-row" style="border-color:transparent;margin-bottom:0">
+              <b>🕐 الوقت:</b>
+              <span style="color:#1a1a2e;font-weight:600">${time}</span>
+            </div>
           </div>
-          ${img}
+
+          <!-- صورة قبل -->
+          ${imgBefore}
+
+          <!-- زر الخريطة -->
           ${mapLink}
-          <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;border:1px dashed var(--border)">
-            <div style="font-weight:700;color:var(--text);margin-bottom:8px;font-size:0.9rem"><i class="fas fa-camera"></i> التقط صورة بعد التنفيذ</div>
+
+          <!-- قسم صورة بعد التنفيذ -->
+          <div style="margin-top:14px;padding:14px;background:var(--bg);border-radius:10px;border:2px dashed var(--border)">
+            <div style="font-weight:700;color:var(--text);margin-bottom:10px;font-size:0.92rem;text-align:center">
+              <i class="fas fa-camera" style="color:var(--warning)"></i> صورة بعد التنفيذ
+            </div>
             ${afterImgSection}
-            <button class="btn btn-warning ripple" onclick="driverTakeAfterPhoto(${x.id})" style="margin-top:6px;padding:10px">
-              <i class="fas fa-camera"></i> أخذ الصورة بعد التنفيذ
+            <button class="btn btn-warning ripple" onclick="driverTakeAfterPhoto(${x.id})" style="padding:12px;font-size:0.95rem">
+              <i class="fas fa-camera"></i> ${window._driverAfterImages && window._driverAfterImages[x.id] ? 'تغيير الصورة' : 'أخذ الصورة بعد التنفيذ'}
             </button>
           </div>
-          <button class="btn btn-success ripple" onclick="completeTask(${x.id})" style="margin-top:12px;font-size:1rem;padding:14px">
+
+          <!-- زر الإرسال للإدارة -->
+          <button class="btn btn-success ripple" onclick="completeTask(${x.id})" style="margin-top:12px;font-size:1rem;padding:15px;background:linear-gradient(135deg,#2E7D32,#388E3C)">
             <i class="fas fa-paper-plane"></i> تحويل إلى الإدارة ✅
           </button>
         </div>
       `;
     }).join('');
-  } catch(e) {}
+  } catch(e) { console.error('renderDriverTasks error:', e); }
 }
 
 // ===== السائق: أخذ صورة بعد التنفيذ لتبليغ معين =====

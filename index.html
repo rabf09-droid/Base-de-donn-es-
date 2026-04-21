@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -2289,19 +2289,15 @@ select.input {
       <button class="btn btn-primary ripple" style="margin-bottom:12px" onclick="showPage('driverTonnage')">
         <i class="fas fa-plus"></i> <span data-i18n="newTonnage">تسجيل نفايات جديدة</span>
       </button>
+      <h3 style="margin-bottom:10px;color:var(--primary)"><i class="fas fa-tasks"></i> مهامك المعينة</h3>
+      <div id="tasksList"></div>
       
-      <!-- أيقونة تتبع التبليغات الجديدة -->
-      <button class="btn btn-info mb ripple" style="background: linear-gradient(135deg, #2196F3, #1976D2); margin-bottom:15px;" onclick="renderDriverTasks()">
-        <i class="fas fa-clipboard-list" style="font-size:2.5rem"></i>
-        <span style="margin-top:10px; font-weight:800;">تتبع التبليغات المحولة</span>
-      </button>
-
-      <div id="driverTasksContainer" style="display:none; background: var(--bg); padding: 10px; border-radius: var(--radius); border: 2px solid var(--info); margin-bottom: 15px;">
-        <h3 style="margin-bottom:10px;color:var(--primary); text-align:center;"><i class="fas fa-tasks"></i> قائمة المهام الحالية</h3>
-        <div id="tasksList"></div>
-        <button class="btn btn-dark ripple" onclick="document.getElementById('driverTasksContainer').style.display='none'" style="margin-top:10px; height:40px; font-size:0.9rem;">
-          <i class="fas fa-times"></i> إغلاق القائمة
-        </button>
+      <!-- خانة استقبال التبليغات المحسّنة -->
+      <div id="tasksReceived" style="display:none;margin:15px 0">
+        <div class="info-card" style="text-align:center;margin-bottom:10px;font-weight:bold">
+          <i class="fas fa-inbox"></i> التبليغات المرسلة إليك
+        </div>
+        <div id="receivedTasksList"></div>
       </div>
       <button class="btn btn-secondary ripple" onclick="endMission()" id="endMissionBtn" style="display:none">
         <i class="fas fa-flag-checkered"></i> <span data-i18n="endMission">إنهاء المهمة</span>
@@ -2337,6 +2333,12 @@ select.input {
       <div id="alertsPanel">
         <h3 style="color:var(--danger);margin-bottom:8px;font-size:1rem"><i class="fas fa-bell"></i> تنبيهات المناطق</h3>
         <div id="alertsList"></div>
+      </div>
+
+      <!-- [3.5] خانة استقبال التبليغات الجديدة -->
+      <div id="reportInboxPanel" style="margin:15px 0;padding:15px;background:linear-gradient(135deg,#e3f2fd,#bbdefb);border-radius:var(--radius-sm);border-right:4px solid var(--info)">
+        <h3 style="color:var(--info);margin-bottom:10px;font-size:1rem"><i class="fas fa-inbox"></i> البلاغات المستلمة</h3>
+        <div id="reportInboxList" style="max-height:300px;overflow-y:auto"></div>
       </div>
 
       <!-- [4] حالة السائقين المباشرة -->
@@ -3998,40 +4000,30 @@ function endMission() {
 // ===== مهام السائق =====
 function renderDriverTasks() {
   try {
-    // إظهار الحاوية عند النقر
-    document.getElementById('driverTasksContainer').style.display = 'block';
-    document.getElementById('driverTasksContainer').scrollIntoView({behavior: 'smooth'});
-
     const t = allReports.filter(r => r.driverName === currentDriver && r.status !== 'done');
     const c = document.getElementById('tasksList');
     
     if(!t.length) {
-      c.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle"></i><p>لا توجد مهام محولة حالياً</p></div>';
+      c.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle"></i><p>لا توجد مهام</p></div>';
       return;
     }
     
     c.innerHTML = t.map(x => {
-	      const imgBefore = x.image ? `<div class="img-container"><img src="${x.image}"><div class="img-label">📷 صورة البلاغ (${x.date} ${x.time})</div></div>` : '';
-	      const mapLink = x.gps ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${x.gps.split(',')[0]},${x.gps.split(',')[1]}" target="_blank" class="btn btn-info ripple" style="margin-top:8px"><i class="fas fa-map-marker-alt"></i> الوصول إلى موقع التبليغ</a>` : '';
-	      
-	      return `
-	        <div class="report-card assigned">
-	          <div class="info-row"><b>📍 العنوان:</b> ${x.addr}</div>
-	          <div class="info-row"><b>🌍 GPS:</b> ${x.gps}</div>
-	          <div class="info-row"><b>📅 التاريخ:</b> ${x.date} ${x.time}</div>
-	          ${imgBefore}
-	          ${mapLink}
-	          <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px">
-	            <button class="btn btn-purple ripple" onclick="driverTakePhoto(${x.id})">
-	              <i class="fas fa-camera"></i> أخذ صورة بعد إتمام المهمة
-	            </button>
-	            <button class="btn btn-success ripple" onclick="completeTask(${x.id})">
-	              <i class="fas fa-paper-plane"></i> تحويل الإرسال إلى الإدارة
-	            </button>
-	          </div>
-	        </div>
-	      `;
-	    }).join('');
+      const img = x.image ? `<div class="img-container"><img src="${x.image}"><div class="img-label">📷 صورة البلاغ (${x.date} ${x.time})</div></div>` : '';
+      const mapLink = x.gps ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${x.gps.split(',')[0]},${x.gps.split(',')[1]}" target="_blank" class="btn btn-info ripple" style="margin-top:8px"><i class="fas fa-map"></i> الدخول للخريطة</a>` : '';
+      
+      return `
+        <div class="report-card assigned">
+          <div class="info-row"><b>📍 العنوان:</b> ${x.addr}</div>
+          <div class="info-row"><b>🌍 GPS:</b> ${x.gps}</div>
+          ${img}
+          ${mapLink}
+          <button class="btn btn-success ripple" onclick="completeTask(${x.id})" style="margin-top:10px">
+            <i class="fas fa-check"></i> تأكيد الإنجاز
+          </button>
+        </div>
+      `;
+    }).join('');
   } catch(e) {}
 }
 
@@ -4060,19 +4052,75 @@ function completeTask(id) {
   try {
     if(!tempAfterImage && !confirm('لم يتم التصوير. متابعة؟')) return;
     
-    const u = {status: 'done', doneTime: new Date().toLocaleString('ar-DZ')};
-    if(tempAfterImage) u.doneImage = tempAfterImage;
+    const report = allReports.find(r => r.id == id);
+    if(!report) return;
+    
+    const u = {
+      status: 'done', 
+      doneTime: new Date().toLocaleString('ar-DZ'),
+      doneImage: tempAfterImage || null,
+      completedBy: currentDriver,
+      completionNotes: 'تم الإنجاز بواسطة السائق'
+    };
     
     updateReport(id, u);
     tempAfterImage = null;
     
-    showToast('✅ تم الإنجاز!', 'success');
+    showCompletionSummary(report, u);
+    
+    showToast('✅ تم الإنجاز وإرسال التقرير للإدارة!', 'success');
     renderDriverTasks();
+    renderReceivedTasks();
     updateStats();
   } catch(e) {
     showToast('⚠️ خطأ في الإنجاز', 'error');
   }
 }
+
+function showCompletionSummary(report, completion) {
+  try {
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10020;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px)';
+    
+    const beforeImg = report.image ? `<img src="${report.image}" style="width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px">` : '';
+    const afterImg = completion.doneImage ? `<img src="${completion.doneImage}" style="width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px">` : '';
+    
+    modal.innerHTML = `
+      <div style="background:var(--bg-card);border-radius:var(--radius-lg);padding:24px;max-width:400px;width:100%;border:3px solid var(--success);text-align:center">
+        <h3 style="color:var(--success);margin-bottom:12px"><i class="fas fa-check-circle"></i> تم الانجاز بنجاح</h3>
+        
+        <div style="text-align:right;margin:15px 0;background:var(--bg);padding:12px;border-radius:8px">
+          <div><b>العنوان:</b> ${report.addr}</div>
+          <div style="font-size:0.85rem;color:var(--text-light)">GPS: ${report.gps}</div>
+          <div style="font-size:0.85rem;color:var(--text-light)">التاريخ: ${report.date} ${report.time}</div>
+          <div style="font-size:0.85rem;color:var(--text-light)">الانجاز: ${completion.doneTime}</div>
+        </div>
+        
+        <div style="margin:15px 0">
+          <div style="text-align:center;font-weight:700;margin-bottom:8px">صور المقارنة</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:0.8rem;color:var(--text-light);margin-bottom:5px">قبل</div>
+              ${beforeImg || '<div style="height:150px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted)"><i class="fas fa-image"></i></div>'}
+            </div>
+            <div>
+              <div style="font-size:0.8rem;color:var(--text-light);margin-bottom:5px">بعد</div>
+              ${afterImg || '<div style="height:150px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted)"><i class="fas fa-image"></i></div>'}
+            </div>
+          </div>
+        </div>
+        
+        <button class="btn btn-success ripple" onclick="this.parentElement.parentElement.remove()" style="margin-top:12px">
+          <i class="fas fa-check"></i> حسنا
+        </button>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    setTimeout(() => modal.remove(), 8000);
+  } catch(e) {}
+}
+
 
 // ===== الطلبات =====
 function submitRequest() {
@@ -5027,9 +5075,51 @@ function updateDriverPanel() {
     const endBtn = document.getElementById('endMissionBtn');
     if(endBtn) endBtn.style.display = (currentDriver && truckTrackingData.active) ? 'block' : 'none';
     
-    if(currentDriver) renderDriverTasks();
+    if(currentDriver) {
+      renderDriverTasks();
+      renderReceivedTasks();
+    }
   } catch(e) {}
 }
+
+function renderReceivedTasks() {
+  try {
+    const receivedDiv = document.getElementById('tasksReceived');
+    const receivedList = document.getElementById('receivedTasksList');
+    if(!receivedDiv || !receivedList) return;
+    
+    const assignedTasks = allReports.filter(r => r.driverName === currentDriver && r.status === 'assigned');
+    
+    if(assignedTasks.length === 0) {
+      receivedDiv.style.display = 'none';
+      return;
+    }
+    
+    receivedDiv.style.display = 'block';
+    
+    receivedList.innerHTML = assignedTasks.map(task => {
+      const beforeImg = task.image ? `<div class="img-container"><img src="${task.image}"><div class="img-label">صورة قبل (${task.date})</div></div>` : '';
+      const mapLink = task.gps ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${task.gps.split(',')[0]},${task.gps.split(',')[1]}" target="_blank" class="btn btn-info ripple" style="margin:8px 0"><i class="fas fa-map"></i> فتح الخريطة</a>` : '';
+      
+      return `
+        <div class="report-card assigned" style="margin-bottom:12px">
+          <div class="info-row"><b>العنوان:</b> ${task.addr}</div>
+          <div class="info-row"><b>الاحداثيات:</b> ${task.gps}</div>
+          <div class="info-row"><b>التاريخ والوقت:</b> ${task.date} ${task.time}</div>
+          ${beforeImg}
+          ${mapLink}
+          <button class="btn btn-warning ripple" onclick="driverTakePhoto(${task.id})" style="margin:8px 0">
+            <i class="fas fa-camera"></i> التقط صورة بعد الانجاز
+          </button>
+          <button class="btn btn-success ripple" onclick="completeTask(${task.id})" style="margin:8px 0">
+            <i class="fas fa-check-circle"></i> تاكيد الانجاز وارسال للادارة
+          </button>
+        </div>
+      `;
+    }).join('');
+  } catch(e) {}
+}
+
 
 function initTruckTrackingMap() {
   try {
@@ -5307,6 +5397,39 @@ function showReportsPage() {
   try { applyFilters(); } catch(e) {}
 }
 
+function loadAdminInbox() {
+  try {
+    const inboxList = document.getElementById('reportInboxList');
+    if(!inboxList) return;
+    
+    const newReports = allReports.filter(r => r.status === 'new');
+    
+    if(newReports.length === 0) {
+      inboxList.innerHTML = '<div class="empty-state" style="padding:10px"><i class="fas fa-inbox"></i><p>لا توجد بلاغات جديدة</p></div>';
+      return;
+    }
+    
+    inboxList.innerHTML = newReports.slice(0, 10).map(r => {
+      const img = r.image ? `<img src="${r.image}" style="width:60px;height:60px;border-radius:8px;object-fit:cover">` : '<i class="fas fa-image" style="font-size:2rem;color:var(--text-muted)"></i>';
+      
+      return `
+        <div style="display:flex;gap:10px;align-items:center;padding:10px;background:var(--bg);border-radius:8px;margin-bottom:8px">
+          <div>${img}</div>
+          <div style="flex:1;font-size:0.85rem">
+            <div><b>${r.addr}</b></div>
+            <div style="color:var(--text-light);font-size:0.75rem">${r.date} ${r.time}</div>
+            <div style="color:var(--text-muted);font-size:0.75rem">GPS: ${r.gps}</div>
+          </div>
+          <button class="btn btn-warning ripple" onclick="assignDriver(${r.id})" style="padding:6px 12px;font-size:0.8rem;margin:0">
+            <i class="fas fa-arrow-right"></i> توجيه
+          </button>
+        </div>
+      `;
+    }).join('');
+  } catch(e) {}
+}
+
+
 function applyFilters() {
   try {
     const st = document.getElementById('filterStatus')?.value || 'all';
@@ -5345,6 +5468,7 @@ function renderReportsList(reps) {
       const d2 = r.doneImage ? `<button class="download-btn" onclick="downloadImage('${r.doneImage}','after_${r.id}.jpg')"><i class="fas fa-download"></i> تحميل صورة بعد</button>` : '';
       const d3 = `<button class="download-btn download-all" onclick="downloadReportText(${r.id})"><i class="fas fa-file-alt"></i> التقرير الكامل</button>`;
       const q = `<button class="download-btn" style="background:var(--purple)" onclick="showQR(${r.id})"><i class="fas fa-qrcode"></i> QR Code</button>`;
+      const viewComp = `<button class="download-btn" style="background:var(--info)" onclick="viewReportComparison(${r.id})"><i class="fas fa-images"></i> عرض المقارنة</button>`;
       
       const img1 = r.image ? `<div class="img-container"><img src="${r.image}"><div class="img-label">📷 قبل (${r.date})</div></div>${d1}` : '';
       const img2 = r.doneImage ? `<div class="img-container"><img src="${r.doneImage}"><div class="img-label done-label">✅ بعد (${r.doneTime||''})</div></div>${d2}` : '';
@@ -5366,13 +5490,149 @@ function renderReportsList(reps) {
           ${r.driverName ? `<div class="info-row"><b>👷 السائق:</b> ${r.driverName}</div>` : ''}
           <div class="info-row"><b>📊 الحالة:</b> <span style="color:${r.status==='done'?'var(--success)':r.status==='assigned'?'var(--warning)':'var(--danger)'}">${r.status==='done'?'✅ منجز':r.status==='assigned'?'🚚 قيد التنفيذ':'🆕 جديد'}</span></div>
           ${img1}${img2}
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">${q}${d3}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">${q}${viewComp}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">${d3}</div>
           <div style="margin-top:10px">${act}</div>
         </div>
       `;
     }).join('');
   } catch(e) {}
 }
+
+function viewReportComparison(id) {
+  try {
+    const report = allReports.find(r => r.id == id);
+    if(!report) {
+      showToast('البلاغ غير موجود', 'error');
+      return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10025;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;backdrop-filter:blur(5px)';
+    
+    const beforeImg = report.image ? `<img src="${report.image}" style="width:100%;height:200px;object-fit:cover;border-radius:8px">` : '<div style="height:200px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted)"><i class="fas fa-image" style="font-size:3rem"></i></div>';
+    const afterImg = report.doneImage ? `<img src="${report.doneImage}" style="width:100%;height:200px;object-fit:cover;border-radius:8px">` : '<div style="height:200px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted)"><i class="fas fa-image" style="font-size:3rem"></i></div>';
+    
+    const statusColor = report.status === 'done' ? 'var(--success)' : report.status === 'assigned' ? 'var(--warning)' : 'var(--danger)';
+    const statusText = report.status === 'done' ? 'منجز' : report.status === 'assigned' ? 'قيد التنفيذ' : 'جديد';
+    
+    modal.innerHTML = `
+      <div style="background:var(--bg-card);border-radius:var(--radius-lg);padding:24px;max-width:500px;width:100%;border:3px solid ${statusColor};max-height:90vh;overflow-y:auto">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <h3 style="color:${statusColor};margin:0"><i class="fas fa-file-alt"></i> تقرير البلاغ #${report.id}</h3>
+          <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-light)">&times;</button>
+        </div>
+        
+        <div style="background:linear-gradient(135deg,rgba(0,98,51,0.1),rgba(0,98,51,0.05));padding:15px;border-radius:8px;margin-bottom:15px;border-right:4px solid var(--primary)">
+          <div style="margin:8px 0"><b>العنوان:</b> ${report.addr}</div>
+          <div style="margin:8px 0;font-size:0.9rem"><b>الاحداثيات:</b> ${report.gps}</div>
+          <div style="margin:8px 0;font-size:0.9rem"><b>التاريخ:</b> ${report.date} ${report.time}</div>
+          <div style="margin:8px 0;font-size:0.9rem"><b>الحالة:</b> <span style="color:${statusColor};font-weight:700">${statusText}</span></div>
+          ${report.driverName ? `<div style="margin:8px 0;font-size:0.9rem"><b>السائق:</b> ${report.driverName}</div>` : ''}
+          ${report.doneTime ? `<div style="margin:8px 0;font-size:0.9rem"><b>وقت الانجاز:</b> ${report.doneTime}</div>` : ''}
+        </div>
+        
+        <div style="margin:20px 0">
+          <h4 style="color:var(--primary);margin-bottom:10px;text-align:center">مقارنة الصور</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px">
+            <div>
+              <div style="font-weight:700;color:var(--text-light);margin-bottom:8px;text-align:center">قبل الانجاز</div>
+              ${beforeImg}
+              <div style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin-top:5px">${report.date} ${report.time}</div>
+            </div>
+            <div>
+              <div style="font-weight:700;color:var(--text-light);margin-bottom:8px;text-align:center">بعد الانجاز</div>
+              ${afterImg}
+              <div style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin-top:5px">${report.doneTime || '-'}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display:flex;gap:10px;margin-top:20px">
+          <button class="btn btn-primary ripple" onclick="downloadReportText(${report.id})" style="flex:1">
+            <i class="fas fa-download"></i> تحميل التقرير
+          </button>
+          <button class="btn btn-warning ripple" onclick="printReportComparison(${report.id})" style="flex:1">
+            <i class="fas fa-print"></i> طباعة
+          </button>
+          <button class="btn btn-danger ripple" onclick="deleteReport(${report.id}); this.parentElement.parentElement.parentElement.remove()" style="flex:1">
+            <i class="fas fa-trash"></i> حذف
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+  } catch(e) {
+    showToast('خطأ في عرض التقرير', 'error');
+  }
+}
+
+function printReportComparison(id) {
+  try {
+    const report = allReports.find(r => r.id == id);
+    if(!report) return;
+    
+    const win = window.open('', '_blank', 'width=800,height=600');
+    win.document.write(`
+      <html dir="rtl">
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          body { font-family: 'Cairo', Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+          .container { background: white; padding: 30px; border-radius: 8px; max-width: 800px; margin: 0 auto; }
+          h1 { color: #006233; text-align: center; border-bottom: 3px solid #006233; padding-bottom: 10px; }
+          .info-section { margin: 20px 0; padding: 15px; background: #f9f9f9; border-right: 4px solid #006233; }
+          .info-row { display: flex; justify-content: space-between; margin: 8px 0; }
+          .images { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; }
+          .image-box { text-align: center; }
+          .image-box img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
+          .image-label { font-weight: bold; margin-top: 10px; color: #666; }
+          .footer { text-align: center; margin-top: 30px; color: #999; font-size: 12px; }
+          @media print { body { background: white; } }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>تقرير البلاغ #${report.id}</h1>
+          
+          <div class="info-section">
+            <div class="info-row"><b>العنوان:</b> <span>${report.addr}</span></div>
+            <div class="info-row"><b>الاحداثيات:</b> <span>${report.gps}</span></div>
+            <div class="info-row"><b>التاريخ والوقت:</b> <span>${report.date} ${report.time}</span></div>
+            <div class="info-row"><b>السائق:</b> <span>${report.driverName || '-'}</span></div>
+            <div class="info-row"><b>الحالة:</b> <span>${report.status === 'done' ? 'منجز' : report.status === 'assigned' ? 'قيد التنفيذ' : 'جديد'}</span></div>
+            ${report.doneTime ? `<div class="info-row"><b>وقت الانجاز:</b> <span>${report.doneTime}</span></div>` : ''}
+          </div>
+          
+          <div class="images">
+            <div class="image-box">
+              <div class="image-label">قبل الانجاز</div>
+              ${report.image ? `<img src="${report.image}">` : '<div style="height:200px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center">لا توجد صورة</div>'}
+              <div style="font-size:12px;color:#999;margin-top:5px">${report.date} ${report.time}</div>
+            </div>
+            <div class="image-box">
+              <div class="image-label">بعد الانجاز</div>
+              ${report.doneImage ? `<img src="${report.doneImage}">` : '<div style="height:200px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center">لا توجد صورة</div>'}
+              <div style="font-size:12px;color:#999;margin-top:5px">${report.doneTime || '-'}</div>
+            </div>
+          </div>
+          
+          <div class="footer">
+            <p>تم طباعة هذا التقرير من نظام المدية نظيفة 2026</p>
+            <p>بلدية المدية - مصلحة النظافة والوقاية الصحية</p>
+          </div>
+        </div>
+        <script>window.print(); setTimeout(() => window.close(), 1500);</script>
+      </body>
+      </html>
+    `);
+    win.document.close();
+  } catch(e) {
+    showToast('خطأ في الطباعة', 'error');
+  }
+}
+
 
 function showQR(id) {
   try {

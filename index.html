@@ -3996,21 +3996,61 @@ function renderDriverTasks() {
     
     c.innerHTML = t.map(x => {
       const img = x.image ? `<div class="img-container"><img src="${x.image}"><div class="img-label">📷 صورة البلاغ (${x.date} ${x.time})</div></div>` : '';
-      const mapLink = x.gps ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${x.gps.split(',')[0]},${x.gps.split(',')[1]}" target="_blank" class="btn btn-info ripple" style="margin-top:8px"><i class="fas fa-map"></i> الدخول للخريطة</a>` : '';
+      const mapLink = x.gps && x.gps !== 'غير محدد' ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(x.gps)}" target="_blank" class="btn btn-info ripple" style="margin-top:8px"><i class="fas fa-map-marked-alt"></i> 🗺️ فتح الموقع على الخريطة</a>` : '';
+      const afterImgSection = (window._driverAfterImages && window._driverAfterImages[x.id])
+        ? `<div class="img-container" style="border:2px solid var(--success)"><img src="${window._driverAfterImages[x.id]}"><div class="img-label" style="background:rgba(76,175,80,0.85)">✅ صورة بعد التنفيذ</div></div>` : '';
       
       return `
-        <div class="report-card assigned">
-          <div class="info-row"><b>📍 العنوان:</b> ${x.addr}</div>
-          <div class="info-row"><b>🌍 GPS:</b> ${x.gps}</div>
+        <div class="report-card assigned" style="border-right-color:var(--warning)">
+          <div style="background:linear-gradient(135deg,#fff3e0,#ffe0b2);padding:10px;border-radius:8px;margin-bottom:10px">
+            <div style="font-weight:700;color:var(--warning);font-size:0.9rem;margin-bottom:4px"><i class="fas fa-bell"></i> تبليغ موجّه إليك</div>
+            <div class="info-row"><b>📍 العنوان:</b> ${x.addr}</div>
+            <div class="info-row"><b>🌍 الإحداثيات:</b> <span style="font-size:0.82rem;color:var(--primary)">${x.gps}</span></div>
+            <div class="info-row"><b>📅 التاريخ:</b> ${x.date}</div>
+            <div class="info-row"><b>🕐 الوقت:</b> ${x.time}</div>
+          </div>
           ${img}
           ${mapLink}
-          <button class="btn btn-success ripple" onclick="completeTask(${x.id})" style="margin-top:10px">
-            <i class="fas fa-check"></i> تأكيد الإنجاز
+          <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;border:1px dashed var(--border)">
+            <div style="font-weight:700;color:var(--text);margin-bottom:8px;font-size:0.9rem"><i class="fas fa-camera"></i> التقط صورة بعد التنفيذ</div>
+            ${afterImgSection}
+            <button class="btn btn-warning ripple" onclick="driverTakeAfterPhoto(${x.id})" style="margin-top:6px;padding:10px">
+              <i class="fas fa-camera"></i> أخذ الصورة بعد التنفيذ
+            </button>
+          </div>
+          <button class="btn btn-success ripple" onclick="completeTask(${x.id})" style="margin-top:12px;font-size:1rem;padding:14px">
+            <i class="fas fa-paper-plane"></i> تحويل إلى الإدارة ✅
           </button>
         </div>
       `;
     }).join('');
   } catch(e) {}
+}
+
+// ===== السائق: أخذ صورة بعد التنفيذ لتبليغ معين =====
+function driverTakeAfterPhoto(reportId) {
+  try {
+    if(!window._driverAfterImages) window._driverAfterImages = {};
+    const i = document.createElement('input');
+    i.type = 'file';
+    i.accept = 'image/*';
+    i.capture = 'environment';
+    i.onchange = e => {
+      if(e.target.files[0]) {
+        const r = new FileReader();
+        r.onload = ev => {
+          window._driverAfterImages[reportId] = ev.target.result;
+          tempAfterImage = ev.target.result;
+          showToast('✅ تم حفظ الصورة بعد التنفيذ', 'success');
+          renderDriverTasks();
+        };
+        r.readAsDataURL(e.target.files[0]);
+      }
+    };
+    i.click();
+  } catch(e) {
+    showToast('⚠️ خطأ في الكاميرا', 'error');
+  }
 }
 
 function driverTakePhoto(id) {
@@ -4036,15 +4076,27 @@ function driverTakePhoto(id) {
 
 function completeTask(id) {
   try {
-    if(!tempAfterImage && !confirm('لم يتم التصوير. متابعة؟')) return;
+    if(!window._driverAfterImages) window._driverAfterImages = {};
+    const afterImg = window._driverAfterImages[id] || tempAfterImage;
     
-    const u = {status: 'done', doneTime: new Date().toLocaleString('ar-DZ')};
-    if(tempAfterImage) u.doneImage = tempAfterImage;
+    if(!afterImg && !confirm('لم يتم التصوير بعد التنفيذ. متابعة بدون صورة؟')) return;
+    
+    const now = new Date();
+    const u = {
+      status: 'done',
+      doneTime: now.toLocaleTimeString('ar-DZ'),
+      doneDate: now.toLocaleDateString('ar-DZ'),
+      doneByDriver: currentDriver
+    };
+    if(afterImg) u.doneImage = afterImg;
     
     updateReport(id, u);
+    
+    // تنظيف الصورة المؤقتة
+    if(window._driverAfterImages[id]) delete window._driverAfterImages[id];
     tempAfterImage = null;
     
-    showToast('✅ تم الإنجاز!', 'success');
+    showToast('✅ تم إرسال التقرير إلى الإدارة!', 'success');
     renderDriverTasks();
     updateStats();
   } catch(e) {
@@ -5319,37 +5371,89 @@ function renderReportsList(reps) {
     c.innerHTML += reps.slice(0, 50).map(r => {
       if(!r) return '';
       
-      const d1 = r.image ? `<button class="download-btn" onclick="downloadImage('${r.image}','before_${r.id}.jpg')"><i class="fas fa-download"></i> تحميل صورة قبل</button>` : '';
-      const d2 = r.doneImage ? `<button class="download-btn" onclick="downloadImage('${r.doneImage}','after_${r.id}.jpg')"><i class="fas fa-download"></i> تحميل صورة بعد</button>` : '';
-      const d3 = `<button class="download-btn download-all" onclick="downloadReportText(${r.id})"><i class="fas fa-file-alt"></i> التقرير الكامل</button>`;
-      const q = `<button class="download-btn" style="background:var(--purple)" onclick="showQR(${r.id})"><i class="fas fa-qrcode"></i> QR Code</button>`;
-      
-      const img1 = r.image ? `<div class="img-container"><img src="${r.image}"><div class="img-label">📷 قبل (${r.date})</div></div>${d1}` : '';
-      const img2 = r.doneImage ? `<div class="img-container"><img src="${r.doneImage}"><div class="img-label done-label">✅ بعد (${r.doneTime||''})</div></div>${d2}` : '';
+      // ===== صور قبل وبعد =====
+      const hasAfter = !!r.doneImage;
+      const hasBefore = !!r.image;
+
+      let imagesSection = '';
+      if(hasBefore || hasAfter) {
+        imagesSection = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">`;
+        imagesSection += hasBefore
+          ? `<div><div style="font-size:0.72rem;font-weight:700;color:var(--danger);margin-bottom:4px;text-align:center">📷 قبل التدخل</div><div class="img-container"><img src="${r.image}" style="height:130px"><div class="img-label">${r.date} ${r.time}</div></div></div>`
+          : `<div style="height:130px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.78rem;border:1px dashed var(--border)">لا صورة قبل</div>`;
+        imagesSection += hasAfter
+          ? `<div><div style="font-size:0.72rem;font-weight:700;color:var(--success);margin-bottom:4px;text-align:center">✅ بعد التنفيذ</div><div class="img-container"><img src="${r.doneImage}" style="height:130px"><div class="img-label" style="background:rgba(76,175,80,0.85)">${r.doneDate||''} ${r.doneTime||''}</div></div></div>`
+          : `<div style="height:130px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.78rem;border:1px dashed var(--border)">لا صورة بعد</div>`;
+        imagesSection += '</div>';
+      }
+
+      // ===== أزرار التحميل والطباعة =====
+      const d1 = hasBefore ? `<button class="download-btn" onclick="downloadImage('${r.image}','before_${r.id}.jpg')"><i class="fas fa-download"></i> تحميل صورة قبل</button>` : '';
+      const d2 = hasAfter ? `<button class="download-btn" onclick="downloadImage('${r.doneImage}','after_${r.id}.jpg')"><i class="fas fa-download"></i> تحميل صورة بعد</button>` : '';
+      const d3 = `<button class="download-btn download-all" onclick="downloadReportText(${r.id})"><i class="fas fa-file-alt"></i> تحميل التقرير الكامل</button>`;
+      const dPrint = `<button class="download-btn" style="background:var(--primary)" onclick="printSingleReport(${r.id})"><i class="fas fa-print"></i> طباعة</button>`;
+      const q = `<button class="download-btn" style="background:#673ab7" onclick="showQR(${r.id})"><i class="fas fa-qrcode"></i> QR Code</button>`;
       
       let act = '';
       if(r.status === 'new' || r.status === 'assigned') {
         act += `<button class="btn btn-info ripple" onclick="assignDriver(${r.id})" style="margin-bottom:8px"><i class="fas fa-user-check"></i> توجيه للسائق</button>`;
         act += `<button class="btn btn-success ripple" onclick="markReportDoneWithSMS(${r.id})" style="margin-bottom:8px"><i class="fas fa-check-circle"></i> إنجاز + إشعار واتساب</button>`;
-      }      act += `<button class="btn btn-danger ripple" onclick="deleteReport(${r.id})"><i class="fas fa-trash"></i> حذف</button>`;
+      }
+      act += `<button class="btn btn-danger ripple" onclick="deleteReport(${r.id})"><i class="fas fa-trash"></i> حذف</button>`;
       
       const recurringBadge = r.recurring ? '<span style="background:#FF9800;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.7rem;margin-right:5px">🔄 متكرر</span>' : '';
       const wasteBadge = r.wasteType ? `<span class="waste-badge waste-${r.wasteType}">${getWasteTypeName(r.wasteType)}</span>` : '';
+      const emergencyBadge = r.emergency ? '<span style="background:#f44336;color:#fff;padding:2px 8px;border-radius:10px;font-size:0.7rem;margin-right:5px">🚨 طوارئ</span>' : '';
       
       return `
-        <div class="report-card ${r.status}">
-          <div class="info-row"><b>📍 العنوان:</b> ${recurringBadge}${wasteBadge} ${r.addr}</div>
+        <div class="report-card ${r.status}" style="${r.emergency?'border-right-color:#f44336;border-right-width:6px':''}">
+          <div class="info-row"><b>📍 العنوان:</b> ${emergencyBadge}${recurringBadge}${wasteBadge} ${r.addr}</div>
           <div class="info-row"><b>🌍 GPS:</b> ${r.gps}</div>
-          <div class="info-row"><b>📅 التاريخ:</b> ${r.date} ${r.time}</div>
+          <div class="info-row"><b>📅 تبليغ:</b> ${r.date} ${r.time}</div>
           ${r.driverName ? `<div class="info-row"><b>👷 السائق:</b> ${r.driverName}</div>` : ''}
+          ${r.doneDate ? `<div class="info-row"><b>✅ إنجاز:</b> ${r.doneDate} ${r.doneTime||''}</div>` : ''}
           <div class="info-row"><b>📊 الحالة:</b> <span style="color:${r.status==='done'?'var(--success)':r.status==='assigned'?'var(--warning)':'var(--danger)'}">${r.status==='done'?'✅ منجز':r.status==='assigned'?'🚚 قيد التنفيذ':'🆕 جديد'}</span></div>
-          ${img1}${img2}
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">${q}${d3}</div>
+          ${imagesSection}
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">${d1}${d2}${dPrint}${d3}${q}</div>
           <div style="margin-top:10px">${act}</div>
         </div>
       `;
     }).join('');
   } catch(e) {}
+}
+
+// ===== طباعة تقرير واحد قبل وبعد =====
+function printSingleReport(id) {
+  try {
+    const r = allReports.find(x => x.id == id);
+    if(!r) return;
+    const win = window.open('', '_blank', 'width=700,height=600');
+    const beforeImg = r.image ? `<img src="${r.image}" style="width:100%;max-height:220px;object-fit:cover;border-radius:8px">` : '<div style="height:120px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#aaa">لا صورة</div>';
+    const afterImg = r.doneImage ? `<img src="${r.doneImage}" style="width:100%;max-height:220px;object-fit:cover;border-radius:8px">` : '<div style="height:120px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#aaa">لا صورة</div>';
+    win.document.write(`<html dir="rtl"><head><meta charset="UTF-8"><style>
+      body{font-family:'Segoe UI',Tahoma,sans-serif;padding:30px;color:#1a1a2e;max-width:650px;margin:0 auto}
+      h1{color:#006233;font-size:1.4rem;text-align:center;border-bottom:3px solid #006233;padding-bottom:10px}
+      .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee;font-size:0.9rem}
+      .row b{color:#006233}.imgs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+      .img-lbl{font-weight:700;font-size:0.8rem;text-align:center;margin-bottom:5px}
+      .before-lbl{color:#f44336}.after-lbl{color:#4CAF50}
+      .footer{text-align:center;font-size:0.72rem;color:#aaa;margin-top:20px;border-top:1px solid #eee;padding-top:10px}
+    </style></head><body>
+      <h1>🏛️ تقرير تبليغ — المدية نظيفة 2026</h1>
+      <div class="row"><b>📍 العنوان:</b><span>${r.addr}</span></div>
+      <div class="row"><b>🌍 الإحداثيات:</b><span>${r.gps}</span></div>
+      <div class="row"><b>📅 تاريخ التبليغ:</b><span>${r.date} — ${r.time}</span></div>
+      <div class="row"><b>👷 السائق:</b><span>${r.driverName||'—'}</span></div>
+      <div class="row"><b>✅ تاريخ الإنجاز:</b><span>${r.doneDate||'—'} ${r.doneTime||''}</span></div>
+      <div class="row"><b>📊 الحالة:</b><span>${r.status==='done'?'✅ منجز':r.status==='assigned'?'🚚 قيد التنفيذ':'🆕 جديد'}</span></div>
+      <div class="imgs">
+        <div><div class="img-lbl before-lbl">📷 صورة قبل التدخل</div>${beforeImg}</div>
+        <div><div class="img-lbl after-lbl">✅ صورة بعد التنفيذ</div>${afterImg}</div>
+      </div>
+      <div class="footer">مصلحة النظافة والوقاية الصحية — بلدية المدية | إعداد د. رابحي فتحي 2026</div>
+    <script>window.print();setTimeout(()=>window.close(),2000);<\/script></body></html>`);
+    win.document.close();
+  } catch(e) { showToast('⚠️ خطأ في الطباعة','error'); }
 }
 
 function showQR(id) {
@@ -5388,10 +5492,20 @@ function showQR(id) {
 
 function assignDriver(id) {
   try {
-    const n = prompt('اسم السائق:');
-    if(!n) return;
+    const staff = JSON.parse(localStorage.getItem('medea_staff') || '[]');
+    const drivers = staff.filter(s => s.role && s.role.includes('سائق'));
+    
+    let n;
+    if(drivers.length) {
+      const names = drivers.map(d => d.name).join('\n');
+      n = prompt('اختر اسم السائق:\n' + names + '\n\n(أو اكتب اسماً جديداً)');
+    } else {
+      n = prompt('اسم السائق:');
+    }
+    if(!n || !n.trim()) return;
+    n = n.trim();
     updateReport(id, {driverName: n, status: 'assigned'});
-    showToast('✅ تم التوجيه لـ ' + n, 'success');
+    showToast('✅ تم تحويل البلاغ للسائق: ' + n, 'success');
     showReportsPage();
   } catch(e) {
     showToast('⚠️ خطأ في التوجيه', 'error');

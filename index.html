@@ -101,7 +101,7 @@ body {
   background: var(--primary-dark);
 }
 
-/* ===== شاشة اختيار الجهاز ===== */
+/* ===== شاشة اختيار الدور ===== */
 #deviceSelector {
   position: fixed;
   top: 0; left: 0;
@@ -113,23 +113,22 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  overflow-y: auto;
 }
 #deviceSelector.active { display: flex; }
 
 .device-card {
   background: var(--bg-card);
-  padding: 22px 20px;
+  padding: 35px 30px;
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   text-align: center;
-  max-width: 420px;
-  width: 94%;
+  max-width: 480px;
+  width: 100%;
   border: 3px solid var(--primary);
   position: relative;
   overflow: hidden;
   animation: slideUp 0.6s ease;
-  max-height: 90vh;
-  overflow-y: auto;
 }
 
 @keyframes slideUp {
@@ -146,10 +145,11 @@ body {
 }
 
 .device-card .flag-icon {
-  font-size: 2.8rem;
-  margin-bottom: 8px;
+  font-size: 4rem;
+  margin-bottom: 15px;
   display: inline-block;
-  animation: wave 2s ease-in-out infinite;  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  animation: wave 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
 }
 
 @keyframes wave {
@@ -159,52 +159,50 @@ body {
 
 .device-card h1 {
   color: var(--primary);
-  font-size: 1.6rem;
-  margin-bottom: 4px;
+  font-size: 2.2rem;
+  margin-bottom: 8px;
   font-weight: 900;
   letter-spacing: -0.5px;
 }
 
 .device-card h2 {
   color: var(--secondary);
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
   font-weight: 700;
 }
 
 .device-card p {
   color: var(--text-light);
-  font-size: 0.88rem;
-  margin-bottom: 12px;
+  font-size: 1rem;
+  margin-bottom: 25px;
 }
 
+/* ===== أزرار اختيار الدور ===== */
 .device-buttons {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
-.device-btn {
+.role-btn {
   width: 100%;
-  padding: 13px 16px;
+  padding: 0;
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 700;
   font-family: 'Cairo', sans-serif;
   transition: var(--transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
   color: white;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  text-align: right;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
-
-.device-btn::after {
+.role-btn::after {
   content: '';
   position: absolute;
   top: 50%; left: 50%;
@@ -213,46 +211,98 @@ body {
   border-radius: 50%;
   transition: width 0.6s, height 0.6s, top 0.6s, left 0.6s;
 }
+.role-btn:active::after {
+  width: 400px; height: 400px;
+  top: calc(50% - 200px); left: calc(50% - 200px);
+}
+.role-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+.role-btn:active { transform: translateY(-1px); }
 
-.device-btn:active::after {
-  width: 300px;
-  height: 300px;
-  top: calc(50% - 150px);
-  left: calc(50% - 150px);
+.role-btn-icon {
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: rgba(0,0,0,0.15);
+  flex-shrink: 0;
+  padding: 16px 0;
+}
+.role-btn-body {
+  flex: 1;
+  padding: 14px 16px;
+}
+.role-btn-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 4px;
+}
+.role-btn-desc {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  display: block;
+  line-height: 1.4;
+}
+.role-btn-arrow {
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  opacity: 0.7;
+  flex-shrink: 0;
 }
 
-.device-btn.computer {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  box-shadow: 0 6px 20px rgba(0,98,51,0.4);
-}
+.role-btn.citizen  { background: linear-gradient(135deg, #006233, #008040); }
+.role-btn.driver   { background: linear-gradient(135deg, #e65100, #ff6d00); }
+.role-btn.admin    { background: linear-gradient(135deg, #1a237e, #283593); }
 
-.device-btn.phone {
-  background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-  box-shadow: 0 6px 20px rgba(196,30,58,0.4);
+/* شارة الدور في الشريط العلوي */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.2);
 }
+.role-badge:hover { background: rgba(255,255,255,0.35); }
 
-.device-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+/* زر تغيير الدور */
+.change-role-btn {
+  width: 100%;
+  padding: 12px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-light);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
 }
+.change-role-btn:hover { border-color: var(--primary); color: var(--primary); background: rgba(0,98,51,0.05); }
 
-.device-btn:active {
-  transform: translateY(-1px);
-}
-
-.device-btn i {
-  font-size: 1.4rem;
-}
-
+/* ===== footer text ===== */
 .footer-text {
   color: var(--text-light);
   text-align: center;
   margin-top: 20px;
-  font-size: 0.85rem;}
-
-.footer-text p {
-  margin: 4px 0;
+  font-size: 0.85rem;
 }
+.footer-text p { margin: 4px 0; }
 
 /* ===== شاشة الترحيب ===== */
 #splash {
@@ -266,7 +316,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-#splash.show { display: flex !important; }
 
 .splash-content {
   background: var(--bg-card);
@@ -1883,90 +1932,55 @@ select.input {
 #emergencyBtn{position:fixed;bottom:70px;left:16px;width:52px;height:52px;background:linear-gradient(135deg,#f44336,#b71c1c);color:#fff;border:none;border-radius:50%;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 18px rgba(244,67,54,0.5);z-index:9998;display:none;align-items:center;justify-content:center;animation:emergencyPulse 2s infinite;transition:var(--transition)}
 #emergencyBtn.visible{display:flex}
 @keyframes emergencyPulse{0%,100%{box-shadow:0 4px 18px rgba(244,67,54,0.5)}50%{box-shadow:0 4px 28px rgba(244,67,54,0.9),0 0 0 8px rgba(244,67,54,0.15)}}
-#emergencyBtn:hover{transform:scale(1.1)}
-
-/* ===== نظام الأدوار ===== */
-.role-citizen, .role-driver, .role-admin { display: none !important; }
-body.role-citizen .role-citizen { display: block !important; }
-body.role-driver  .role-driver  { display: block !important; }
-body.role-admin   .role-admin   { display: block !important; }
-/* بعض العناصر تحتاج flex لا block */
-body.role-citizen .role-citizen.flex-role { display: flex !important; }
-body.role-driver  .role-driver.flex-role  { display: flex !important; }
-body.role-admin   .role-admin.flex-role   { display: flex !important; }
-/* شارة الدور في الشريط العلوي */
-#roleBadge {
-  background: rgba(255,255,255,0.2);
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-/* بطاقة الترحيب بالسائق */
-#driverWelcomeCard {
-  background: linear-gradient(135deg,#E65100,#F57C00);
-  color: #fff;
-  padding: 16px;
-  border-radius: var(--radius);
-  text-align: center;
-  margin-bottom: 14px;
-  font-size: 1rem;
-  font-weight: 700;
-  display: none;
-}
-body.role-driver #driverWelcomeCard { display: block; }</style>
+#emergencyBtn:hover{transform:scale(1.1)}</style>
 </head>
 <body>
 
-<!-- شاشة اختيار الجهاز والدور -->
+<!-- شاشة اختيار الدور -->
 <div id="deviceSelector">
   <div class="device-card">
     <div class="flag-icon">🇩🇿</div>
     <h1 data-i18n="devTitle">النظافة من الإيمان</h1>
-    <h2 data-i18n="devSubtitle">المدية نظيفة 2026</h2>
-    <p data-i18n="devDesc">اختر نوع الجهاز ثم دورك</p>
+    <h2 data-i18n="devSubtitle">المدية نظيفة</h2>
+    <p data-i18n="devDesc">اختر دورك للمتابعة</p>
+    <div class="device-buttons">
 
-    <!-- اختيار الجهاز -->
-    <div style="display:flex;gap:8px;margin-bottom:14px;justify-content:center">
-      <button id="selDesktop" class="device-btn computer" style="flex:1;padding:10px 6px;font-size:0.82rem" onclick="selectDeviceType('desktop')">
-        <i class="fas fa-laptop"></i> <span data-i18n="btnComputer">الكمبيوتر</span>
+      <!-- مواطن -->
+      <button class="role-btn citizen" onclick="selectRole('citizen')">
+        <div class="role-btn-icon">👤</div>
+        <div class="role-btn-body">
+          <span class="role-btn-title">مواطن</span>
+          <span class="role-btn-desc">إرسال تبليغ • طلباتي • الجدول • التوعية • الإحصائيات</span>
+        </div>
+        <div class="role-btn-arrow"><i class="fas fa-chevron-left"></i></div>
       </button>
-      <button id="selMobile" class="device-btn phone" style="flex:1;padding:10px 6px;font-size:0.82rem" onclick="selectDeviceType('mobile')">
-        <i class="fas fa-mobile-alt"></i> <span data-i18n="btnPhone">الهاتف</span>
-      </button>
-    </div>
 
-    <!-- اختيار الدور -->
-    <p style="font-size:0.88rem;color:var(--text);font-weight:700;margin-bottom:10px">من أنت؟</p>
-    <div class="device-buttons" style="gap:9px">
-      <button class="device-btn" style="background:linear-gradient(135deg,#2E7D32,#43A047);box-shadow:0 4px 14px rgba(46,125,50,0.4);flex-direction:row;justify-content:flex-start;padding:12px 16px;gap:12px" onclick="selectRole('citizen')">
-        <i class="fas fa-user" style="font-size:1.2rem;flex-shrink:0"></i>
-        <div style="text-align:right;flex:1">
-          <div style="font-size:0.95rem;font-weight:800">👤 مواطن</div>
-          <div style="font-size:0.72rem;opacity:0.88">إرسال تبليغ / الخدمات</div>
+      <!-- سائق -->
+      <button class="role-btn driver" onclick="selectRole('driver')">
+        <div class="role-btn-icon">🚛</div>
+        <div class="role-btn-body">
+          <span class="role-btn-title">سائق</span>
+          <span class="role-btn-desc">الوصول المباشر لصفحة السائق وتسجيل المهام</span>
         </div>
+        <div class="role-btn-arrow"><i class="fas fa-chevron-left"></i></div>
       </button>
-      <button class="device-btn" style="background:linear-gradient(135deg,#E65100,#F57C00);box-shadow:0 4px 14px rgba(230,81,0,0.4);flex-direction:row;justify-content:flex-start;padding:12px 16px;gap:12px" onclick="selectRole('driver')">
-        <i class="fas fa-truck-loading" style="font-size:1.2rem;flex-shrink:0"></i>
-        <div style="text-align:right;flex:1">
-          <div style="font-size:0.95rem;font-weight:800">🚛 سائق</div>
-          <div style="font-size:0.72rem;opacity:0.88">عرض المهام والمسار</div>
+
+      <!-- الإدارة -->
+      <button class="role-btn admin" onclick="selectRole('admin')">
+        <div class="role-btn-icon">🏛️</div>
+        <div class="role-btn-body">
+          <span class="role-btn-title">الإدارة</span>
+          <span class="role-btn-desc">كامل الصلاحيات — جميع الأقسام والأدوات</span>
         </div>
+        <div class="role-btn-arrow"><i class="fas fa-chevron-left"></i></div>
       </button>
-      <button class="device-btn" style="background:linear-gradient(135deg,#1565C0,#1976D2);box-shadow:0 4px 14px rgba(21,101,192,0.4);flex-direction:row;justify-content:flex-start;padding:12px 16px;gap:12px" onclick="selectRole('admin')">
-        <i class="fas fa-shield-alt" style="font-size:1.2rem;flex-shrink:0"></i>
-        <div style="text-align:right;flex:1">
-          <div style="font-size:0.95rem;font-weight:800">🏛️ الإدارة</div>
-          <div style="font-size:0.72rem;opacity:0.88">لوحة التحكم الكاملة</div>
-        </div>
-      </button>
+
     </div>
   </div>
   <div class="footer-text">
     <p data-i18n="ft1">مصلحة النظافة والوقاية الصحية - بلدية المدية</p>
     <p data-i18n="ft2">التطبيق من إعداد د. رابحي فتحي</p>
-    <p style="margin-top:8px;font-size:0.75rem;opacity:0.7">سيتم حفظ اختيارك للزيارات القادمة</p>
+    <p style="margin-top:8px;font-size:0.8rem" data-i18n="ft3">سيتم حفظ اختيارك للزيارات القادمة</p>
   </div>
 </div>
 
@@ -1984,17 +1998,20 @@ body.role-driver #driverWelcomeCard { display: block; }</style>
 <div class="main-content" id="mainContent">
   <!-- الشريط العلوي -->
   <div class="top-bar">
-    <div class="status">
-      <span class="dot"></span>
-      <span data-i18n="topStatus">متصل - النظام جاهز</span>
-    </div>    <div style="display:flex;align-items:center;gap:10px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="status">
+        <span class="dot"></span>
+        <span data-i18n="topStatus">متصل</span>
+      </div>
+      <span id="roleBadgeTop" class="role-badge" onclick="changeRole()" title="تغيير الدور"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
       <div class="time-date">
         <span id="timeDisplay">00:00:00</span>
       </div>
       <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع">
         <i class="fas fa-moon"></i>
       </button>
-      <span id="roleBadge" onclick="changeRole()" title="تغيير الدور">👤</span>
     </div>
   </div>
 
@@ -2051,13 +2068,6 @@ body.role-driver #driverWelcomeCard { display: block; }</style>
   <div id="home" class="page active">
 
     <!-- شريط إنجاز اليوم -->
-    <div id="driverWelcomeCard">
-      <i class="fas fa-truck-loading" style="font-size:1.8rem;margin-bottom:8px;display:block"></i>
-      مرحباً بك سائقاً — اضغط أدناه لعرض مهامك
-      <button class="btn ripple" style="margin-top:10px;background:rgba(255,255,255,0.25);font-size:0.9rem;padding:10px" onclick="showPage('driver')">
-        <i class="fas fa-tasks"></i> عرض مهامي
-      </button>
-    </div>
     <div id="dailyAchievementBar">
       <div class="ach-item">
         <span class="ach-num" id="achReports">0</span>
@@ -2080,100 +2090,114 @@ body.role-driver #driverWelcomeCard { display: block; }</style>
       </div>
     </div>
 
-    <!-- ===== 1. إرسال تبليغ (للجميع) ===== -->
+    <!-- 1. إرسال تبليغ — الأهم دائماً -->
     <button class="btn btn-primary mb ripple" onclick="showPage('report')">
       <i class="fas fa-truck" style="font-size:2.5rem"></i>
       <span data-i18n="sendReport">إرسال تبليغ</span>
     </button>
 
-    <!-- ===== 2. طلباتي (للمواطن فقط) ===== -->
-    <div class="role-citizen role-admin">
-      <button class="btn btn-info ripple" onclick="showPage('requests')" style="height:55px">
-        <i class="fas fa-tools"></i> <span data-i18n="myRequests">طلباتي</span>
+    <!-- 2. طلباتي (مواطن + إدارة) -->
+    <div class="role-section" data-roles="citizen,admin">
+      <button class="btn btn-info ripple" onclick="showPage('requests')" style="height:55px;font-size:1.05rem">
+        <i class="fas fa-tools" style="font-size:1.4rem"></i>
+        <span data-i18n="myRequests">🔧 طلباتي</span>
       </button>
     </div>
 
-    <!-- ===== 3. جدول الجمع (للجميع) ===== -->
-    <button class="btn btn-warning ripple" onclick="showPage('schedule')" style="height:55px">
-      <i class="fas fa-calendar-alt"></i> <span data-i18n="schedule">جدول الجمع</span>
+    <!-- 3. جدول الجمع (مواطن + إدارة) -->
+    <div class="role-section" data-roles="citizen,admin">
+      <button class="btn btn-warning ripple" onclick="showPage('schedule')" style="height:55px;font-size:1.05rem">
+        <i class="fas fa-calendar-alt" style="font-size:1.4rem"></i>
+        <span data-i18n="schedule">📅 جدول الجمع</span>
+      </button>
+    </div>
+
+    <!-- 4. التوعية + حاسبة التدوير (مواطن + إدارة) -->
+    <div class="role-section" data-roles="citizen,admin">
+      <div class="card hover-lift">
+        <h3 data-i18n="servicesTitle">🌿 التوعية والتدوير</h3>
+        <div class="grid-2">
+          <button class="btn btn-purple ripple" onclick="showPage('tips')">
+            <i class="fas fa-lightbulb"></i> <span data-i18n="awareness">توعية</span>
+          </button>
+          <button class="btn btn-success ripple" onclick="showPage('recycling')">
+            <i class="fas fa-recycle"></i> <span data-i18n="recyclingCalc">حاسبة التدوير</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. الإحصائيات (مواطن + إدارة) -->
+    <div class="role-section" data-roles="citizen,admin">
+      <button class="btn btn-purple ripple" onclick="showPage('dashboard')" style="height:55px;font-size:1.05rem">
+        <i class="fas fa-chart-bar" style="font-size:1.4rem"></i>
+        <span data-i18n="dashboard">📊 الإحصائيات</span>
+      </button>
+    </div>
+
+    <!-- 6. الفرز والاقتصاد الدائري (إدارة فقط) -->
+    <div class="role-section" data-roles="admin">
+      <div class="card hover-lift">
+        <h3 data-i18n="circularEconomy">♻️ الفرز والاقتصاد الدائري</h3>
+        <div class="grid-2">
+          <button class="btn btn-success ripple" onclick="showPage('sortingCenter')">
+            <i class="fas fa-industry"></i> <span data-i18n="sortingCenter">مركز الفرز</span>
+          </button>
+          <button class="btn btn-purple ripple" onclick="showPage('recyclingMarket')">
+            <i class="fas fa-store"></i> <span data-i18n="recyclingMarket">سوق التدوير</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. التتبع المباشر (إدارة فقط) -->
+    <div class="role-section" data-roles="admin">
+      <div class="card hover-lift" style="margin-top:0">
+        <h3 data-i18n="tracking">🚚 التتبع المباشر</h3>
+        <button class="btn btn-secondary ripple" onclick="showPage('truckTracking')">
+          <i class="fas fa-map-marker-alt"></i> <span data-i18n="trackTrucks">تتبع مسار الشاحنات</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 8. أدوات العرض (إدارة فقط) -->
+    <div class="role-section" data-roles="admin">
+      <div class="card hover-lift" style="border-color:#667eea;background:linear-gradient(135deg,#f8f9ff,#eef1ff)">
+        <h3 style="color:#667eea" data-i18n="toolsTitle">🎬 أدوات العرض</h3>
+        <div class="grid-2">
+          <button class="btn btn-purple ripple" onclick="loadDemoData()">
+            <i class="fas fa-dice"></i> <span data-i18n="demoData">بيانات تجريبية</span>
+          </button>
+          <button class="btn btn-dark ripple" onclick="openPrintDialog()">
+            <i class="fas fa-print"></i> <span data-i18n="printPDF">طباعة PDF</span>
+          </button>
+        </div>
+        <button class="btn btn-secondary ripple" onclick="exitApp()" style="margin-top:8px">
+          <i class="fas fa-sign-out-alt"></i> <span data-i18n="exit">الخروج</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 9. السائق والإدارة — في الأسفل (إدارة فقط) -->
+    <div class="role-section" data-roles="admin">
+      <div class="card hover-lift" style="margin-top:0">
+        <h3 data-i18n="hallTitle">👥 الرواق</h3>
+        <div class="grid-2">
+          <button class="btn btn-warning sb2 ripple" onclick="showPage('driver')">
+            <i class="fas fa-truck-loading"></i> <span data-i18n="drivers">السائقين</span>
+          </button>
+          <button class="btn btn-dark sb2 ripple" onclick="showPage('admin')">
+            <i class="fas fa-shield-alt"></i> <span data-i18n="admin">الإدارة</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- زر تغيير الدور في الأسفل -->
+    <button class="change-role-btn" onclick="changeRole()">
+      <i class="fas fa-exchange-alt"></i> تغيير الدور
     </button>
 
-    <!-- ===== 4. توعية + حاسبة ===== -->
-    <div class="card hover-lift role-citizen role-admin">
-      <h3 data-i18n="servicesTitle">✨ التوعية والخدمات البيئية</h3>
-      <div class="grid-2">
-        <button class="btn btn-purple ripple" onclick="showPage('tips')">
-          <i class="fas fa-lightbulb"></i> <span data-i18n="awareness">توعية بيئية</span>
-        </button>
-        <button class="btn btn-success ripple" onclick="showPage('recycling')">
-          <i class="fas fa-recycle"></i> <span data-i18n="recyclingCalc">حاسبة التدوير</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- ===== 5. الإحصائيات العامة ===== -->
-    <div class="role-citizen role-admin">
-      <button class="btn btn-purple ripple" onclick="showPage('dashboard')" style="height:55px">
-        <i class="fas fa-chart-bar"></i> <span data-i18n="dashboard">لوحة الإحصائيات</span>
-      </button>
-    </div>
-
-    <!-- ===== 6. الاقتصاد الدائري + الفرز ===== -->
-    <div class="card hover-lift role-admin">
-      <h3 data-i18n="circularEconomy">🔄 الاقتصاد الدائري</h3>
-      <div class="grid-2">
-        <button class="btn btn-success ripple" onclick="showPage('sortingCenter')">
-          <i class="fas fa-industry"></i> <span data-i18n="sortingCenter">مركز الفرز</span>
-        </button>
-        <button class="btn btn-purple ripple" onclick="showPage('recyclingMarket')">
-          <i class="fas fa-store"></i> <span data-i18n="recyclingMarket">سوق التدوير</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- ===== 7. التتبع المباشر ===== -->
-    <div class="card hover-lift role-driver role-admin" style="margin-top:12px">
-      <h3 data-i18n="tracking">🚚 التتبع المباشر</h3>
-      <button class="btn btn-secondary ripple" onclick="showPage('truckTracking')">
-        <i class="fas fa-map-marker-alt"></i> <span data-i18n="trackTrucks">تتبع مسار الشاحنات</span>
-      </button>
-    </div>
-
-    <!-- ===== 8. أدوات العرض (للإدارة فقط) ===== -->
-    <div class="card hover-lift role-admin" style="border-color:#667eea;background:linear-gradient(135deg,#f8f9ff,#eef1ff)">
-      <h3 style="color:#667eea" data-i18n="toolsTitle">🎬 أدوات العرض</h3>
-      <div class="grid-2">
-        <button class="btn btn-purple ripple" onclick="loadDemoData()">
-          <i class="fas fa-dice"></i> <span data-i18n="demoData">بيانات تجريبية</span>
-        </button>
-        <button class="btn btn-dark ripple" onclick="openPrintDialog()">
-          <i class="fas fa-print"></i> <span data-i18n="printPDF">طباعة PDF</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- ===== 9. الرواق — السائق والإدارة (في الأسفل) ===== -->
-    <div class="card hover-lift role-admin" style="margin-top:12px">
-      <h3 data-i18n="hallTitle">👥 الرواق</h3>
-      <div class="grid-2">
-        <button class="btn btn-warning sb2 ripple" onclick="showPage('driver')">
-          <i class="fas fa-truck-loading"></i> <span data-i18n="drivers">السائقين</span>
-        </button>
-        <button class="btn btn-dark sb2 ripple" onclick="showPage('admin')">
-          <i class="fas fa-shield-alt"></i> <span data-i18n="admin">الإدارة</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- زر الخروج وتغيير الدور -->
-    <div style="margin-top:16px;display:flex;gap:10px">
-      <button class="btn ripple" style="background:#757575;flex:1" onclick="changeRole()">
-        <i class="fas fa-exchange-alt"></i> تغيير الدور
-      </button>
-      <button class="btn btn-secondary ripple" style="flex:1" onclick="exitApp()">
-        <i class="fas fa-sign-out-alt"></i> <span data-i18n="exit">الخروج</span>
-      </button>
-    </div>
   </div>
 
   <!-- ========== صفحة إرسال تبليغ ========== -->
@@ -3118,101 +3142,123 @@ const sectorRoutesData = {
 };
 
 // ===== اختيار الجهاز =====
-// ===== تطبيع بيانات البلاغات (يجب أن تكون قبل _startApp) =====
-function normalizeReport(r) {
-  if(!r) return r;
-  // توحيد أسماء الحقول — يضمن عمل البلاغات القديمة والجديدة معاً
-  r.addr  = r.addr  || r.address   || r.location   || r.title        || '—';
-  r.gps   = r.gps   || r.coords    || r.gpsCoords  || r.coordinates  || '';
-  r.date  = r.date  || r.reportDate|| r.createdDate || '—';
-  r.time  = r.time  || r.reportTime|| r.createdTime || '—';
-  r.image = r.image || r.photo     || r.img         || r.beforeImage  || null;
-  return r;
+function _startApp(mode) {
+  try { if(mode === 'desktop') document.body.classList.add('desktop-mode'); else document.body.classList.remove('desktop-mode'); } catch(e) {}
+  var sel = document.getElementById('deviceSelector');
+  var spl = document.getElementById('splash');
+  var main = document.getElementById('mainContent');
+  if(sel) { sel.style.display = 'none'; sel.classList.remove('active'); }
+  if(spl) { spl.style.display = 'none'; }
+  if(main) { main.style.display = 'block'; main.classList.add('active'); }
+  try { updateTime(); } catch(e) {}
+  try { setupSync(); } catch(e) {}
+  try { loadFromCloud('reports','reports',(d)=>{allReports=d?Object.values(d):[];updateStats();}); } catch(e) {}
+  try { loadFromCloud('wasteTracking','wasteTracking',(d)=>{wasteTracking=d?Object.values(d):[];}); } catch(e) {}
+  try { loadFromCloud('marketMaterials','marketMaterials',(d)=>{marketMaterials=d?Object.values(d):[];}); } catch(e) {}
+  try { loadFromCloud('truckTracking','truckTracking',(d)=>{if(d)truckTrackingData=d;}); } catch(e) {}
+  try { var lang=localStorage.getItem('medea_lang')||'ar'; currentLang=lang; updateLanguageUI(); } catch(e) {}
+  // تطبيق الدور بعد التحميل
+  try { applyRoleUI(); } catch(e) {}
 }
 
 // ===== نظام الأدوار =====
-let currentRole = 'citizen';
+var currentRole = 'citizen'; // القيمة الافتراضية
 
-function selectDeviceType(mode) {
-  try { localStorage.setItem('medea_device', mode); } catch(e) {}
-  if(mode === 'desktop') document.body.classList.add('desktop-mode');
-  else document.body.classList.remove('desktop-mode');
-  document.querySelectorAll('#selDesktop,#selMobile').forEach(b => b.style.opacity='0.5');
-  const s = document.getElementById(mode==='desktop'?'selDesktop':'selMobile');
-  if(s) s.style.opacity='1';
-}
+var ROLE_CONFIG = {
+  citizen: {
+    label: '👤 مواطن',
+    device: 'mobile',
+    // أقسام مرئية للمواطن في الصفحة الرئيسية
+    sections: ['citizen', 'citizen,admin']
+  },
+  driver: {
+    label: '🚛 سائق',
+    device: 'mobile',
+    sections: []
+  },
+  admin: {
+    label: '🏛️ إدارة',
+    device: 'desktop',
+    sections: ['citizen', 'admin', 'citizen,admin']
+  }
+};
 
 function selectRole(role) {
-  try {
-    currentRole = role;
-    localStorage.setItem('medea_role', role);
-    var mode = localStorage.getItem('medea_device') || 'mobile';
+  currentRole = role;
+  try { localStorage.setItem('medea_role', role); } catch(e) {}
 
-    // 1. إخفاء شاشة الاختيار
-    var selEl = document.getElementById('deviceSelector');
-    if(selEl) { selEl.classList.remove('active'); selEl.style.cssText='display:none !important;'; }
+  // تحديد وضع الجهاز حسب الدور
+  var deviceMode = ROLE_CONFIG[role] ? ROLE_CONFIG[role].device : 'mobile';
+  try { localStorage.setItem('medea_device', deviceMode); } catch(e) {}
 
-    // 2. إظهار splash
-    var spl = document.getElementById('splash');
-    if(spl) spl.classList.add('show');
+  var sel = document.getElementById('deviceSelector');
+  if(sel) { sel.style.opacity='0'; sel.style.transition='opacity 0.3s'; }
 
-    // 3. بعد 1.2 ثانية: إخفاء splash وإظهار التطبيق
-    setTimeout(function() {
-      var spl2 = document.getElementById('splash');
-      if(spl2) { spl2.classList.remove('show'); spl2.style.cssText='display:none !important;'; }
-
-      var main = document.getElementById('mainContent');
-      if(main) { main.style.cssText='display:block !important;'; main.classList.add('active'); }
-
-      applyRole(role);
-      _startApp(mode);
-      if(role === 'driver') setTimeout(function(){ showPage('driver'); }, 400);
-    }, 1200);
-
-  } catch(e) {
-    var main = document.getElementById('mainContent');
-    if(main) { main.style.display='block'; main.classList.add('active'); }
-    applyRole(role || 'citizen');
-    _startApp('mobile');
-  }
+  setTimeout(function() {
+    if(sel) { sel.style.display='none'; sel.classList.remove('active'); }
+    // السائق يذهب مباشرة لصفحته
+    if(role === 'driver') {
+      _startApp(deviceMode);
+      setTimeout(function(){ showPage('driver'); }, 500);
+    } else {
+      var spl = document.getElementById('splash');
+      if(spl) { spl.style.display='flex'; spl.style.opacity='1'; }
+      setTimeout(function() { _startApp(deviceMode); }, 1800);
+      setTimeout(function() {
+        var m = document.getElementById('mainContent');
+        if(m && !m.classList.contains('active')) { _startApp(deviceMode); }
+      }, 5000);
+    }
+  }, 300);
 }
 
-function applyRole(role) {
-  currentRole = role;
-  document.body.classList.remove('role-citizen','role-driver','role-admin');
-  document.body.classList.add('role-'+role);
-  const badge = document.getElementById('roleBadge');
-  if(badge){
-    const L = {citizen:'👤 مواطن', driver:'🚛 سائق', admin:'🏛️ إدارة'};
-    badge.textContent = L[role]||'👤';
-  }
+function applyRoleUI() {
+  try {
+    // تحديث شارة الدور في الشريط العلوي
+    var badge = document.getElementById('roleBadgeTop');
+    if(badge) {
+      var cfg = ROLE_CONFIG[currentRole];
+      badge.textContent = cfg ? cfg.label : '';
+      badge.style.display = cfg ? 'inline-flex' : 'none';
+    }
+
+    // إخفاء/إظهار الأقسام حسب الدور
+    var sections = document.querySelectorAll('.role-section');
+    sections.forEach(function(sec) {
+      var roles = (sec.getAttribute('data-roles') || '').split(',').map(function(r){ return r.trim(); });
+      if(roles.indexOf(currentRole) !== -1) {
+        sec.style.display = 'block';
+      } else {
+        sec.style.display = 'none';
+      }
+    });
+  } catch(e) {}
 }
 
 function changeRole() {
+  // إعادة عرض شاشة اختيار الدور
   try { localStorage.removeItem('medea_role'); } catch(e) {}
-  const main = document.getElementById('mainContent');
-  if(main) { main.style.cssText=''; main.classList.remove('active'); }
-  const sel = document.getElementById('deviceSelector');
-  if(sel) { sel.style.cssText=''; sel.classList.add('active'); }
-  document.body.classList.remove('role-citizen','role-driver','role-admin');
+  var sel = document.getElementById('deviceSelector');
+  var main = document.getElementById('mainContent');
+  if(main) { main.style.display = 'none'; main.classList.remove('active'); }
+  if(sel) { sel.style.opacity='1'; sel.style.display='flex'; sel.classList.add('active'); }
 }
 
 function selectDevice(mode) {
-  // قديم — للتوافق فقط
+  // نبقي هذه الدالة للتوافق الخلفي
   try { localStorage.setItem('medea_device', mode); } catch(e) {}
-  selectRole(localStorage.getItem('medea_role') || 'citizen');
-}
-
-function _startApp(mode) {
-  try { if(mode==='desktop') document.body.classList.add('desktop-mode'); else document.body.classList.remove('desktop-mode'); } catch(e) {}
-  // لا نلمس display هنا — selectRole تتولى ذلك
-  try { updateTime(); } catch(e) {}
-  try { setupSync(); } catch(e) {}
-  try { loadFromCloud('reports','reports',function(d){allReports=d?Object.values(d).map(normalizeReport):[];updateStats();}); } catch(e) {}
-  try { loadFromCloud('wasteTracking','wasteTracking',function(d){wasteTracking=d?Object.values(d):[];}); } catch(e) {}
-  try { loadFromCloud('marketMaterials','marketMaterials',function(d){marketMaterials=d?Object.values(d):[];}); } catch(e) {}
-  try { loadFromCloud('truckTracking','truckTracking',function(d){if(d)truckTrackingData=d;}); } catch(e) {}
-  try { var lang=localStorage.getItem('medea_lang')||'ar'; currentLang=lang; updateLanguageUI(); } catch(e) {}
+  var sel = document.getElementById('deviceSelector');
+  if(sel) { sel.style.opacity='0'; sel.style.transition='opacity 0.3s'; }
+  setTimeout(function() {
+    if(sel) { sel.style.display='none'; sel.classList.remove('active'); }
+    var spl = document.getElementById('splash');
+    if(spl) { spl.style.display='flex'; spl.style.opacity='1'; }
+    setTimeout(function() { _startApp(mode); }, 2000);
+    setTimeout(function() {
+      var m = document.getElementById('mainContent');
+      if(m && !m.classList.contains('active')) { _startApp(mode); }
+    }, 5000);
+  }, 300);
 }
 
 // ===== تبديل الوضع =====
@@ -3667,6 +3713,17 @@ function showToast(msg, type='success') {
 }
 
 // ===== Firebase Sync =====
+function normalizeReport(r) {
+  // توحيد أسماء الحقول — يضمن عمل البلاغات القديمة والجديدة
+  if(!r) return r;
+  r.addr  = r.addr  || r.address  || r.location  || r.title  || '—';
+  r.gps   = r.gps   || r.coords   || r.gpsCoords || r.coordinates || '';
+  r.date  = r.date  || r.reportDate || r.createdDate || '—';
+  r.time  = r.time  || r.reportTime || r.createdTime || '—';
+  r.image = r.image || r.photo    || r.img        || r.beforeImage || null;
+  return r;
+}
+
 function setupSync() {
   try {
     const connectedRef = db.ref('.info/connected');
@@ -3727,10 +3784,7 @@ function loadFromCloud(path, localKey, callback) {
 }
 
 function updateCloudItem(path, itemId, updates) {
-  try {
-    // استخدام update() بدل set() لدمج الحقول وليس استبدال البلاغ كاملاً
-    db.ref(path + '/' + itemId).update(updates).catch(()=>{});
-  } catch(e) {}
+  try { db.ref(path + '/' + itemId).set(updates).catch(()=>{}); } catch(e) {}
 }
 
 function addToCloud(path, item) {
@@ -3780,26 +3834,15 @@ function saveReport(r) {
 }
 
 function updateReport(id, upd) {
-  try {
-    const index = allReports.findIndex(x => x.id == id);
-    if(index !== -1) {
-      // دمج البيانات محلياً أولاً
-      const merged = normalizeReport({...allReports[index], ...upd});
-      allReports[index] = merged;
-
-      // حفظ البلاغ كاملاً في Firebase (ليس فقط الحقول المحدّثة)
-      // هذا يمنع تصفير البيانات القديمة
-      try { db.ref('reports/' + id).set(merged).catch(()=>{}); } catch(e) {}
-
-      updateStats();
-      if(document.getElementById('reportsPage') &&
-         document.getElementById('reportsPage').classList.contains('active')) {
-        showReportsPage();
-      }
-      // تحديث مهام السائق فوراً
-      if(currentDriver) renderDriverTasks();
+  updateCloudItem('reports', id, upd);
+  const index = allReports.findIndex(x => x.id == id);
+  if(index !== -1) {
+    allReports[index] = {...allReports[index], ...upd};
+    updateStats();
+    if(document.getElementById('reportsPage').classList.contains('active')) {
+      showReportsPage();
     }
-  } catch(e) {}
+  }
 }
 
 function saveWasteTracking(w) {
@@ -6587,38 +6630,31 @@ window.addEventListener('DOMContentLoaded', function() {
     if(savedPoints) userPoints = parseInt(savedPoints);
   } catch(e) {}
 
-  var savedDevice = null, savedRole = null;
-  try { savedDevice = localStorage.getItem('medea_device'); } catch(e) {}
-  try { savedRole   = localStorage.getItem('medea_role');   } catch(e) {}
+  // تحديد الدور المحفوظ
+  var savedRole = null;
+  try { savedRole = localStorage.getItem('medea_role'); } catch(e) {}
 
-  // تأكد من عرض شاشة الاختيار أولاً دائماً
-  var selEl = document.getElementById('deviceSelector');
-  var main  = document.getElementById('mainContent');
-  var spl   = document.getElementById('splash');
-
-  // إخفاء كل شيء
-  if(main) { main.style.cssText = 'display:none !important;'; main.classList.remove('active'); }
-  if(spl)  { spl.style.cssText  = 'display:none !important;'; }
-
-  if(savedDevice && savedRole) {
-    // الدور والجهاز محفوظان — تشغيل مباشر بدون شاشة اختيار
-    if(selEl) { selEl.classList.remove('active'); selEl.style.cssText='display:none !important;'; }
-    if(savedDevice === 'desktop') document.body.classList.add('desktop-mode');
-    applyRole(savedRole);
-    if(main) { main.style.cssText='display:block !important;'; main.classList.add('active'); }
+  if(savedRole && ROLE_CONFIG[savedRole]) {
+    // دور محفوظ: تشغيل مباشر بدون شاشة الاختيار
+    currentRole = savedRole;
+    var savedDevice = ROLE_CONFIG[savedRole].device || 'mobile';
     _startApp(savedDevice);
-    if(savedRole === 'driver') setTimeout(function(){ showPage('driver'); }, 500);
+    if(savedRole === 'driver') {
+      setTimeout(function(){ showPage('driver'); }, 500);
+    }
   } else {
-    // إظهار شاشة الاختيار
-    if(selEl) { selEl.style.cssText=''; selEl.classList.add('active'); }
-    if(savedDevice === 'desktop') document.body.classList.add('desktop-mode');
+    // لا دور محفوظ: إظهار شاشة الاختيار
+    var sel = document.getElementById('deviceSelector');
+    if(sel) { sel.style.display = 'flex'; sel.classList.add('active'); }
   }
 
+  // [1] شريط إنجاز اليوم — تحديث فوري وكل دقيقة
   setTimeout(updateDailyAchievement, 800);
   setInterval(updateDailyAchievement, 60000);
 
-  setTimeout(function() {
-    var eBtn = document.getElementById('emergencyBtn');
+  // [H] تفعيل زر الطوارئ في الصفحة الرئيسية
+  setTimeout(() => {
+    const eBtn = document.getElementById('emergencyBtn');
     if(eBtn) eBtn.classList.add('visible');
   }, 1000);
 });

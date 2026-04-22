@@ -118,16 +118,18 @@ body {
 
 .device-card {
   background: var(--bg-card);
-  padding: 40px 35px;
+  padding: 22px 20px;
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   text-align: center;
-  max-width: 480px;
-  width: 100%;
+  max-width: 420px;
+  width: 94%;
   border: 3px solid var(--primary);
   position: relative;
   overflow: hidden;
   animation: slideUp 0.6s ease;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 @keyframes slideUp {
@@ -144,8 +146,8 @@ body {
 }
 
 .device-card .flag-icon {
-  font-size: 4rem;
-  margin-bottom: 15px;
+  font-size: 2.8rem;
+  margin-bottom: 8px;
   display: inline-block;
   animation: wave 2s ease-in-out infinite;  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
 }
@@ -157,46 +159,47 @@ body {
 
 .device-card h1 {
   color: var(--primary);
-  font-size: 2.2rem;
-  margin-bottom: 8px;
+  font-size: 1.6rem;
+  margin-bottom: 4px;
   font-weight: 900;
   letter-spacing: -0.5px;
 }
 
 .device-card h2 {
   color: var(--secondary);
-  font-size: 1.6rem;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
   font-weight: 700;
 }
 
 .device-card p {
   color: var(--text-light);
-  font-size: 1rem;
-  margin-bottom: 25px;
+  font-size: 0.88rem;
+  margin-bottom: 12px;
 }
 
 .device-buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   align-items: center;
 }
 
 .device-btn {
   width: 100%;
-  padding: 18px;
+  padding: 13px 16px;
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   font-family: 'Cairo', sans-serif;
   transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;  color: white;
+  gap: 10px;
+  color: white;
   position: relative;
   overflow: hidden;
 }
@@ -1924,32 +1927,38 @@ body.role-driver #driverWelcomeCard { display: block; }</style>
     <p data-i18n="devDesc">اختر نوع الجهاز ثم دورك</p>
 
     <!-- اختيار الجهاز -->
-    <div style="display:flex;gap:10px;margin-bottom:18px;justify-content:center">
-      <button id="selDesktop" class="device-btn computer" style="flex:1;padding:12px 8px;font-size:0.9rem" onclick="selectDeviceType('desktop')">
+    <div style="display:flex;gap:8px;margin-bottom:14px;justify-content:center">
+      <button id="selDesktop" class="device-btn computer" style="flex:1;padding:10px 6px;font-size:0.82rem" onclick="selectDeviceType('desktop')">
         <i class="fas fa-laptop"></i> <span data-i18n="btnComputer">الكمبيوتر</span>
       </button>
-      <button id="selMobile" class="device-btn phone" style="flex:1;padding:12px 8px;font-size:0.9rem" onclick="selectDeviceType('mobile')">
+      <button id="selMobile" class="device-btn phone" style="flex:1;padding:10px 6px;font-size:0.82rem" onclick="selectDeviceType('mobile')">
         <i class="fas fa-mobile-alt"></i> <span data-i18n="btnPhone">الهاتف</span>
       </button>
     </div>
 
     <!-- اختيار الدور -->
-    <p style="font-size:0.95rem;color:var(--text);font-weight:700;margin-bottom:12px">من أنت؟</p>
-    <div class="device-buttons" style="gap:12px">
-      <button class="device-btn" style="background:linear-gradient(135deg,#2E7D32,#43A047);box-shadow:0 6px 20px rgba(46,125,50,0.4)" onclick="selectRole('citizen')">
-        <i class="fas fa-user" style="font-size:1.6rem"></i>
-        <span style="font-size:1rem;font-weight:800">👤 مواطن</span>
-        <small style="font-size:0.75rem;opacity:0.85">إرسال تبليغ / الخدمات</small>
+    <p style="font-size:0.88rem;color:var(--text);font-weight:700;margin-bottom:10px">من أنت؟</p>
+    <div class="device-buttons" style="gap:9px">
+      <button class="device-btn" style="background:linear-gradient(135deg,#2E7D32,#43A047);box-shadow:0 4px 14px rgba(46,125,50,0.4);flex-direction:row;justify-content:flex-start;padding:12px 16px;gap:12px" onclick="selectRole('citizen')">
+        <i class="fas fa-user" style="font-size:1.2rem;flex-shrink:0"></i>
+        <div style="text-align:right;flex:1">
+          <div style="font-size:0.95rem;font-weight:800">👤 مواطن</div>
+          <div style="font-size:0.72rem;opacity:0.88">إرسال تبليغ / الخدمات</div>
+        </div>
       </button>
-      <button class="device-btn" style="background:linear-gradient(135deg,#E65100,#F57C00);box-shadow:0 6px 20px rgba(230,81,0,0.4)" onclick="selectRole('driver')">
-        <i class="fas fa-truck-loading" style="font-size:1.6rem"></i>
-        <span style="font-size:1rem;font-weight:800">🚛 سائق</span>
-        <small style="font-size:0.75rem;opacity:0.85">عرض المهام والمسار</small>
+      <button class="device-btn" style="background:linear-gradient(135deg,#E65100,#F57C00);box-shadow:0 4px 14px rgba(230,81,0,0.4);flex-direction:row;justify-content:flex-start;padding:12px 16px;gap:12px" onclick="selectRole('driver')">
+        <i class="fas fa-truck-loading" style="font-size:1.2rem;flex-shrink:0"></i>
+        <div style="text-align:right;flex:1">
+          <div style="font-size:0.95rem;font-weight:800">🚛 سائق</div>
+          <div style="font-size:0.72rem;opacity:0.88">عرض المهام والمسار</div>
+        </div>
       </button>
-      <button class="device-btn" style="background:linear-gradient(135deg,#1565C0,#1976D2);box-shadow:0 6px 20px rgba(21,101,192,0.4)" onclick="selectRole('admin')">
-        <i class="fas fa-shield-alt" style="font-size:1.6rem"></i>
-        <span style="font-size:1rem;font-weight:800">🏛️ الإدارة</span>
-        <small style="font-size:0.75rem;opacity:0.85">لوحة التحكم الكاملة</small>
+      <button class="device-btn" style="background:linear-gradient(135deg,#1565C0,#1976D2);box-shadow:0 4px 14px rgba(21,101,192,0.4);flex-direction:row;justify-content:flex-start;padding:12px 16px;gap:12px" onclick="selectRole('admin')">
+        <i class="fas fa-shield-alt" style="font-size:1.2rem;flex-shrink:0"></i>
+        <div style="text-align:right;flex:1">
+          <div style="font-size:0.95rem;font-weight:800">🏛️ الإدارة</div>
+          <div style="font-size:0.72rem;opacity:0.88">لوحة التحكم الكاملة</div>
+        </div>
       </button>
     </div>
   </div>
@@ -3136,21 +3145,25 @@ function selectRole(role) {
   currentRole = role;
   try { localStorage.setItem('medea_role', role); } catch(e) {}
   const mode = localStorage.getItem('medea_device') || 'mobile';
-  const sel  = document.getElementById('deviceSelector');
+
+  // إخفاء شاشة الاختيار فوراً
+  const selEl = document.getElementById('deviceSelector');
+  if(selEl) { selEl.style.display='none'; selEl.classList.remove('active'); }
+
+  // إظهار splash لثانية واحدة
   const spl  = document.getElementById('splash');
   const main = document.getElementById('mainContent');
-  if(sel) { sel.style.opacity='0'; sel.style.transition='opacity 0.3s'; }
+  if(spl) { spl.style.display='flex'; }
+
   setTimeout(()=>{
-    if(sel) { sel.style.display='none'; sel.classList.remove('active'); }
-    if(spl) { spl.style.display='flex'; }
-    setTimeout(()=>{
-      if(spl) { spl.style.display='none'; }
-      if(main){ main.style.display='block'; main.classList.add('active'); }
-      applyRole(role);
-      _startApp(mode);
-      if(role==='driver') setTimeout(()=>showPage('driver'), 700);
-    }, 1500);
-  }, 300);
+    // إخفاء splash وإظهار التطبيق
+    if(spl)  { spl.style.display='none'; }
+    if(main) { main.style.display='block'; main.classList.add('active'); }
+    applyRole(role);
+    _startApp(mode);
+    // السائق يذهب مباشرة لصفحته
+    if(role==='driver') setTimeout(()=>showPage('driver'), 500);
+  }, 1200);
 }
 
 function applyRole(role) {
@@ -3194,23 +3207,6 @@ function _startApp(mode) {
   try { loadFromCloud('marketMaterials','marketMaterials',(d)=>{marketMaterials=d?Object.values(d):[];}); } catch(e) {}
   try { loadFromCloud('truckTracking','truckTracking',(d)=>{if(d)truckTrackingData=d;}); } catch(e) {}
   try { var lang=localStorage.getItem('medea_lang')||'ar'; currentLang=lang; updateLanguageUI(); } catch(e) {}
-}
-
-function selectDevice(mode) {
-  try { localStorage.setItem('medea_device', mode); } catch(e) {}
-  var sel = document.getElementById('deviceSelector');
-  if(sel) { sel.style.opacity='0'; sel.style.transition='opacity 0.3s'; }
-  setTimeout(function() {
-    if(sel) { sel.style.display='none'; sel.classList.remove('active'); }
-    var spl = document.getElementById('splash');
-    if(spl) { spl.style.display='flex'; spl.style.opacity='1'; }
-    setTimeout(function() { _startApp(mode); }, 2000);
-    // Safety timeout
-    setTimeout(function() {
-      var m = document.getElementById('mainContent');
-      if(m && !m.classList.contains('active')) { _startApp(mode); }
-    }, 5000);
-  }, 300);
 }
 
 // ===== تبديل الوضع =====

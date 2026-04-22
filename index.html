@@ -266,6 +266,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+#splash.show { display: flex !important; }
 
 .splash-content {
   background: var(--bg-card);
@@ -3130,40 +3131,50 @@ function normalizeReport(r) {
 }
 
 // ===== نظام الأدوار =====
-let currentRole = 'citizen'; // citizen | driver | admin
+let currentRole = 'citizen';
 
 function selectDeviceType(mode) {
   try { localStorage.setItem('medea_device', mode); } catch(e) {}
   if(mode === 'desktop') document.body.classList.add('desktop-mode');
   else document.body.classList.remove('desktop-mode');
-  document.querySelectorAll('#selDesktop,#selMobile').forEach(b => b.style.opacity='0.55');
-  const sel = document.getElementById(mode==='desktop'?'selDesktop':'selMobile');
-  if(sel) sel.style.opacity='1';
+  document.querySelectorAll('#selDesktop,#selMobile').forEach(b => b.style.opacity='0.5');
+  const s = document.getElementById(mode==='desktop'?'selDesktop':'selMobile');
+  if(s) s.style.opacity='1';
 }
 
 function selectRole(role) {
-  currentRole = role;
-  try { localStorage.setItem('medea_role', role); } catch(e) {}
-  const mode = localStorage.getItem('medea_device') || 'mobile';
+  try {
+    currentRole = role;
+    localStorage.setItem('medea_role', role);
+    var mode = localStorage.getItem('medea_device') || 'mobile';
 
-  // إخفاء شاشة الاختيار فوراً
-  const selEl = document.getElementById('deviceSelector');
-  if(selEl) { selEl.style.display='none'; selEl.classList.remove('active'); }
+    // 1. إخفاء شاشة الاختيار
+    var selEl = document.getElementById('deviceSelector');
+    if(selEl) { selEl.classList.remove('active'); selEl.style.cssText='display:none !important;'; }
 
-  // إظهار splash لثانية واحدة
-  const spl  = document.getElementById('splash');
-  const main = document.getElementById('mainContent');
-  if(spl) { spl.style.display='flex'; }
+    // 2. إظهار splash
+    var spl = document.getElementById('splash');
+    if(spl) spl.classList.add('show');
 
-  setTimeout(()=>{
-    // إخفاء splash وإظهار التطبيق
-    if(spl)  { spl.style.display='none'; }
+    // 3. بعد 1.2 ثانية: إخفاء splash وإظهار التطبيق
+    setTimeout(function() {
+      var spl2 = document.getElementById('splash');
+      if(spl2) { spl2.classList.remove('show'); spl2.style.cssText='display:none !important;'; }
+
+      var main = document.getElementById('mainContent');
+      if(main) { main.style.cssText='display:block !important;'; main.classList.add('active'); }
+
+      applyRole(role);
+      _startApp(mode);
+      if(role === 'driver') setTimeout(function(){ showPage('driver'); }, 400);
+    }, 1200);
+
+  } catch(e) {
+    var main = document.getElementById('mainContent');
     if(main) { main.style.display='block'; main.classList.add('active'); }
-    applyRole(role);
-    _startApp(mode);
-    // السائق يذهب مباشرة لصفحته
-    if(role==='driver') setTimeout(()=>showPage('driver'), 500);
-  }, 1200);
+    applyRole(role || 'citizen');
+    _startApp('mobile');
+  }
 }
 
 function applyRole(role) {
@@ -3171,41 +3182,36 @@ function applyRole(role) {
   document.body.classList.remove('role-citizen','role-driver','role-admin');
   document.body.classList.add('role-'+role);
   const badge = document.getElementById('roleBadge');
-  if(badge) {
-    const labels = {citizen:'👤 مواطن', driver:'🚛 سائق', admin:'🏛️ إدارة'};
-    badge.textContent = labels[role]||'👤';
+  if(badge){
+    const L = {citizen:'👤 مواطن', driver:'🚛 سائق', admin:'🏛️ إدارة'};
+    badge.textContent = L[role]||'👤';
   }
 }
 
 function changeRole() {
   try { localStorage.removeItem('medea_role'); } catch(e) {}
-  const sel  = document.getElementById('deviceSelector');
   const main = document.getElementById('mainContent');
-  if(main) { main.style.display='none'; main.classList.remove('active'); }
-  if(sel)  { sel.style.display='flex'; sel.style.opacity='1'; sel.classList.add('active'); }
+  if(main) { main.style.cssText=''; main.classList.remove('active'); }
+  const sel = document.getElementById('deviceSelector');
+  if(sel) { sel.style.cssText=''; sel.classList.add('active'); }
   document.body.classList.remove('role-citizen','role-driver','role-admin');
 }
 
 function selectDevice(mode) {
-  // توافق مع الكود القديم
+  // قديم — للتوافق فقط
   try { localStorage.setItem('medea_device', mode); } catch(e) {}
-  selectRole(localStorage.getItem('medea_role')||'citizen');
+  selectRole(localStorage.getItem('medea_role') || 'citizen');
 }
 
 function _startApp(mode) {
-  try { if(mode === 'desktop') document.body.classList.add('desktop-mode'); else document.body.classList.remove('desktop-mode'); } catch(e) {}
-  var sel = document.getElementById('deviceSelector');
-  var spl = document.getElementById('splash');
-  var main = document.getElementById('mainContent');
-  if(sel) { sel.style.display = 'none'; sel.classList.remove('active'); }
-  if(spl) { spl.style.display = 'none'; }
-  if(main) { main.style.display = 'block'; main.classList.add('active'); }
+  try { if(mode==='desktop') document.body.classList.add('desktop-mode'); else document.body.classList.remove('desktop-mode'); } catch(e) {}
+  // لا نلمس display هنا — selectRole تتولى ذلك
   try { updateTime(); } catch(e) {}
   try { setupSync(); } catch(e) {}
-  try { loadFromCloud('reports','reports',(d)=>{allReports=d?Object.values(d).map(normalizeReport):[];updateStats();}); } catch(e) {}
-  try { loadFromCloud('wasteTracking','wasteTracking',(d)=>{wasteTracking=d?Object.values(d):[];}); } catch(e) {}
-  try { loadFromCloud('marketMaterials','marketMaterials',(d)=>{marketMaterials=d?Object.values(d):[];}); } catch(e) {}
-  try { loadFromCloud('truckTracking','truckTracking',(d)=>{if(d)truckTrackingData=d;}); } catch(e) {}
+  try { loadFromCloud('reports','reports',function(d){allReports=d?Object.values(d).map(normalizeReport):[];updateStats();}); } catch(e) {}
+  try { loadFromCloud('wasteTracking','wasteTracking',function(d){wasteTracking=d?Object.values(d):[];}); } catch(e) {}
+  try { loadFromCloud('marketMaterials','marketMaterials',function(d){marketMaterials=d?Object.values(d):[];}); } catch(e) {}
+  try { loadFromCloud('truckTracking','truckTracking',function(d){if(d)truckTrackingData=d;}); } catch(e) {}
   try { var lang=localStorage.getItem('medea_lang')||'ar'; currentLang=lang; updateLanguageUI(); } catch(e) {}
 }
 
@@ -6581,32 +6587,38 @@ window.addEventListener('DOMContentLoaded', function() {
     if(savedPoints) userPoints = parseInt(savedPoints);
   } catch(e) {}
 
-  // استعادة الجهاز والدور المحفوظين
-  var savedDevice = null;
-  var savedRole   = null;
+  var savedDevice = null, savedRole = null;
   try { savedDevice = localStorage.getItem('medea_device'); } catch(e) {}
   try { savedRole   = localStorage.getItem('medea_role');   } catch(e) {}
 
+  // تأكد من عرض شاشة الاختيار أولاً دائماً
+  var selEl = document.getElementById('deviceSelector');
+  var main  = document.getElementById('mainContent');
+  var spl   = document.getElementById('splash');
+
+  // إخفاء كل شيء
+  if(main) { main.style.cssText = 'display:none !important;'; main.classList.remove('active'); }
+  if(spl)  { spl.style.cssText  = 'display:none !important;'; }
+
   if(savedDevice && savedRole) {
-    // الجهاز والدور محفوظان: تشغيل مباشر
+    // الدور والجهاز محفوظان — تشغيل مباشر بدون شاشة اختيار
+    if(selEl) { selEl.classList.remove('active'); selEl.style.cssText='display:none !important;'; }
+    if(savedDevice === 'desktop') document.body.classList.add('desktop-mode');
     applyRole(savedRole);
+    if(main) { main.style.cssText='display:block !important;'; main.classList.add('active'); }
     _startApp(savedDevice);
-    if(savedRole === 'driver') setTimeout(()=>showPage('driver'), 700);
+    if(savedRole === 'driver') setTimeout(function(){ showPage('driver'); }, 500);
   } else {
     // إظهار شاشة الاختيار
-    var sel = document.getElementById('deviceSelector');
-    if(sel) { sel.style.display = 'flex'; sel.classList.add('active'); }
-    // تطبيق وضع الجهاز المحفوظ إن وُجد
+    if(selEl) { selEl.style.cssText=''; selEl.classList.add('active'); }
     if(savedDevice === 'desktop') document.body.classList.add('desktop-mode');
   }
 
-  // [1] شريط إنجاز اليوم
   setTimeout(updateDailyAchievement, 800);
   setInterval(updateDailyAchievement, 60000);
 
-  // [H] زر الطوارئ
-  setTimeout(() => {
-    const eBtn = document.getElementById('emergencyBtn');
+  setTimeout(function() {
+    var eBtn = document.getElementById('emergencyBtn');
     if(eBtn) eBtn.classList.add('visible');
   }, 1000);
 });
